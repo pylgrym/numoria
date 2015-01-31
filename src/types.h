@@ -20,6 +20,10 @@
 
 /* Use ISO C99 standard declarations to get correct lengths; if you
    have an old compiler; #define NO_STDINT. */
+
+#ifndef MORIA_TYPES_H
+#define MORIA_TYPES_H
+
 #if defined(NO_STDINT)
 #include<limits.h>
 typedef unsigned char  int8u;
@@ -421,3 +425,6 @@ typedef struct high_scores
   char name[PLAYER_NAME_SIZE];
   char died_from[25];
 } high_scores;
+
+
+#endif // MORIA_TYPES_H.

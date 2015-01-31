@@ -22,6 +22,12 @@
 
 #include "cursesJG.h"
 
+// #include "config.h"
+// #include "constant.h"
+// #include "types.h"
+// #include "externs.h"
+
+
 // http://pubs.opengroup.org/onlinepubs/7908799/xcurses/curses.h.html
 
 // Flag making extra case 'Jakobs code' for cases where we don't need to do anything, e.g. suspend.
@@ -1198,45 +1204,27 @@ void clear_from (int row)
 
 /* Outputs a char to a given interpolated y, x position	-RAK-	*/
 /* sign bit of a character used to indicate standout mode. -CJS */
-void print( // ch, row, col)
-char ch,
-int row,
-int col)
-#ifdef MAC
+void print( const struct LocInf& ch, int row,int col)
 {
-  char cnow, anow;
 
   row -= panel_row_prt;/* Real co-ords convert to screen positions */
   col -= panel_col_prt;
-
-  GetScreenCharAttr(&cnow, &anow, col, row);	/* Check current */
-
-  /* If char is already set, ignore op */
-  if ((cnow != ch) || (anow != ATTR_NORMAL))
-    DSetScreenCharAttr(ch & 0x7F,
-		       (ch & 0x80) ? attrReversed : attrNormal,
-		       col, row);
-}
-#else
-{
-  vtype tmp_str;
-
-  row -= panel_row_prt;/* Real co-ords convert to screen positions */
-  col -= panel_col_prt;
-  if (mvaddch (row, col, ch) == ERR)
+  if (mvaddch (row, col, ch.c) == ERR)
     {
       abort();
       /* clear msg_flag to avoid problems with unflushed messages */
       msg_flag = 0;
-      (void) sprintf(tmp_str, "error in print, row = %d col = %d\n",
-		     row, col);
+      vtype tmp_str;
+      (void)sprintf(tmp_str, "error in print, row = %d col = %d\n", row, col);
       prt(tmp_str, 0, 0);
       bell ();
       /* wait so user can see error */
       (void) sleep(2);
     }
 }
-#endif
+
+
+
 
 
 /* Moves the cursor to a given interpolated y, x position	-RAK-	*/

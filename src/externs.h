@@ -361,7 +361,7 @@ void flush(void);
 void erase_line(int, int);
 void clear_screen(void);
 void clear_from(int);
-void print(char, int, int);
+void print(const struct LocInf&, int, int); // 
 void move_cursor_relative(int, int);
 void count_msg_print(char *);
 void prt(char *, int, int);
@@ -416,7 +416,12 @@ enum TileEnum {
   Ti_Thing,
   Ti_Floor,
   Ti_Wall,
-  Ti_MineralSeam
+  Ti_MineralSeam,
+  Ti_Empty,
+  Ti_Firebolt,
+  Ti_Fireball,
+  Ti_Breath,
+  Ti_ThrowItem
 };
 
 struct LocInf {

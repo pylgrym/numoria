@@ -1775,7 +1775,7 @@ void creatures(int attack)
 			       || (randint(50) == 1))
 			{
 			  notice = randint(1024);
-			  if (notice*notice*notice <= (1L << (29 - py.misc.stl)))
+        if (notice*notice*notice <= (int32u) (1L << (29 - py.misc.stl))) // Warning	3	warning C4018: '<=' : signed/unsigned mismatch	
 			    {
 			      m_ptr->csleep -= (100 / m_ptr->cdis);
 			      if (m_ptr->csleep > 0)

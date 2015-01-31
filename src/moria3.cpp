@@ -700,7 +700,7 @@ int monptr, int dam)
       if (new_exp_frac >= 0x10000L)
 	{
 	  new_exp++;
-	  p_ptr->exp_frac = new_exp_frac - 0x10000L;
+	  p_ptr->exp_frac = int16u (new_exp_frac - 0x10000L); //  was: warning C4244: '=' : conversion from 'long' to 'int16u', possible loss of data
 	}
       else
 	p_ptr->exp_frac = new_exp_frac;

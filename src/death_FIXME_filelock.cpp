@@ -674,9 +674,9 @@ are not saved.");
 #endif
   new_entry.mhp = py.misc.mhp;
   new_entry.chp = py.misc.chp;
-  new_entry.dun_level = dun_level;
-  new_entry.lev = py.misc.lev;
-  new_entry.max_dlv = py.misc.max_dlv;
+  new_entry.dun_level = (int8u) dun_level; //   warning C4244: '=' : conversion from 'int16' to 'int8u', possible loss of data
+  new_entry.lev = (int8u) py.misc.lev;  // warning C4244 : '=' : conversion from 'int16' to 'int8u', possible loss of data
+  new_entry.max_dlv = (int8u) py.misc.max_dlv; // warning C4244 : '=' : conversion from 'int16' to 'int8u', possible loss of data
   new_entry.sex = (py.misc.male ? 'M' : 'F');
   new_entry.race = py.misc.prace;
   new_entry.classs = py.misc.pclass;

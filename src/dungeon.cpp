@@ -1898,7 +1898,7 @@ static void regenhp(int percent)
   new_chp_frac = (new_chp & 0xFFFF) + p_ptr->chp_frac; /* mod 65536 */
   if (new_chp_frac >= 0x10000L)
     {
-      p_ptr->chp_frac = new_chp_frac - 0x10000L;
+      p_ptr->chp_frac = (int16u) (new_chp_frac - 0x10000L); // was: d:\moria\numoria\src\dungeon.cpp(1901): warning C4244: '=' : conversion from 'long' to 'int16u', possible loss of data
       p_ptr->chp++;
     }
   else
@@ -1933,7 +1933,7 @@ static void regenmana(int percent)
   new_mana_frac = (new_mana & 0xFFFF) + p_ptr->cmana_frac; /* mod 65536 */
   if (new_mana_frac >= 0x10000L)
     {
-      p_ptr->cmana_frac = new_mana_frac - 0x10000L;
+      p_ptr->cmana_frac = (int16u) (new_mana_frac - 0x10000L); // was: warning C4244: '=' : conversion from 'long' to 'int16u', possible loss of data
       p_ptr->cmana++;
     }
   else

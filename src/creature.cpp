@@ -1754,6 +1754,7 @@ void creatures(int attack)
 	    while (k > 0)
 	      {
 		k--;
+
 		wake = FALSE;
 		ignore = FALSE;
 		rcmove = 0;

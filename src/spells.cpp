@@ -2305,7 +2305,7 @@ int turn_undead()
 		  turn_und = TRUE;
 		  c_recall[m_ptr->mptr].r_cdefense |= CD_UNDEAD;
 		}
-	      m_ptr->confused = py.misc.lev;
+	      m_ptr->confused = (int8u) py.misc.lev; // We cast int16u LEVEL to an 8bit, but it's OK, level is never int16..
 	    }
 	  else if (m_ptr->ml)
 	    {
@@ -2428,7 +2428,7 @@ void lose_exp(int32 amount)
   prt_experience();
 
   i = 0;
-  while ((player_exp[i] * m_ptr->expfact / 100) <= m_ptr->exp)
+  while ((player_exp[i] * m_ptr->expfact / 100) <= (int32u) m_ptr->exp)
     i++;
   /* increment i once more, because level 1 exp is stored in player_exp[0] */
   i++;

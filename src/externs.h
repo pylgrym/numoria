@@ -407,9 +407,22 @@ int damroll(int, int);
 int pdamroll(unsigned char *);
 int los(int, int, int, int);
 
+enum TileEnum {
+  Ti_Player,
+  Ti_Blind,
+  Ti_Halluc,
+  Ti_Creature,
+  Ti_Unlit,
+  Ti_Thing,
+  Ti_Floor,
+  Ti_Wall,
+  Ti_MineralSeam
+};
+
 struct LocInf {
   unsigned char c;
-  explicit LocInf(unsigned char c_) :c(c_) {}
+  TileEnum tile;
+  explicit LocInf(unsigned char c_, TileEnum tile_) :c(c_), tile(tile_) {}
 };
 
 LocInf loc_symbol(int, int); // unsigned char

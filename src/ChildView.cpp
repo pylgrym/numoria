@@ -15,6 +15,33 @@
 #endif
 
 
+
+SpriteDrawer::SpriteDrawer() {
+  // char buf[256];
+  // GetCurrentDirectory(sizeof buf, buf);
+  int res = sprites.Load( _T("sprites.png") );
+}
+
+
+void SpriteDrawer::drawSprite(int myChar, CRect& dest, CDC& dc) {
+  int cellWidth = dest.Width();
+  int cellHeight = dest.Height();
+  int imgWidth = sprites.GetWidth();
+  int colCount = imgWidth / cellWidth;
+
+  int row = myChar / colCount;
+  int col = myChar % colCount;
+  int offset_x = col * cellWidth;
+  int offset_y = row * cellHeight;
+  CRect srcR(CPoint(0, 0), CSize(cellWidth, cellHeight));
+  srcR.OffsetRect(offset_x, offset_y);
+
+  sprites.Draw(dc, dest, srcR);
+}
+
+
+
+
 class debstr : public std::stringstream {
 public:
 	~debstr() {
@@ -220,8 +247,9 @@ void CChildView::OnPaint()
 			CRect cellR(CPoint(x, y), CSize(cellw, cellh));
 
 			// dc.Rectangle(&cellR);  
-			cellR.InflateRect(0, 0, -1, -1);
-			dc.FillRect(&cellR, &cellBackgroundBrush);
+      CRect shrink = cellR;
+      shrink.InflateRect(0, 0, -1, -1);
+      dc.FillRect(&shrink, &cellBackgroundBrush);
 
 			COLORREF back = RGB(0, 110, 0), front = RGB(255, 255, 0);
 			if (cell.c == '@') { //  == pos) {
@@ -243,6 +271,7 @@ void CChildView::OnPaint()
 
 			// FrameRect Rectangle RoundRect
       char a_item[2] = "a"; a_item[0] = cell.c; // Make ascii string with char in it.
+
       CA2T u_item(a_item, CP_ACP); // Convert ascii string to Unicode. //  CP_UTF8);
       // CString s = u_item;
 
@@ -254,6 +283,7 @@ void CChildView::OnPaint()
 				| DT_SINGLELINE
 				);
 
+      sprites.drawSprite(cell.c, cellR, dc);
 
 		}
 	}

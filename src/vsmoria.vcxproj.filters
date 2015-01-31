@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\actions">
+      <UniqueIdentifier>{fbcff078-148b-4949-8f4e-dab219f35fbd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -53,37 +56,16 @@
     <ClCompile Include="ChildView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="misc4.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="rnd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="variable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="staffs.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="wands.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="prayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="eat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="magic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="sets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="help.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="potions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="wizard.cpp">
@@ -101,9 +83,6 @@
     <ClCompile Include="create.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="scrolls.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="files_FIXME.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -113,16 +92,10 @@
     <ClCompile Include="recall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="moria2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="misc1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="misc2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="store2.cpp">
@@ -171,6 +144,36 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="cursesJG.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="misc4inscribe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="actions\eat.cpp">
+      <Filter>Source Files\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="actions\magic.cpp">
+      <Filter>Source Files\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="actions\potions.cpp">
+      <Filter>Source Files\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="actions\prayer.cpp">
+      <Filter>Source Files\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="actions\scrolls.cpp">
+      <Filter>Source Files\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="actions\staffs.cpp">
+      <Filter>Source Files\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="actions\wands.cpp">
+      <Filter>Source Files\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="moria2_running.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="misc2_magictreasure.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

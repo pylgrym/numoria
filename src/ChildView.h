@@ -5,6 +5,13 @@
 
 #pragma once
 
+class SpriteDrawer {
+public:
+  CImage sprites;
+  SpriteDrawer();
+
+  void drawSprite(int myChar, CRect& dest, CDC& dc);
+};
 
 // CChildView window
 
@@ -18,6 +25,7 @@ public:
 
 // Attributes
 public:
+  SpriteDrawer sprites;
 
 // Operations
 public:

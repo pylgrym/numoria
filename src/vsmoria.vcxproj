@@ -54,6 +54,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -110,6 +111,13 @@
     <ClInclude Include="vsmoria.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="actions\eat.cpp" />
+    <ClCompile Include="actions\magic.cpp" />
+    <ClCompile Include="actions\potions.cpp" />
+    <ClCompile Include="actions\prayer.cpp" />
+    <ClCompile Include="actions\scrolls.cpp" />
+    <ClCompile Include="actions\staffs.cpp" />
+    <ClCompile Include="actions\wands.cpp" />
     <ClCompile Include="ChildView.cpp" />
     <ClCompile Include="create.cpp" />
     <ClCompile Include="creature.cpp" />
@@ -117,34 +125,28 @@
     <ClCompile Include="death_FIXME_filelock.cpp" />
     <ClCompile Include="desc.cpp" />
     <ClCompile Include="dungeon.cpp" />
-    <ClCompile Include="eat.cpp" />
     <ClCompile Include="files_FIXME.cpp" />
     <ClCompile Include="generate.cpp" />
     <ClCompile Include="help.cpp" />
     <ClCompile Include="io_FIXME_curses.cpp" />
-    <ClCompile Include="magic.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="misc1.cpp" />
-    <ClCompile Include="misc2.cpp" />
+    <ClCompile Include="misc2_magictreasure.cpp" />
     <ClCompile Include="misc3.cpp" />
-    <ClCompile Include="misc4.cpp" />
+    <ClCompile Include="misc4inscribe.cpp" />
     <ClCompile Include="monsters.cpp" />
     <ClCompile Include="moria1.cpp" />
-    <ClCompile Include="moria2.cpp" />
+    <ClCompile Include="moria2_running.cpp" />
     <ClCompile Include="moria3.cpp" />
     <ClCompile Include="moria4.cpp" />
     <ClCompile Include="player.cpp" />
-    <ClCompile Include="potions.cpp" />
-    <ClCompile Include="prayer.cpp" />
     <ClCompile Include="recall.cpp" />
     <ClCompile Include="rnd.cpp" />
     <ClCompile Include="save.cpp" />
-    <ClCompile Include="scrolls.cpp" />
     <ClCompile Include="sets.cpp" />
     <ClCompile Include="signals_FIXME.cpp" />
     <ClCompile Include="spells.cpp" />
-    <ClCompile Include="staffs.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -155,7 +157,6 @@
     <ClCompile Include="treasure.cpp" />
     <ClCompile Include="variable.cpp" />
     <ClCompile Include="vsmoria.cpp" />
-    <ClCompile Include="wands.cpp" />
     <ClCompile Include="wizard.cpp" />
   </ItemGroup>
   <ItemGroup>

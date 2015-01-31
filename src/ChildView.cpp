@@ -201,7 +201,7 @@ void CChildView::OnPaint()
 	CPaintDC dc(this); // device context for painting
 
 
-	CPen pen(PS_SOLID, 1, RGB(128, 0, 0));
+	CPen pen(PS_SOLID, 1, RGB(16, 0, 32));
 	dc.SelectObject(pen);
 	CBrush cellBackgroundBrush(RGB(0, 0, 20));   // Black  background
 	// dc.SetBkMode(OPAQUE);
@@ -235,11 +235,8 @@ void CChildView::OnPaint()
 	dc.SelectObject(newFont);
 
 
-	// CPoint pos = CPoint(10, 15);
-
 
   extern CursesJG Csr;
-
 
 	for (int row = 0; row<25; ++row) {
 		for (int col = 0; col<80; ++col) {
@@ -249,45 +246,32 @@ void CChildView::OnPaint()
 			int x = col*cellw, y = row*cellh;
 			CRect cellR(CPoint(x, y), CSize(cellw, cellh));
 
-			// dc.Rectangle(&cellR);  
+			dc.Rectangle(&cellR);  
       CRect shrink = cellR;
       shrink.InflateRect(0, 0, -1, -1);
       dc.FillRect(&shrink, &cellBackgroundBrush);
 
-			COLORREF back = RGB(0, 110, 0), front = RGB(255, 255, 0);
-			if (cell.c == '@') { //  == pos) {
+      COLORREF back = RGB(0, 10, 0);
+      COLORREF front = RGB(250, 255, 250); // cell.color; //  RGB(255, 255, 0);
+			if (cell.color != colorNone) { // .c == '@') { //  == pos) {
         // At least color the player differently..
-				back = RGB(230, 120, 50); front = RGB(255, 200, 40);
-        back = RGB(230, 120, 50); front = RGB(155, 100, 255);
+        front = cell.color;
       }
-
-			// const TCHAR* flavor = _T("  MWmw You feel a stirring presence nearby.");
-      // if (row == 1 && col < (int)_tcslen(flavor)) { // 
-      // 	static TCHAR myfield[2] = _T("A");
-      // 	item = myfield;
-      // 	myfield[0] = flavor[col];
-      // }
-      // const TCHAR* item = _T("."); // "#"; // item = _T("@");
 
 			dc.SetBkColor(back);
 			dc.SetTextColor(front);
 
-			// FrameRect Rectangle RoundRect
       char a_item[2] = "a"; a_item[0] = cell.c; // Make ascii string with char in it.
-
       CA2T u_item(a_item, CP_ACP); // Convert ascii string to Unicode. //  CP_UTF8);
-      // CString s = u_item;
 
-      // LPCWSTR
-      dc.DrawText((LPCTSTR) u_item, //CString(u_item), 
+      dc.DrawText((LPCTSTR) u_item, 
         &cellR,
 				DT_CENTER
 				| DT_VCENTER
 				| DT_SINGLELINE
 				);
 
-      sprites.drawSprite(cell.c, cellR, dc);
-
+      // sprites.drawSprite(cell.c, cellR, dc);
 		}
 	}
 

@@ -21,6 +21,8 @@
 #define LINT_ARGS
 // #define _CRT_SECURE_NO_WARNINGS
 
+#include "LocInf.h"
+
 #include<stdio.h>
 
 /* VMS requires that this be in externs.h, not files.c; this prevents a
@@ -407,28 +409,7 @@ int damroll(int, int);
 int pdamroll(unsigned char *);
 int los(int, int, int, int);
 
-enum TileEnum {
-  Ti_Player,
-  Ti_Blind,
-  Ti_Halluc,
-  Ti_Creature,
-  Ti_Unlit,
-  Ti_Thing,
-  Ti_Floor,
-  Ti_Wall,
-  Ti_MineralSeam,
-  Ti_Empty,
-  Ti_Firebolt,
-  Ti_Fireball,
-  Ti_Breath,
-  Ti_ThrowItem
-};
 
-struct LocInf {
-  unsigned char c;
-  TileEnum tile;
-  explicit LocInf(unsigned char c_, TileEnum tile_) :c(c_), tile(tile_) {}
-};
 
 LocInf loc_symbol(int, int); // unsigned char
 

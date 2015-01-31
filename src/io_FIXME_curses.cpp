@@ -43,7 +43,10 @@ CursesJG Csr;
 int  mvaddstr(int y, int x, const char *str) { return Csr.mvaddstr(y,x,str);  }
 int addstr(const char *str) { return Csr.addstr(str); }
 int  addch(const chtype ch) { return Csr.addch(ch); }
+
 int  mvaddch(int y, int x, const chtype ch) { return Csr.mvaddch(y, x, ch); }
+int  mvaddch_L(int y, int x, const struct LocInf& ch) { return Csr.mvaddch_L(y, x, ch); }
+
 int  move(int y, int x) { return Csr.move(y, x); }
 int  wrefresh(WINDOW *w) { return Csr.wrefresh(w); }
 int  refresh() { return Csr.refresh(); }
@@ -1209,7 +1212,7 @@ void print( const struct LocInf& ch, int row,int col)
 
   row -= panel_row_prt;/* Real co-ords convert to screen positions */
   col -= panel_col_prt;
-  if (mvaddch (row, col, ch.c) == ERR)
+  if (mvaddch_L(row, col, ch) == ERR)
     {
       abort();
       /* clear msg_flag to avoid problems with unflushed messages */

@@ -559,30 +559,25 @@ LocInf loc_symbol(int y, int x)  { // unsigned char
   cave_ptr = &cave[y][x];
   f_ptr = &py.flags;
 
-  if ((cave_ptr->cptr == 1) && (!find_flag || find_prself)) // creature-1 is PLAYER!
+  if ((cave_ptr->cptr == 1) && (!find_flag || find_prself)) { // creature-1 is PLAYER!
     return LocInf('@', Ti_Player);
-  else if (f_ptr->status & PY_BLIND)
-    return LocInf(' ', Ti_Blind);
-  else if ((f_ptr->image > 0) && (randint(12) == 1))
-    return LocInf(randint(95) + 31, Ti_Halluc);
-  else if ((cave_ptr->cptr > 1) && (m_list[cave_ptr->cptr].ml))
-    return LocInf(c_list[m_list[cave_ptr->cptr].mptr].cchar, Ti_Creature);
-  else if (!cave_ptr->pl && !cave_ptr->tl && !cave_ptr->fm) // no permlight, no templight, no fieldmark 
+  } else if (f_ptr->status & PY_BLIND) {
+    return LocInf(' ', Ti_Blind); // We are blind, don't show anything.
+  } else if ((f_ptr->image > 0) && (randint(12) == 1)) {
+    return LocInf(randint(95) + 31, Ti_Halluc); // We are hallucinating.
+  } else if ((cave_ptr->cptr > 1) && (m_list[cave_ptr->cptr].ml)) {
+    monster_type& monster = m_list[cave_ptr->cptr];
+    creature_type& creatureType = c_list[monster.mptr];
+    return LocInf(creatureType.cchar, Ti_Creature, creatureType.color);
+  } else if (!cave_ptr->pl && !cave_ptr->tl && !cave_ptr->fm) { // no permlight, no templight, no fieldmark 
     return LocInf(' ', Ti_Unlit);
-  else if ((cave_ptr->tptr != 0)
-    && (t_list[cave_ptr->tptr].tval != TV_INVIS_TRAP))
-    return LocInf(t_list[cave_ptr->tptr].tchar, Ti_Thing);
-  else if (cave_ptr->fval <= MAX_CAVE_FLOOR)
-  {
+  } else if ((cave_ptr->tptr != 0) && (t_list[cave_ptr->tptr].tval != TV_INVIS_TRAP)) {
+    return LocInf(t_list[cave_ptr->tptr].tchar, Ti_Thing); // There is a THING on the floor.
+  } else if (cave_ptr->fval <= MAX_CAVE_FLOOR) {
     return LocInf('.', Ti_Floor); // FLOOR
-  }
-  else if (cave_ptr->fval == GRANITE_WALL || cave_ptr->fval == BOUNDARY_WALL
-    || highlight_seams == FALSE)
-  {
+  } else if (cave_ptr->fval == GRANITE_WALL || cave_ptr->fval == BOUNDARY_WALL || highlight_seams == FALSE) {
     return LocInf('#', Ti_Wall); // WALL
-  }
-  else	/* Originally set highlight bit, but that is not portable, now use the percent sign instead. */
-  {
+  } else { /* Originally set highlight bit, but that is not portable, now use the percent sign instead. */  
     return LocInf('%', Ti_MineralSeam); // mineralSEAM(likely) or error-fallthrough(not likely)
   }
 }

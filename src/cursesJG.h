@@ -1,20 +1,29 @@
 #ifndef CURSES_JG_H
 #define CURSES_JG_H
 
+#include "LocInf.h"
+
 # define        ERR     (0)
 
 typedef char chtype;
 
-class ScreenCell {
+class ScreenCell : public LocInf {
 public:
 	enum CellConstants { Empty = ' ' };
-	chtype c;
+
+	//chtype c;
+  
+
 	// colors, graphics, sounds, fantastic other stuff.
-	ScreenCell() { c = Empty; }
-	ScreenCell(chtype c_) { c = c_; }
+	ScreenCell() { }
+	ScreenCell(chtype c_)  { c = c_; }
+  ScreenCell(const LocInf& src) {
+    LocInf::operator=(src);
+  }
 
 	void clearCell() {
 		c = Empty;
+    baseClear();
 	}
 };
 
@@ -92,8 +101,12 @@ public:
 
 	int  mvaddstr(int y, int x, const char *str);  
 	int  addstr(const char *str);  
+
 	int  addch(const chtype ch);  
+	int  addch_L(const struct LocInf& ch);  
+
 	int  mvaddch(int y, int x, const chtype ch);  
+  int  mvaddch_L(int y, int x, const struct LocInf& ch);// const chtype ch);
 	int  move(int, int);  
 	int  wrefresh(WINDOW *);  
 	int  clear(); // Curses Spec: clear internal buffer, and MARK for redraw (don't actually trigger the redraw..) 

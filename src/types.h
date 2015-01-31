@@ -84,6 +84,7 @@ typedef struct creature_type
   int8u hd[2];		/* Creatures hit die	*/
   int8u damage[4];	/* Type attack and damage*/
   int8u level;		/* Level of creature	*/
+  COLORREF color;
 } creature_type;
 
 typedef struct m_attack_type	/* Monster attack and damage types */

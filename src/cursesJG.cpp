@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "cursesJG.h"
+#include "LocInf.h"
+
 
 /* FIXME; I want to catch calls to fprintf(stderror, e.g. 
 ..(void) fprintf (stderr, "Can't open score file \"%s\"\n", MORIA_TOP);
@@ -19,7 +21,9 @@ CursesJG::CursesJG() {
 
 
 int  CursesJG::move(int y, int x) { curscr->csr_y = y, curscr->csr_x = x; return 1; }
+
 int  CursesJG::addch(const chtype ch) { curscr->cell(curscr->csr_y, curscr->csr_x) = ScreenCell(ch); help_advCsr(); return 1; }
+int  CursesJG::addch_L(const struct LocInf& ch) { curscr->cell(curscr->csr_y, curscr->csr_x) = ScreenCell(ch); help_advCsr(); return 1; }
 
 void CursesJG::help_advCsr() { // Move cursor right, then new line, then top of screen.
 	curscr->csr_x += 1; // Move right.
@@ -33,6 +37,7 @@ void CursesJG::help_advCsr() { // Move cursor right, then new line, then top of 
 }
 
 int  CursesJG::mvaddch(int y, int x, const chtype ch) { move(y, x); addch(ch); return 1; }
+int  CursesJG::mvaddch_L(int y, int x, const struct LocInf& ch) { move(y, x); addch_L(ch); return 1; }
 
 int CursesJG::addstr(const char *str) {
 	int count = 0;

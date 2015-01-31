@@ -59,8 +59,9 @@ public:
 
 void keyEaterLoopJG() {
   debstr() << "keyEaterLoopJG begin\n";
-  const int waitCount = 10;
-  const int waitMS = 50;
+  // JG: be careful this doesn't slow us too much..
+  const int waitCount = 4;
+  const int waitMS = 25;
   for (int i = 0; i < waitCount; ++i) {
     // Check to see if any messages are waiting in the queue
     MSG msg;
@@ -271,7 +272,9 @@ void CChildView::OnPaint()
 				| DT_SINGLELINE
 				);
 
-      // sprites.drawSprite(cell.c, cellR, dc);
+      if (cell.color != colorNone || cell.tile == Ti_Thing || cell.tile == Ti_Environ) { // IE if monster, not text..
+        sprites.drawSprite(cell.c, cellR, dc);
+      }
 		}
 	}
 

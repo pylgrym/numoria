@@ -406,7 +406,14 @@ int next_to_walls(int, int); // JG: I added this, only appears in .. VMS section
 int damroll(int, int);
 int pdamroll(unsigned char *);
 int los(int, int, int, int);
-unsigned char loc_symbol(int, int);
+
+struct LocInf {
+  unsigned char c;
+  explicit LocInf(unsigned char c_) :c(c_) {}
+};
+
+LocInf loc_symbol(int, int); // unsigned char
+
 int test_light(int, int);
 void prt_map(void);
 int compact_monsters(void);

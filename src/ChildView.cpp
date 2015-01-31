@@ -19,11 +19,14 @@
 SpriteDrawer::SpriteDrawer() {
   // char buf[256];
   // GetCurrentDirectory(sizeof buf, buf);
-  int res = sprites.Load( _T("sprites.png") );
+  int res = sprites.Load( _T("sprites\\sprites.png") );
+  initOK = (res >= 0);
 }
 
 
 void SpriteDrawer::drawSprite(int myChar, CRect& dest, CDC& dc) {
+  if (!initOK) { return;  } // Fail silently/gracefully.
+
   int cellWidth = dest.Width();
   int cellHeight = dest.Height();
   int imgWidth = sprites.GetWidth();

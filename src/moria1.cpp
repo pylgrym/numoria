@@ -1629,7 +1629,7 @@ void light_room(int y, int x)
 		if (tval >= TV_MIN_VISIBLE && tval <= TV_MAX_VISIBLE)
 		  c_ptr->fm = TRUE;
 	      }
-	    print(loc_symbol(i, j), i, j);
+	    print(loc_symbol(i, j).c, i, j);
 	  }
       }
 }
@@ -1640,7 +1640,7 @@ void lite_spot(int y, int x)
 //register int y, x;
 {
   if (panel_contains(y, x))
-    print(loc_symbol(y, x), y, x);
+    print(loc_symbol(y, x).c, y, x);
 }
 
 
@@ -1705,7 +1705,7 @@ static void sub1_move_light(int y1, int x1, int y2, int x2)
     }
   for (i = top; i <= bottom; i++)
     for (j = left; j <= right; j++)   /* Leftmost to rightmost do*/
-      print(loc_symbol(i, j), i, j);
+      print(loc_symbol(i, j).c, i, j);
 }
 
 
@@ -1723,12 +1723,12 @@ static void sub3_move_light(int y1, int x1, int y2, int x2)
 	for (j = x1-1; j <= x1+1; j++)
 	  {
 	    cave[i][j].tl = FALSE;
-	    print(loc_symbol(i, j), i, j);
+	    print(loc_symbol(i, j).c, i, j);
 	  }
       light_flag = FALSE;
     }
   else if (!find_flag || find_prself)
-    print(loc_symbol(y1, x1), y1, x1);
+    print(loc_symbol(y1, x1).c, y1, x1);
 
   if (!find_flag || find_prself)
     print('@', y2, x2);

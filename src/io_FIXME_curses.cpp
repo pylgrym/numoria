@@ -1776,7 +1776,7 @@ void screen_map()
       for (j = 0; j < MAX_WIDTH; j++)
 	{
 	  col = j / RATIO;
-	  tmp = loc_symbol(i, j);
+	  tmp = loc_symbol(i, j).c;
 	  if (priority[map[col]] < priority[tmp])
 	    map[col] = tmp;
 	  if (map[col] == '@')

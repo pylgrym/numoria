@@ -552,53 +552,38 @@ int los( // fromY, fromX, toY, toX)
 
 
 /* Returns symbol for given row, column			-RAK-	*/
-unsigned char loc_symbol( // y, x)
-	int y, int x)
-{
+LocInf loc_symbol(int y, int x)  { // unsigned char 
   register cave_type *cave_ptr;
   register struct player_type::flags *f_ptr;
 
   cave_ptr = &cave[y][x];
   f_ptr = &py.flags;
 
-  if ((cave_ptr->cptr == 1) && (!find_flag || find_prself))
-    return '@';
+  if ((cave_ptr->cptr == 1) && (!find_flag || find_prself)) // creature-1 is PLAYER!
+    return LocInf('@');
   else if (f_ptr->status & PY_BLIND)
-    return ' ';
+    return LocInf(' ');
   else if ((f_ptr->image > 0) && (randint (12) == 1))
-    return randint (95) + 31;
+    return LocInf(randint(95) + 31);
   else if ((cave_ptr->cptr > 1) && (m_list[cave_ptr->cptr].ml))
-    return c_list[m_list[cave_ptr->cptr].mptr].cchar;
+    return LocInf(c_list[m_list[cave_ptr->cptr].mptr].cchar);
   else if (!cave_ptr->pl && !cave_ptr->tl && !cave_ptr->fm)
-    return ' ';
+    return LocInf(' ');
   else if ((cave_ptr->tptr != 0)
 	   && (t_list[cave_ptr->tptr].tval != TV_INVIS_TRAP))
-    return t_list[cave_ptr->tptr].tchar;
+     return LocInf(t_list[cave_ptr->tptr].tchar);
   else if (cave_ptr->fval <= MAX_CAVE_FLOOR)
     {
-#ifdef MSDOS
-      return floorsym;
-#else
-      return '.';
-#endif
+      return LocInf('.'); // FLOOR
     }
   else if (cave_ptr->fval == GRANITE_WALL || cave_ptr->fval == BOUNDARY_WALL
 	   || highlight_seams == FALSE)
     {
-#ifdef MSDOS
-      return wallsym;
-#else
-#ifndef ATARI_ST
-      return '#';
-#else
-      return (unsigned char)240;
-#endif
-#endif
+      return LocInf('#'); // WALL
     }
-  else	/* Originally set highlight bit, but that is not portable, now use
-	   the percent sign instead. */
+  else	/* Originally set highlight bit, but that is not portable, now use the percent sign instead. */
     {
-      return '%';
+      return LocInf('%'); // mineralSEAM(likely) or error-fallthrough(not likely)
     }
 }
 
@@ -630,7 +615,7 @@ void prt_map()
       erase_line (k, 13);
       for (j = panel_col_min; j <= panel_col_max; j++)	/* Left to right */
 	{
-	  tmp_char = loc_symbol(i, j);
+	  tmp_char = loc_symbol(i, j).c;
 	  if (tmp_char != ' ')
 	    print(tmp_char, i, j);
 	}

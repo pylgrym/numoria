@@ -8,6 +8,7 @@
 class SpriteDrawer {
 public:
   CImage sprites;
+  bool initOK;
   SpriteDrawer();
 
   void drawSprite(int myChar, CRect& dest, CDC& dc);

@@ -227,18 +227,22 @@ int in_bounds( // y, x)
 /* Calculates current boundaries				-RAK-	*/
 void panel_bounds()
 {
+  const int viewPort_ROW_Offset = 1; // 1 is required, because we display msg's at top.
+  const int viewPort_COL_Offset = 0; // was 13; (when stat block on left side.)
+
   panel_row_min = panel_row*(SCREEN_HEIGHT / 2);
   panel_row_max = panel_row_min + SCREEN_HEIGHT - 1;
-  panel_row_prt = panel_row_min - 1;
+  panel_row_prt = panel_row_min - viewPort_ROW_Offset;
+
   panel_col_min = panel_col*(SCREEN_WIDTH / 2);
   panel_col_max = panel_col_min + SCREEN_WIDTH - 1;
-  panel_col_prt = panel_col_min - 13;
+  panel_col_prt = panel_col_min - viewPort_COL_Offset;// -1; // -13; // was -13
 }
 
 
 /* Given an row (y) and col (x), this routine detects  -RAK-	*/
 /* when a move off the screen has occurred and figures new borders.
-   Force forcses the panel bounds to be recalculated, useful for 'W'here. */
+   Forces the panel bounds to be recalculated, useful for 'W'here. */
 int get_panel( //y, x, force)
   int y, int x, int force)
 {

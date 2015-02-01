@@ -437,49 +437,49 @@ char *title_string()
 /* Prints title of character				-RAK-	*/
 void prt_title()
 {
-  prt_field(title_string(), 4, STAT_COLUMN);
+  prt_field(title_string(), STAT_TITLE_ROW, STAT_TITLE_COL); // XXX 4
 }
 
 
 /* Prints level						-RAK-	*/
 void prt_level()
 {
-  prt_int((int)py.misc.lev, 13, STAT_COLUMN + 6);
+  prt_int((int)py.misc.lev, STAT_LEV_ROW, STAT_LEV_COL); // 13, STAT_COLUMN + 6);
 }
 
 
 /* Prints players current mana points.		 -RAK-	*/
 void prt_cmana()
 {
-  prt_int(py.misc.cmana, 15, STAT_COLUMN + 6);
+  prt_int(py.misc.cmana, STAT_MANA_ROW, STAT_MANA_COL); // 15, STAT_COLUMN + 6);
 }
 
 
 /* Prints Max hit points				-RAK-	*/
 void prt_mhp()
 {
-  prt_int(py.misc.mhp, 16, STAT_COLUMN + 6);
+  prt_int(py.misc.mhp, STAT_MHP_ROW, STAT_MHP_COL); // 16, STAT_COLUMN + 6);
 }
 
 
 /* Prints players current hit points			-RAK-	*/
 void prt_chp()
 {
-  prt_int(py.misc.chp, 17, STAT_COLUMN + 6);
+  prt_int(py.misc.chp, STAT_CHP_ROW, STAT_CHP_COL); // 17, STAT_COLUMN + 6);
 }
 
 
 /* prints current AC					-RAK-	*/
 void prt_pac()
 {
-  prt_int(py.misc.dis_ac, 19, STAT_COLUMN + 6);
+  prt_int(py.misc.dis_ac, STAT_AC_ROW, STAT_AC_COL); // 19, STAT_COLUMN + 6);
 }
 
 
 /* Prints current gold					-RAK-	*/
 void prt_gold()
 {
-  prt_long(py.misc.au, 20, STAT_COLUMN + 6);
+  prt_long(py.misc.au, STAT_AU_ROW, STAT_AU_COL); // 20, STAT_COLUMN + 6);
 }
 
 
@@ -941,23 +941,23 @@ void prt_stat_block()
   register int i;
 
   m_ptr = &py.misc;
-  prt_field(race[py.misc.prace].trace, STAT_LINE + 0, STAT_COLUMN); // 2
-  prt_field(classs[py.misc.pclass].title, STAT_LINE + 1, STAT_COLUMN); // 3
-  prt_field(title_string(), STAT_LINE + 2, STAT_COLUMN); // 4
+  prt_field(race[py.misc.prace].trace,    STAT_RACE_ROW,  STAT_RACE_COL); // 2
+  prt_field(classs[py.misc.pclass].title, STAT_CLASS_ROW, STAT_CLASS_COL); // 3
+  prt_field(title_string(),               STAT_TITLE_ROW, STAT_TITLE_COL); // STAT_COLUMN + STATB_WID * 1 ); // 4
 
   for (i = 0; i < 6; i++) {
     prt_stat(i); // in prt_stat_block.
   }
 
 
-  prt_num( "CHP ", m_ptr->chp,     STAT_LINE + 0, STAT_COLUMN + STATB_WID * 1); // 17
-  prt_num( "MHP ", m_ptr->mhp,     STAT_LINE + 1, STAT_COLUMN + STATB_WID * 1); // 16
-  prt_num( "MANA", m_ptr->cmana,   STAT_LINE + 2, STAT_COLUMN + STATB_WID * 1); // 15
-  prt_num( "LEV ", (int)m_ptr->lev,STAT_LINE + 3, STAT_COLUMN + STATB_WID * 1); // 13,
+  prt_num("CHP ", m_ptr->chp,      STAT_CHP_ROW,  STAT_CHP_COL); // STAT_LINE + 0, STAT_COLUMN + STATB_WID * 1); // 17
+  prt_num( "MHP ", m_ptr->mhp,     STAT_MHP_ROW,  STAT_MHP_COL); // STAT_LINE + 1, STAT_COLUMN + STATB_WID * 1); // 16
+  prt_num( "MANA", m_ptr->cmana,   STAT_MANA_ROW, STAT_MANA_COL);// STAT_LINE + 2, STAT_COLUMN + STATB_WID * 1); // 15
+  prt_num( "LEV ", (int)m_ptr->lev,STAT_LEV_ROW,  STAT_LEV_COL); // STAT_LINE + 3, STAT_COLUMN + STATB_WID * 1); // 13,
 
-  prt_lnum("EXP ", m_ptr->exp,     STAT_LINE + 0, STAT_COLUMN + STATB_WID * 2); // 14
-  prt_lnum("GOLD", m_ptr->au,      STAT_LINE + 1, STAT_COLUMN + STATB_WID * 2); // 20
-  prt_num( "AC  ", m_ptr->dis_ac,  STAT_LINE + 2, STAT_COLUMN + STATB_WID * 2); // 19
+  prt_lnum("EXP ", m_ptr->exp,     STAT_EXP_ROW,  STAT_EXP_COL);//  STAT_LINE + 0, STAT_COLUMN + STATB_WID * 2); // 14
+  prt_lnum("GOLD", m_ptr->au,      STAT_AU_ROW,   STAT_AU_COL); //  STAT_LINE + 1, STAT_COLUMN + STATB_WID * 2); // 20
+  prt_num( "AC  ", m_ptr->dis_ac,  STAT_AC_ROW,   STAT_AC_COL); //  STAT_LINE + 2, STAT_COLUMN + STATB_WID * 2); // 19
 
   prt_winner();
   status = py.flags.status;
@@ -2093,7 +2093,7 @@ void prt_experience()
   if (p_ptr->exp > p_ptr->max_exp)
     p_ptr->max_exp = p_ptr->exp;
 
-  prt_long(p_ptr->exp, 14, STAT_COLUMN + 6);
+  prt_long(p_ptr->exp, STAT_EXP_ROW, STAT_EXP_COL); // 14, STAT_COLUMN + 6);
 }
 
 
@@ -2181,54 +2181,6 @@ void insert_str( // object_str, mtc_str, insert)
 }
 
 
-#if 0
-/* this is no longer used anywhere */
-/* Inserts a number into a string				*/
-void insert_num( // object_str, mtc_str, number, show_sign)
-  char *object_str,
-  register char *mtc_str,
-  int number,
-  int show_sign)
-{
-  int mlen;
-  vtype str1, str2;
-  register char *string, *tmp_str;
-  int flag;
-
-  flag = 1;
-  mlen = strlen(mtc_str);
-  tmp_str = object_str;
-  do
-  {
-    string = index(tmp_str, mtc_str[0]);
-    if (string == CNIL)
-      flag = 0;
-    else
-    {
-      flag = strncmp(string, mtc_str, mlen);
-      if (flag)
-        tmp_str = string+1;
-    }
-  }
-  while (flag);
-  if (string)
-  {
-#ifdef __TURBOC__
-    /* Avoid complaint about possible loss of significance.  */
-    (void) strncpy(str1, object_str, (size_t)(string - object_str));
-#else
-    (void) strncpy(str1, object_str, string - object_str);
-#endif
-    /* Turbo C needs int for array index.  */
-    str1[(int)(string - object_str)] = '\0';
-    (void) strcpy(str2, string + mlen);
-    if ((number >= 0) && (show_sign))
-      (void) sprintf(object_str, "%s+%d%s", str1, number, str2);
-    else
-      (void) sprintf(object_str, "%s%d%s", str1, number, str2);
-  }
-}
-#endif
 
 void insert_lnum( // object_str, mtc_str, number, show_sign)
   char *object_str,

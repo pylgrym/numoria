@@ -100,8 +100,10 @@ int CursesJG::refresh() {
    to allow system to process a bit of painting.. on the other hand, we are already supposed to reach 'inkey waits', waiting for user input.
    However, in animation-situaitons, maybe loops here will allow us to SEE the animation..?
   */
+
   extern void processQueuedMsgs();
-  processQueuedMsgs();
+  // Don't, it makes everything slow:
+  // processQueuedMsgs();
 
   // Consider: should call UpdateWindow or something.
   // invalidateWndJG(); // in refresh

@@ -1209,9 +1209,10 @@ void clear_from (int row)
 /* sign bit of a character used to indicate standout mode. -CJS */
 void print( const struct LocInf& ch, int row,int col)
 {
-
+  // JG: prt is viewport.
   row -= panel_row_prt;/* Real co-ords convert to screen positions */
   col -= panel_col_prt;
+
   if (mvaddch_L(row, col, ch) == ERR)
     {
       abort();

@@ -127,11 +127,7 @@ extern int panel_col_min, panel_col_max;
 extern int panel_col_prt, panel_row_prt;
 
 /*  Following are all floor definitions				*/
-#ifdef MAC
-extern cave_type (*cave)[MAX_WIDTH];
-#else
 extern cave_type cave[MAX_HEIGHT][MAX_WIDTH];
-#endif
 
 /* Following are player variables				*/
 extern player_type py;

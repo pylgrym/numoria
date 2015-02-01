@@ -66,8 +66,10 @@ some of the system defines set up there.
 /* Dungeon size parameters					*/
 #define MAX_HEIGHT  66	    /* Multiple of 11; >= 22 */
 #define MAX_WIDTH  198	  /* Multiple of 33; >= 66 */
+
 #define SCREEN_HEIGHT  22
 #define SCREEN_WIDTH   66
+
 #define QUART_HEIGHT (SCREEN_HEIGHT / 4)
 #define QUART_WIDTH  (SCREEN_WIDTH / 4)
 
@@ -290,7 +292,35 @@ some of the system defines set up there.
 // line/row where stat block starts:
 #define STAT_LINE   25
 // width of stat block columns (might change to tabbed approach):
-#define STATB_WID 12
+#define STATB_WID 14
+
+const int STAT_RACE_ROW = STAT_LINE + 0;
+const int STAT_RACE_COL = STAT_COLUMN + STATB_WID * 0;
+
+const int STAT_CLASS_ROW = STAT_LINE + 1;
+const int STAT_CLASS_COL = STAT_COLUMN + STATB_WID * 0;
+
+const int STAT_TITLE_ROW = STAT_LINE + 2;
+const int STAT_TITLE_COL = STAT_COLUMN + STATB_WID * 0;
+
+
+const int STAT_CHP_ROW  = STAT_LINE + 0;
+const int STAT_CHP_COL  = STAT_COLUMN + STATB_WID * 1;
+const int STAT_MHP_ROW  = STAT_LINE + 1;
+const int STAT_MHP_COL  = STAT_COLUMN + STATB_WID * 1;
+const int STAT_MANA_ROW = STAT_LINE + 2;
+const int STAT_MANA_COL = STAT_COLUMN + STATB_WID * 1;
+const int STAT_LEV_ROW  = STAT_LINE + 3;
+const int STAT_LEV_COL  = STAT_COLUMN + STATB_WID * 1;
+
+const int STAT_EXP_ROW = STAT_LINE + 0;
+const int STAT_EXP_COL = STAT_COLUMN + STATB_WID * 2;
+const int STAT_AU_ROW  = STAT_LINE + 1;
+const int STAT_AU_COL  = STAT_COLUMN + STATB_WID * 2;
+const int STAT_AC_ROW  = STAT_LINE + 2;
+const int STAT_AC_COL  = STAT_COLUMN + STATB_WID * 2;
+
+
 
 /* Class spell types */
 #define NONE	0

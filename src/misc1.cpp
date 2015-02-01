@@ -227,8 +227,6 @@ int in_bounds( // y, x)
 /* Calculates current boundaries				-RAK-	*/
 void panel_bounds()
 {
-  const int viewPort_ROW_Offset = 1; // 1 is required, because we display msg's at top.
-  const int viewPort_COL_Offset = 0; // was 13; (when stat block on left side.)
 
   panel_row_min = panel_row*(SCREEN_HEIGHT / 2);
   panel_row_max = panel_row_min + SCREEN_HEIGHT - 1;
@@ -616,7 +614,7 @@ void prt_map()
   for (i = panel_row_min; i <= panel_row_max; i++)  /* Top to bottom */
   {
     k++;
-    erase_line(k, 13);
+    erase_line(k, viewPort_COL_Offset); // 13);
     for (j = panel_col_min; j <= panel_col_max; j++)	/* Left to right */
     {
       tmp_char = loc_symbol(i, j);

@@ -67,6 +67,9 @@ some of the system defines set up there.
 #define MAX_HEIGHT  66	    /* Multiple of 11; >= 22 */
 #define MAX_WIDTH  198	  /* Multiple of 33; >= 66 */
 
+const int viewPort_ROW_Offset = 1; // 1 is required, because we display msg's at top.
+const int viewPort_COL_Offset = 0; // was 13; (when stat block on left side.)
+
 #define SCREEN_HEIGHT  22
 #define SCREEN_WIDTH   66
 
@@ -286,8 +289,8 @@ some of the system defines set up there.
 #define BOUNDARY_WALL	15
 
 /* Column for stats    */
-// was col 0
-#define STAT_COLUMN	13
+// was col 0, was 13
+#define STAT_COLUMN	1
 
 // line/row where stat block starts:
 #define STAT_LINE   25

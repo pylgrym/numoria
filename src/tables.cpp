@@ -147,18 +147,29 @@ char **amulets;
 char **syllables;
 
 #else
+COLORREF 
+ickyGreen   = RGB(192, 255, 220),lightBrown = RGB(255, 215, 205),       clear = RGB(200, 200, 200),
+azure       = RGB(189, 200, 255),      blue = RGB(0, 0, 255),       blueSpeck = RGB(0, 0, 220),         black = RGB(0, 0, 0),            brown = RGB(220, 120, 50), brownSpeck = RGB(120, 130, 50), bubbling = RGB(180, 120, 190),
+chartreuse  = RGB(255, 198, 0),      cloudy = RGB(148, 128, 160), copperSpeck = RGB(255, 128, 128),   crimson = RGB(255, 0, 64),          cyan = RGB(0, 255,255),     darkBlue = RGB(0, 0, 90),
+darkGreen   = RGB(0, 128, 0),       darkRed = RGB(128, 0, 0),       goldSpeck = RGB(255, 235, 70),      green = RGB(0, 192, 0),     greenSpeck = RGB(40, 220,100),        grey = RGB(128,128,128),
+greySpeck   = RGB(190, 190, 290),      hazy = RGB(255, 240, 190),      indigo = RGB(0, 0, 128),     lightBlue = RGB(128, 128, 255), lightGreen = RGB(80, 255, 40),     magenta = RGB(192, 14, 90),
+metalBlue   = RGB(50, 70, 120),    metalRed = RGB(200, 100, 50),   metalGreen = RGB(30, 150, 50), metalPurple = RGB(160, 30, 100),       misty = RGB(220, 230, 240),
+orange      = RGB(255, 128, 0), orangeSpeck = RGB(255, 128, 40),         pink = RGB(255, 100, 240), pinkSpeck = RGB(255, 70, 200),        puce = RGB(204, 136, 153),    purple = RGB(255, 0, 155),
+purpleSpeck = RGB(200, 50, 100),        red = RGB(255, 0, 0),        redSpeck = RGB(255, 0, 128), silverSpeck = RGB(220, 200, 240),      smoky = RGB(200, 200, 220),
+tangerine   = RGB(255, 128, 0),      violet = RGB(255, 0, 255),    vermillion = RGB(255, 0, 0),         white = RGB(255, 255, 255),     yellow = RGB(255, 255, 0);
 
-char *colors[MAX_COLORS] = {
-/* Do not move the first three */
-  "Icky Green", "Light Brown", "Clear",
-  "Azure","Blue","Blue Speckled","Black","Brown","Brown Speckled","Bubbling",
-  "Chartreuse","Cloudy","Copper Speckled","Crimson","Cyan","Dark Blue",
-  "Dark Green","Dark Red","Gold Speckled","Green","Green Speckled","Grey",
-  "Grey Speckled","Hazy","Indigo","Light Blue","Light Green","Magenta",
-  "Metallic Blue","Metallic Red","Metallic Green","Metallic Purple","Misty",
-  "Orange","Orange Speckled","Pink","Pink Speckled","Puce","Purple",
-  "Purple Speckled","Red","Red Speckled","Silver Speckled","Smoky",
-  "Tangerine","Violet","Vermilion","White","Yellow"
+// char *
+ColorAttr colors[MAX_COLORS] = {
+  /* Do not move the first three */
+  { "Icky Green", ickyGreen }, { "Light Brown", lightBrown }, { "Clear", clear },
+  { "Azure", azure }, { "Blue", blue }, {"Blue Speckled", blueSpeck}, { "Black", black }, { "Brown", brown}, { "Brown Speckled", brownSpeck }, { "Bubbling", bubbling },
+  {"Chartreuse",chartreuse}, { "Cloudy",cloudy}, { "Copper Speckled",copperSpeck}, { "Crimson",crimson}, { "Cyan",cyan}, { "Dark Blue", darkBlue },
+  {"Dark Green",darkGreen}, { "Dark Red",darkRed}, { "Gold Speckled",goldSpeck}, { "Green",green}, { "Green Speckled",greenSpeck}, { "Grey", grey },
+  { "Grey Speckled", greySpeck }, { "Hazy", hazy }, { "Indigo", indigo }, { "Light Blue", lightBlue }, {"Light Green", lightGreen}, { "Magenta", magenta },
+  {"Metallic Blue",metalBlue}, { "Metallic Red",metalRed}, { "Metallic Green",metalGreen}, { "Metallic Purple",metalPurple}, { "Misty", misty },
+  { "Orange", orange }, { "Orange Speckled", orangeSpeck }, { "Pink", pink }, { "Pink Speckled", pinkSpeck }, { "Puce", puce }, { "Purple", purple },
+  { "Purple Speckled", purpleSpeck },{ "Red", red}, { "Red Speckled", redSpeck }, { "Silver Speckled", silverSpeck }, { "Smoky", smoky },
+  {"Tangerine",tangerine}, { "Violet",violet}, { "Vermilion",vermillion}, {"White",white}, {"Yellow", yellow }
 };
 
 char *mushrooms[MAX_MUSH] = {

@@ -57,11 +57,8 @@ public:
 
 
 
-void keyEaterLoopJG() {
+void keyEaterLoopJGImpl(int waitCount, int waitMS) {
   debstr() << "keyEaterLoopJG begin\n";
-  // JG: be careful this doesn't slow us too much..
-  const int waitCount = 4;
-  const int waitMS = 25;
   for (int i = 0; i < waitCount; ++i) {
     // Check to see if any messages are waiting in the queue
     MSG msg;
@@ -80,6 +77,20 @@ void keyEaterLoopJG() {
   debstr() << "keyEaterLoopJG end\n";
 }
 
+void keyEaterLoopJG() {
+  // JG: be careful this doesn't slow us too much..
+  const int waitCount = 4;
+  const int waitMS = 25;
+  keyEaterLoopJGImpl(waitCount, waitMS);
+}
+
+
+void processQueuedMsgs() {
+  // JG: be careful this doesn't slow us too much..
+  const int waitCount = 2;
+  const int waitMS = 5;
+  keyEaterLoopJGImpl(waitCount, waitMS);
+}
 
 
 
@@ -123,14 +134,14 @@ static CChildView* singletonWnd = NULL;
 
 
 
-void invalidateWndJG() { // Used by curses-emulator.
+void invalidateWndJG(CRect* pRect) { // Used by curses-emulator.
   /* FIXME: we should limit/reduce these invalidates,
   to the actual necessary rectangles,
   and possibly stop 'erase=true'.
   */
   if (singletonWnd == NULL) { return;  }
 	// assert(singletonWnd != NULL);
-  singletonWnd->Invalidate(false); //  true);
+  singletonWnd->InvalidateRect(pRect, false); //  true);
 }
 
 void flashWndJG() {
@@ -195,6 +206,14 @@ void CChildView::OnTimer(UINT nIDEvent) { // Used to start app loop.
 }
 
 
+const int cellw = 20, cellh = 20;
+
+
+void invalidateCell(int row, int col) {
+	int x = col*cellw, y = row*cellh;
+	CRect cellR(CPoint(x, y), CSize(cellw, cellh));
+  invalidateWndJG(&cellR);
+}
 
 
 void CChildView::OnPaint() 
@@ -211,7 +230,6 @@ void CChildView::OnPaint()
 
 	// const int cellw=16, cellh=16;
 	// const int cellw=24, cellh=24;
-	const int cellw = 20, cellh = 20;
 
 
 	LOGFONT logFont;

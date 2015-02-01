@@ -8,6 +8,9 @@
 
 NB! - anything failing should return ERR=0.
 */
+extern void invalidateWndJG(CRect* pRect);
+extern void invalidateCell(int row, int col);
+
 
 extern WINDOW *stdscr=NULL, *curscr=NULL;
 
@@ -22,8 +25,16 @@ CursesJG::CursesJG() {
 
 int  CursesJG::move(int y, int x) { curscr->csr_y = y, curscr->csr_x = x; return 1; }
 
-int  CursesJG::addch(const chtype ch) { curscr->cell(curscr->csr_y, curscr->csr_x) = ScreenCell(ch); help_advCsr(); return 1; }
-int  CursesJG::addch_L(const struct LocInf& ch) { curscr->cell(curscr->csr_y, curscr->csr_x) = ScreenCell(ch); help_advCsr(); return 1; }
+int  CursesJG::addch(const chtype ch) { 
+  curscr->cell(curscr->csr_y, curscr->csr_x) = ScreenCell(ch); 
+  invalidateCell(curscr->csr_y, curscr->csr_x);
+  help_advCsr(); return 1; 
+}
+int  CursesJG::addch_L(const struct LocInf& ch) { 
+  curscr->cell(curscr->csr_y, curscr->csr_x) = ScreenCell(ch); 
+  invalidateCell(curscr->csr_y, curscr->csr_x);
+  help_advCsr(); return 1; 
+}
 
 void CursesJG::help_advCsr() { // Move cursor right, then new line, then top of screen.
 	curscr->csr_x += 1; // Move right.
@@ -55,13 +66,13 @@ int CursesJG::mvaddstr(int y, int x, const char *str) { move(y, x); addstr(str);
 
 int CursesJG::wrefresh(WINDOW *) { 
 	// FIXME, window-mechanism doesn't exist yet.
+  // invalidateWndJG(NULL); // in clear.
 	return 1; 
 }
 
 
 
 
-extern void invalidateWndJG();
 
 int CursesJG::clear() { 
 	assert(curscr != NULL);
@@ -75,15 +86,25 @@ int CursesJG::clear() {
   // I'll just trigger a complete redraw here
   // (So far I only use MS-Window's Invalidate, 
   // I don't keep separate track of 'which parts are dirty/need refreshing', on char-by-char basis.)
-  invalidateWndJG();
+  invalidateWndJG(NULL); // in clear.
 
 	return 1; 
 }
 
 
 int CursesJG::refresh() {
+  /*
+   JG: Beware that refresh no longer TRIGGERS redraw-dirty, which should be OK,
+   because it was never meant to TRIGGER, but instead to allow execution of queued dirty-draws.
+   However, it might make sense to hook it up with a small 'peekmessage' loop,
+   to allow system to process a bit of painting.. on the other hand, we are already supposed to reach 'inkey waits', waiting for user input.
+   However, in animation-situaitons, maybe loops here will allow us to SEE the animation..?
+  */
+  extern void processQueuedMsgs();
+  processQueuedMsgs();
+
   // Consider: should call UpdateWindow or something.
-  invalidateWndJG();
+  // invalidateWndJG(); // in refresh
   /* refresh is the action that should cause the actual redraw to screen,
   and arguably should even 'force' it / do it immediately (think 'updateWindow/redrawWindow').
     Currently, both 'clear' and 'refresh' do similar things,
@@ -102,6 +123,7 @@ int CursesJG::clrtoeol() {
 	assert(curscr != NULL);
 	for (int x = curscr->csr_x; x < curscr->ncols; ++x) { // COLS
 		curscr->cell(curscr->csr_y, x).clearCell();
+  invalidateCell(curscr->csr_y, x);
 	}
 	return 1;
 }
@@ -114,6 +136,7 @@ int CursesJG::clrtobot() {
 	for (int y = curscr->csr_y; y < curscr->nlines; ++y) { // LINES
 		for ( ; x < curscr->ncols; ++x) { // COLS
 			curscr->cell(y, x).clearCell();
+      invalidateCell(y, x);
 		}
 		x = 0; // Rest of lines, start at the left side.
 	}
@@ -121,13 +144,17 @@ int CursesJG::clrtobot() {
 }
 
 
-int CursesJG::overwrite(const WINDOW * src, WINDOW * tgt) { tgt->overwrite(*src);  return 1; }
+int CursesJG::overwrite(const WINDOW * src, WINDOW * tgt) { 
+  tgt->overwrite(*src);  
+  invalidateWndJG(NULL); // in touchwin.
+  return 1; 
+}
 
 void CursesJG::getyx(WINDOW *win, int& y, int& x) { y = win->csr_y; x = win->csr_x; }
 
 int CursesJG::touchwin(WINDOW *win) { 
 	// cur_scr = win; // Possibly this?
-  invalidateWndJG();
+  invalidateWndJG(NULL); // in touchwin.
   return 1;
 }
 
@@ -137,7 +164,7 @@ WINDOW* CursesJG::initscr() {
 	stdscr = newwin(0, 0, 0, 0); // LINES // COLS
 	curscr = stdscr;  // required behaviour of initscr.
 	// FIXME/todo/Consider: initscr is supposed to refresh/init actual screen too!
-	invalidateWndJG();
+	invalidateWndJG(NULL); // in initscr.
 	return stdscr; 
 }
 

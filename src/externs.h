@@ -221,23 +221,15 @@ extern int16 mfptr;	/* Cur free monster ptr	*/
 extern int16 mon_tot_mult;	/* # of repro's of creature	*/
 
 /* Following are arrays for descriptive pieces			*/
-#ifdef MACGAME
-extern char **colors;
-extern char **mushrooms;
-extern char **woods;
-extern char **metals;
-extern char **rocks;
-extern char **amulets;
-extern char **syllables;
-#else
-extern char *colors[MAX_COLORS];
+
+
+extern ColorAttr colors[MAX_COLORS]; // char *
 extern char *mushrooms[MAX_MUSH];
 extern char *woods[MAX_WOODS];
 extern char *metals[MAX_METALS];
 extern char *rocks[MAX_ROCKS];
 extern char *amulets[MAX_AMULETS];
 extern char *syllables[MAX_SYLLABLES];
-#endif
 
 extern int8u blows_table[7][6];
 

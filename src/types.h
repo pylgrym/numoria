@@ -428,4 +428,10 @@ typedef struct high_scores
 } high_scores;
 
 
+struct ColorAttr {
+  const char* s;
+  COLORREF color;
+};
+
+
 #endif // MORIA_TYPES_H.

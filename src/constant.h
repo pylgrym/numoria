@@ -284,7 +284,13 @@ some of the system defines set up there.
 #define BOUNDARY_WALL	15
 
 /* Column for stats    */
-#define STAT_COLUMN	0
+// was col 0
+#define STAT_COLUMN	13
+
+// line/row where stat block starts:
+#define STAT_LINE   25
+// width of stat block columns (might change to tabbed approach):
+#define STATB_WID 12
 
 /* Class spell types */
 #define NONE	0

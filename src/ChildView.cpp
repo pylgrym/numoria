@@ -257,8 +257,8 @@ void CChildView::OnPaint()
 
   extern CursesJG Csr;
 
-	for (int row = 0; row<25; ++row) {
-		for (int col = 0; col<80; ++col) {
+	for (int row = 0; row<Csr.LINES; ++row) {
+		for (int col = 0; col<Csr.COLS; ++col) {
       const ScreenCell& cell = Csr.cell(row, col);
 
 			CPoint p(col, row);

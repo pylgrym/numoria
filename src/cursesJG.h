@@ -28,7 +28,7 @@ public:
 };
 
 enum CursConstantsEnum {
-	CSR_LINES = 25,
+	CSR_LINES = 30, // 25,
 	CSR_COLS = 80
 };
 

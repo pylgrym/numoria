@@ -95,9 +95,11 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 
 	cs.dwExStyle &= ~WS_EX_CLIENTEDGE;
 	cs.lpszClass = AfxRegisterWndClass(0);
-  
-  cs.cx = 1650; // This makes our window big enough for 80x25.
-  cs.cy = 660;
+
+  cs.x = 0;
+  cs.y = 0;
+  cs.cx = 1915; // This makes our window big enough for 80x25.
+  cs.cy = 32 * 33; // 660;
   /* NB! If we could move the leftmost 13-14 column block
   (stat/status block) below the main playing field,
   we'd only need (80-14)= 64 squares,

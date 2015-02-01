@@ -273,7 +273,8 @@ some of the system defines set up here.
    to FALSE; to use the rogue-like key bindings (vi style movement)
    set ROGUE_LIKE to TRUE.  */
 /* If you change this, you only need to recompile main.c.  */
-#define ROGUE_LIKE FALSE
+#define ROGUE_LIKE TRUE
+//#define ROGUE_LIKE FALSE
 
 
 /* For the ANDREW distributed file system, define this to ensure that

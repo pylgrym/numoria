@@ -112,6 +112,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Tilemap.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="vsmoria.h" />
   </ItemGroup>
@@ -139,7 +140,7 @@
     <ClCompile Include="misc1_map.cpp" />
     <ClCompile Include="misc2_magictreasure.cpp" />
     <ClCompile Include="misc3_stats.cpp" />
-    <ClCompile Include="misc4inscribe.cpp" />
+    <ClCompile Include="misc4_inscribe.cpp" />
     <ClCompile Include="monsters.cpp" />
     <ClCompile Include="moria1.cpp" />
     <ClCompile Include="moria2_running.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="store1.cpp" />
     <ClCompile Include="store2.cpp" />
     <ClCompile Include="tables.cpp" />
+    <ClCompile Include="Tilemap.cpp" />
     <ClCompile Include="treasure.cpp" />
     <ClCompile Include="variable.cpp" />
     <ClCompile Include="vsmoria.cpp" />

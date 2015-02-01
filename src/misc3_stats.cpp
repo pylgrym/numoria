@@ -444,42 +444,42 @@ void prt_title()
 /* Prints level						-RAK-	*/
 void prt_level()
 {
-  prt_int((int)py.misc.lev, STAT_LEV_ROW, STAT_LEV_COL); // 13, STAT_COLUMN + 6);
+  prt_int((int)py.misc.lev, STAT_LEV_ROW, STAT_LEV_COL+6); // 13, STAT_COLUMN + 6);
 }
 
 
 /* Prints players current mana points.		 -RAK-	*/
 void prt_cmana()
 {
-  prt_int(py.misc.cmana, STAT_MANA_ROW, STAT_MANA_COL); // 15, STAT_COLUMN + 6);
+  prt_int(py.misc.cmana, STAT_MANA_ROW, STAT_MANA_COL+6); // 15, STAT_COLUMN + 6);
 }
 
 
 /* Prints Max hit points				-RAK-	*/
 void prt_mhp()
 {
-  prt_int(py.misc.mhp, STAT_MHP_ROW, STAT_MHP_COL); // 16, STAT_COLUMN + 6);
+  prt_int(py.misc.mhp, STAT_MHP_ROW, STAT_MHP_COL+6); // 16, STAT_COLUMN + 6);
 }
 
 
 /* Prints players current hit points			-RAK-	*/
 void prt_chp()
 {
-  prt_int(py.misc.chp, STAT_CHP_ROW, STAT_CHP_COL); // 17, STAT_COLUMN + 6);
+  prt_int(py.misc.chp, STAT_CHP_ROW, STAT_CHP_COL+6); // 17, STAT_COLUMN + 6);
 }
 
 
 /* prints current AC					-RAK-	*/
 void prt_pac()
 {
-  prt_int(py.misc.dis_ac, STAT_AC_ROW, STAT_AC_COL); // 19, STAT_COLUMN + 6);
+  prt_int(py.misc.dis_ac, STAT_AC_ROW, STAT_AC_COL+6); // 19, STAT_COLUMN + 6);
 }
 
 
 /* Prints current gold					-RAK-	*/
 void prt_gold()
 {
-  prt_long(py.misc.au, STAT_AU_ROW, STAT_AU_COL); // 20, STAT_COLUMN + 6);
+  prt_long(py.misc.au, STAT_AU_ROW, STAT_AU_COL+6); // 20, STAT_COLUMN + 6);
 }
 
 
@@ -951,7 +951,7 @@ void prt_stat_block()
   }
 
 
-  prt_num("CHP ", m_ptr->chp,      STAT_CHP_ROW,  STAT_CHP_COL); // STAT_LINE + 0, STAT_COLUMN + STATB_WID * 1); // 17
+  prt_num( "CHP ", m_ptr->chp,     STAT_CHP_ROW,  STAT_CHP_COL); // STAT_LINE + 0, STAT_COLUMN + STATB_WID * 1); // 17
   prt_num( "MHP ", m_ptr->mhp,     STAT_MHP_ROW,  STAT_MHP_COL); // STAT_LINE + 1, STAT_COLUMN + STATB_WID * 1); // 16
   prt_num( "MANA", m_ptr->cmana,   STAT_MANA_ROW, STAT_MANA_COL);// STAT_LINE + 2, STAT_COLUMN + STATB_WID * 1); // 15
   prt_num( "LEV ", (int)m_ptr->lev,STAT_LEV_ROW,  STAT_LEV_COL); // STAT_LINE + 3, STAT_COLUMN + STATB_WID * 1); // 13,

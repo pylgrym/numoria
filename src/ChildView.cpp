@@ -6,7 +6,7 @@
 #include "vsmoria.h"
 #include "ChildView.h"
 
-#include <sstream>
+#include "debstr.h"
 
 #include "cursesJG.h"
 
@@ -19,21 +19,37 @@
 SpriteDrawer::SpriteDrawer() {
   // char buf[256];
   // GetCurrentDirectory(sizeof buf, buf);
-  int res = sprites.Load( _T("sprites\\sprites.png") );
+  // int res = sprites.Load( _T("sprites\\sprites.png") );
+  int res = sprites.Load( _T("sprites\\nethack_tiles_32x32px_by_nevanda-d6w352s.png") );
   initOK = (res >= 0);
+
+  CString tilemapFile = _T("tileFile.txt");
+  tileMap.load(tilemapFile);
+  tileMap.buildHash();
+
+  imgWidth = sprites.GetWidth();
+  imgHeight = sprites.GetHeight();
+
+  cellWidth = 32; // imgWidth / colCount;
+  cellHeight = 32; //  imgHeight / rowCount; // dest.Height();
+
+  colCount = 40; // 16; //  imgWidth / cellWidth;
+  rowCount = imgHeight / cellHeight; // 16;
 }
 
 
 void SpriteDrawer::drawSprite(int myChar, CRect& dest, CDC& dc) {
   if (!initOK) { return;  } // Fail silently/gracefully.
 
-  int cellWidth = dest.Width();
-  int cellHeight = dest.Height();
-  int imgWidth = sprites.GetWidth();
-  int colCount = imgWidth / cellWidth;
+  int row = 0, col = 0;
+  if (false) {
+    row = myChar / colCount;
+    col = myChar % colCount;
+  } else {
+    bool bFound = tileMap.charFromHash(myChar, col, row); // row, col);
+    if (!bFound) { return; } // E.g. 'store digits' are not in this set.
+  }
 
-  int row = myChar / colCount;
-  int col = myChar % colCount;
   int offset_x = col * cellWidth;
   int offset_y = row * cellHeight;
   CRect srcR(CPoint(0, 0), CSize(cellWidth, cellHeight));
@@ -45,14 +61,6 @@ void SpriteDrawer::drawSprite(int myChar, CRect& dest, CDC& dc) {
 
 
 
-class debstr : public std::stringstream {
-public:
-	~debstr() {
-		std::string s = str();
-		CA2T uc(s.c_str(), CP_ACP); //  CP_UTF8);
-		OutputDebugString(uc);
-	}
-};
 
 
 
@@ -206,8 +214,9 @@ void CChildView::OnTimer(UINT nIDEvent) { // Used to start app loop.
 }
 
 
-const int cellw = 20, cellh = 20;
+//const int cellw = 20, cellh = 20;
 
+const int cellw = 32, cellh = 32;
 
 void invalidateCell(int row, int col) {
 	int x = col*cellw, y = row*cellh;
@@ -241,7 +250,8 @@ void CChildView::OnPaint()
 	// -17 and terminal, 'fits', but is too spaced out.
 	// -28 and terminal, has proper widths, but breaks gyjgyj outliers.
 	// -24 is a compromise.
-	logFont.lfHeight = (int)-18; //-24; // 14*1.3f; //-50; //22;
+	// logFont.lfHeight = (int)-18; //IT WAS 18 for 20tile
+	logFont.lfHeight = (int)-29; //So we take 29 for 32tile.
 	// const char* fontName = "Terminal"; //"STENCIL"; // "Terminal"
 	const TCHAR* fontName = _T("Rockwell Extra Bold"); //"STENCIL"; // "Terminal"
 

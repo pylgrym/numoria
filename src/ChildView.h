@@ -5,9 +5,16 @@
 
 #pragma once
 
+#include "./Tilemap.h"
+
 class SpriteDrawer {
 public:
   CImage sprites;
+  int imgWidth, imgHeight;
+  int rowCount, colCount;
+  int cellWidth, cellHeight;
+
+  Tilemap tileMap;
   bool initOK;
   SpriteDrawer();
 

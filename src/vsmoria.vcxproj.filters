@@ -57,6 +57,9 @@
     <ClInclude Include="LocInf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Tilemap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="vsmoria.cpp">
@@ -155,9 +158,6 @@
     <ClCompile Include="cursesJG.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="misc4inscribe.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="actions\eat.cpp">
       <Filter>Source Files\actions</Filter>
     </ClCompile>
@@ -189,6 +189,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="misc3_stats.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="misc4_inscribe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tilemap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

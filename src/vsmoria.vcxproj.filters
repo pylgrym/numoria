@@ -110,9 +110,6 @@
     <ClCompile Include="player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="misc1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="store2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -135,9 +132,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="treasure.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="misc3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="spells.cpp">
@@ -189,6 +183,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="misc2_magictreasure.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="misc1_map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="misc3_stats.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

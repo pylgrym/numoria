@@ -494,7 +494,8 @@ void prt_depth()
     (void)strcpy(depths, "Town level");
   else
     (void)sprintf(depths, "%d feet", depth);
-  prt(depths, 23, 65);
+
+  prt(depths, STAT_DEPTH_ROW, STAT_DEPTH_COL); //  23, 65);
 }
 
 
@@ -1039,8 +1040,7 @@ void put_stats()
 
 
 /* Returns a rating of x depending on y			-JWT-	*/
-char* likert( // x, y)
-  int x, int y)
+char* likert(   int x, int y)
 {
   switch ((x / y))
   {
@@ -1225,7 +1225,6 @@ void change_name()
 
 /* Destroy an item in the inventory			-RAK-	*/
 void inven_destroy(int item_val)
-// int item_val;
 {
   register int j;
   register inven_type *i_ptr;
@@ -1257,8 +1256,7 @@ void inven_destroy(int item_val)
 
 /* Copies the object in the second argument over the first argument.
    However, the second always gets a number of one except for ammo etc. */
-void take_one_item( // s_ptr, i_ptr)
-  register inven_type *s_ptr, inven_type *i_ptr)
+void take_one_item(  register inven_type *s_ptr, inven_type *i_ptr)
 {
   *s_ptr = *i_ptr;
   if ((s_ptr->number > 1) && (s_ptr->subval >= ITEM_SINGLE_STACK_MIN)
@@ -1268,8 +1266,7 @@ void take_one_item( // s_ptr, i_ptr)
 
 
 /* Drops an item from inventory to given location	-RAK-	*/
-void inven_drop( // item_val, drop_all)
-  register int item_val, int drop_all)
+void inven_drop(   register int item_val, int drop_all)
 {
   int i;
   register inven_type *i_ptr;
@@ -1319,7 +1316,7 @@ void inven_drop( // item_val, drop_all)
 
 
 /* Destroys a type of item on a given percent chance	-RAK-	*/
-int inven_damage( // typ, perc)
+int inven_damage(  
   int(*typ)(inven_type*), // JG: I added (inven_type*).
   register int perc)
 {
@@ -1348,8 +1345,7 @@ int weight_limit()
 
 
 /* this code must be identical to the inven_carry() code below */
-int inven_check_num( // t_ptr)
-  register inven_type *t_ptr)
+int inven_check_num( register inven_type *t_ptr)
 {
   register int i;
 
@@ -1370,8 +1366,7 @@ int inven_check_num( // t_ptr)
 }
 
 /* return FALSE if picking up an object would change the players speed */
-int inven_check_weight( // i_ptr)
-  register inven_type *i_ptr)
+int inven_check_weight( register inven_type *i_ptr)
 {
   register int i, new_inven_weight;
 
@@ -1441,8 +1436,7 @@ void check_strength()
 /* Add an item to players inventory.  Return the	*/
 /* item position for a description if needed.	       -RAK-   */
 /* this code must be identical to the inven_check_num() code above */
-int inven_carry( // i_ptr)
-  register inven_type *i_ptr)
+int inven_carry( register inven_type *i_ptr)
 {
   register int locn, i;
   register int typ, subt;

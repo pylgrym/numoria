@@ -136,9 +136,9 @@
     <ClCompile Include="io_FIXME_curses.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainFrm.cpp" />
-    <ClCompile Include="misc1.cpp" />
+    <ClCompile Include="misc1_map.cpp" />
     <ClCompile Include="misc2_magictreasure.cpp" />
-    <ClCompile Include="misc3.cpp" />
+    <ClCompile Include="misc3_stats.cpp" />
     <ClCompile Include="misc4inscribe.cpp" />
     <ClCompile Include="monsters.cpp" />
     <ClCompile Include="moria1.cpp" />

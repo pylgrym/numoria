@@ -324,6 +324,9 @@ const int STAT_AC_ROW  = STAT_LINE + 2;
 const int STAT_AC_COL  = STAT_COLUMN + STATB_WID * 2;
 
 
+const int STAT_DEPTH_ROW = 23;
+const int STAT_DEPTH_COL = (65 - 13) + viewPort_COL_Offset; // was 65;
+
 
 /* Class spell types */
 #define NONE	0

@@ -570,7 +570,7 @@ LocInf loc_symbol(int y, int x)  { // unsigned char
   } else if ((cave_ptr->cptr > 1) && (m_list[cave_ptr->cptr].ml)) { // There is a creature on the tile.
     monster_type& monster = m_list[cave_ptr->cptr];
     creature_type& creatureType = c_list[monster.mptr];
-    return LocInf(creatureType.cchar, Ti_Creature, creatureType.color);
+    return LocInf(creatureType.cchar, Ti_Creature, creatureType.color, monster.mptr);
   } else if (!cave_ptr->pl && !cave_ptr->tl && !cave_ptr->fm) { // no permlight, no templight, no fieldmark 
     return LocInf(' ', Ti_Unlit);
   } else if ((cave_ptr->tptr != 0) && (t_list[cave_ptr->tptr].tval != TV_INVIS_TRAP)) {

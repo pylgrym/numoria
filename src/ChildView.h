@@ -18,7 +18,7 @@ public:
   bool initOK;
   SpriteDrawer();
 
-  void drawSprite(int myChar, CRect& dest, CDC& dc);
+  void drawSprite(int myChar, CRect& dest, CDC& dc, int creatureIndex);
 };
 
 // CChildView window

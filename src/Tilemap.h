@@ -27,6 +27,10 @@ public:
   // std::vector<Assoc> hash;
   std::map<CString,Assoc> hash;
   void buildHash();
-  bool charFromHash(int myChar, int& x, int& y);
+  bool charFromHash(int myChar, int& x, int& y, int creatureIndex);
+
+  Assoc* getAssoc(CString key);
+  std::map<int, CPoint> creatureTile; // Maps from monster-index to tilepos.
+
 };
 

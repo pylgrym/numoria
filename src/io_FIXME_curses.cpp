@@ -1495,6 +1495,10 @@ char *command)
 }
 #endif
 
+bool isprint2(int ch) { // To protect us against stupid asserts in std isprint
+  if (ch < -1 || ch > 255) { return false;  }
+  return isprint(ch);
+}
 
 /* Gets a string terminated by <RETURN>		*/
 /* Function returns false if <ESCAPE> is input	*/
@@ -1553,7 +1557,7 @@ int row, int column, int slen)
 	    }
 	  break;
 	default:
-	  if (!isprint(i) || column > end_col)
+	  if (!isprint2(i) || column > end_col) // isprint
 	    bell();
 	  else
 	    {

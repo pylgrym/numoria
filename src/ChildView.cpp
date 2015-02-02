@@ -40,7 +40,7 @@ SpriteDrawer::SpriteDrawer() {
 }
 
 
-void SpriteDrawer::drawSprite(int myChar, CRect& dest, CDC& dc) {
+void SpriteDrawer::drawSprite(int myChar, CRect& dest, CDC& dc, int creatureIndex) {
   if (!initOK) { return;  } // Fail silently/gracefully.
 
   int row = 0, col = 0;
@@ -48,7 +48,7 @@ void SpriteDrawer::drawSprite(int myChar, CRect& dest, CDC& dc) {
     row = myChar / colCount;
     col = myChar % colCount;
   } else {
-    bool bFound = tileMap.charFromHash(myChar, col, row); // row, col);
+    bool bFound = tileMap.charFromHash(myChar, col, row, creatureIndex); // row, col);
     if (!bFound) { return; } // E.g. 'store digits' are not in this set.
   }
 
@@ -302,7 +302,7 @@ void CChildView::OnPaint()
 				);
 
       if (cell.color != colorNone || cell.tile == Ti_Thing || cell.tile == Ti_Environ) { // IE if monster, not text..
-        sprites.drawSprite(cell.c, cellR, dc);
+        sprites.drawSprite(cell.c, cellR, dc, cell.creatureIndex);
       }
 		}
 	}

@@ -4,7 +4,10 @@
 #include <fstream>
 #include "debstr.h"
 
-
+#include "config.h"
+#include "constant.h"
+#include "types.h"
+#include "externs.h"
 
 Tilemap::Tilemap()
 {
@@ -77,6 +80,13 @@ bool Tilemap::load(CString filename) {
 
 
 
+Assoc* Tilemap::getAssoc(CString key) {
+  std::map<CString, Assoc>::iterator i;
+  i = hash.find(key);
+  if (i == hash.end()) { return NULL;  }
+  return &i->second;
+}
+
 
 void Tilemap::buildHash() {
   // hash.resize(128);
@@ -87,10 +97,35 @@ void Tilemap::buildHash() {
     hash[assoc.key] = assoc;
   }
 
+  for (int j = 0; j < MAX_CREATURES; ++j) {
+    creature_type& creatureType = c_list[j];
+
+    // CT2A ac(assoc.key, CP_UTF8); // CP_ACP);  // s.c_str()
+    CA2T uc(creatureType.name, CP_ACP);  // s.c_str()
+    CString myKey=uc; 
+
+    Assoc* pAssoc = getAssoc(myKey);
+    if (pAssoc != NULL) {
+      creatureTile[j] = pAssoc->tilepos;
+    }
+
+  }
+
 }
 
 
-bool Tilemap::charFromHash(int myChar, int& x, int& y) {
+bool Tilemap::charFromHash(int myChar, int& x, int& y, int creatureIndex) {
+  if (creatureIndex > 1) {
+    std::map<int, CPoint>::iterator j;
+    j = creatureTile.find(creatureIndex); // Maps from monster-index to tilepos.
+    if (j != creatureTile.end()) {
+      x = j->second.x;
+      y = j->second.y;
+      return true;
+    }
+  }
+
+
   std::map<CString, Assoc>::iterator i;
 
   char buf[2] = "a"; buf[0] = myChar;

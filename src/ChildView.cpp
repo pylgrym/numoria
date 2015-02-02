@@ -16,6 +16,8 @@
 
 
 
+const int cellw = 32, cellh = 32;
+
 SpriteDrawer::SpriteDrawer() {
   // char buf[256];
   // GetCurrentDirectory(sizeof buf, buf);
@@ -30,8 +32,8 @@ SpriteDrawer::SpriteDrawer() {
   imgWidth = sprites.GetWidth();
   imgHeight = sprites.GetHeight();
 
-  cellWidth = 32; // imgWidth / colCount;
-  cellHeight = 32; //  imgHeight / rowCount; // dest.Height();
+  cellWidth = cellw; //  32; //  20; // 32; // imgWidth / colCount;
+  cellHeight = cellh; // 32; //  imgHeight / rowCount; // dest.Height();
 
   colCount = 40; // 16; //  imgWidth / cellWidth;
   rowCount = imgHeight / cellHeight; // 16;
@@ -216,7 +218,6 @@ void CChildView::OnTimer(UINT nIDEvent) { // Used to start app loop.
 
 //const int cellw = 20, cellh = 20;
 
-const int cellw = 32, cellh = 32;
 
 void invalidateCell(int row, int col) {
 	int x = col*cellw, y = row*cellh;

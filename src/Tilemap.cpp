@@ -33,34 +33,42 @@ bool Tilemap::save(CString filename) {
   return true;
 }
 
+
+
 bool Tilemap::load(CString filename) {
   std::ifstream f(filename);
-  Assoc assoc;
-  char buf[128] = "";
 
-  while (f.good() && !f.bad()) { // !f.eof()) {
-    debstr() << "\nNext item..\n";
+  debstr() << "\nitems..\n";
+  while (f.good() && !f.bad()) { 
 
-    f >> buf; //  s;
-    debstr() << "(key)got:[" << buf << "]\n";
-    if (!f.good()) { break;  }
-    if (f.bad()) { break;  }
+    std::string line;
+    std::getline(f, line);
 
-    CA2T uc(buf, CP_ACP);  
+    size_t lastQuote = line.find_last_of('"');
+    if (lastQuote == std::string::npos) { continue; } // error.
+    size_t firstQuote = line.find_first_of('"');
+    std::string key = line.substr(firstQuote+1, (lastQuote - firstQuote)-1);
+
+    std::string numPart = line.substr(lastQuote + 2);
+
+    // JG: this is brittle against bad formatting
+    // - would be better if it parsed for found integers.
+    size_t numDivider = numPart.find_first_of(' '); 
+    std::string leftNum = numPart.substr(0, numDivider);
+    std::string rightNum = numPart.substr(numDivider+1);
+    int x = stoi(leftNum);
+    int y = stoi(rightNum);
+
+    CA2T uc(key.c_str(), CP_ACP);  
     CString s = uc;
-    // Strip quotes:
-    s = s.Left(s.GetLength()-1);
-    s = s.Mid(1);
-    assoc.key = s; // s.c_str();
 
-    f >> assoc.tilepos.x; 
-    debstr() << "x:[" << assoc.tilepos.x << "]\n";
+    Assoc assoc;
+    assoc.key = s;
+    assoc.tilepos.x = x;
+    assoc.tilepos.y = y;
 
-    f >> assoc.tilepos.y; 
-    debstr() << "y:[" << assoc.tilepos.y << "]\n";
-
+    debstr() << "tile:[" << assoc.tilepos.x << " / " << assoc.tilepos.y << "]'" << key.c_str() << "'\n";
     tileAssocs.push_back(assoc);
-    debstr() << "end of that item..\n";
   }
   return true;
 }

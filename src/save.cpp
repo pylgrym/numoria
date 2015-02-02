@@ -450,7 +450,7 @@ int save_char()
   bePlayer();
 #endif
 
-  while (!_save_char(savefile))
+   while (!_save_char(savefile))
   {
     (void)sprintf(temp, "Savefile '%s' fails.", savefile);
     msg_print(temp);

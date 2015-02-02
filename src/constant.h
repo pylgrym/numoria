@@ -73,7 +73,8 @@ const int viewPort_COL_Offset = 0; // was 13; (when stat block on left side.)
 #define SCREEN_HEIGHT  22
 #define SCREEN_WIDTH   66
 
-const int RIGHTMOST_COL = SCREEN_WIDTH;
+// JG: Was initially SCREEN_WIDTH=66, but that won't fit in 1920/32..
+const int RIGHTMOST_COL = 60 
 
 #define QUART_HEIGHT (SCREEN_HEIGHT / 4)
 #define QUART_WIDTH  (SCREEN_WIDTH / 4)

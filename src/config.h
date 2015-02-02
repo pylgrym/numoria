@@ -301,11 +301,18 @@ some of the system defines set up here.
 #define SYS_V
 #endif
 
+
+
+
+
+
 /* Substitute strchr for index on USG versions of UNIX.  */
-#define index strchr
+// #define index strchr
+
 #if defined(SYS_V) || defined(MSDOS) || defined(MAC) || defined(VMS)
 #define index strchr
 #endif
+
 #if defined(ATARIST_TC) || (defined(AMIGA) && defined(LATTICE))
 #define index strchr
 #endif
@@ -313,6 +320,11 @@ some of the system defines set up here.
 #ifdef SYS_III
 char *index();
 #endif
+
+
+
+
+
 
 /* Define USG for many systems, this is basically to select SYS V style
    system calls (as opposed to BSD style).  */

@@ -20,6 +20,9 @@
 
 #include "stdafx.h"
 
+// JG: I don't want that encryption-xor stuff.
+#define NO_XOR 1
+
 #include <io.h>
 #include <fcntl.h>
 
@@ -516,7 +519,7 @@ int _save_char( char *fnam)
 
 
     /* GCC for atari st defines atarist */
-    fileptr = fopen(savefile, "w");
+    fileptr = fopen(savefile, "wb");
   }
 
 
@@ -632,7 +635,7 @@ int get_char( int *generate)
     (void)_close(fd);
     fd = -1; /* Make sure it isn't closed again */
     /* GCC for atari st defines atarist */
-    fileptr = fopen(savefile, "r");
+    fileptr = fopen(savefile, "rb");
     if (fileptr == NULL)
       goto error;
 
@@ -1176,27 +1179,41 @@ int get_char( int *generate)
 
 
 static void wr_byte(int8u c) {
+#ifndef NO_XOR
   xor_byte ^= c;
   (void)putc((int)xor_byte, fileptr);
   DEEBUG(fprintf(logfile, "BYTE:  %02X = %d\n", (int)xor_byte, (int)c));
+#else
+  putc((int)c, fileptr);
+  DEEBUG(fprintf(logfile, "BYTE:  %02X = %d\n", (int)c, (int)c));
+#endif // NO_XOR
 }
 
 
 
 
 static void wr_short(int16u s) {
+#ifndef NO_XOR
   xor_byte ^= (s & 0xFF);
   (void)putc((int)xor_byte, fileptr);
   DEEBUG(fprintf(logfile, "SHORT: %02X", (int)xor_byte));
   xor_byte ^= ((s >> 8) & 0xFF);
   (void)putc((int)xor_byte, fileptr);
   DEEBUG(fprintf(logfile, " %02X = %d\n", (int)xor_byte, (int)s));
+#else
+  int c1 = (int)(s & 0xFF);
+  putc( c1, fileptr);
+  int c2 = (int)((s >> 8) & 0xFF);
+  putc( c2, fileptr);
+  DEEBUG(fprintf(logfile, "SHORT:  %02X %02X = %d\n", c1,c2,  (int)s));
+#endif // NO_XOR
 }
 
 
 
 
 static void wr_long(int32u l) {
+#ifndef NO_XOR
   xor_byte ^= (l & 0xFF);
   (void)putc((int)xor_byte, fileptr);
   DEEBUG(fprintf(logfile, "LONG:  %02X", (int)xor_byte));
@@ -1209,6 +1226,13 @@ static void wr_long(int32u l) {
   xor_byte ^= ((l >> 24) & 0xFF);
   (void)putc((int)xor_byte, fileptr);
   DEEBUG(fprintf(logfile, " %02X = %ld\n", (int)xor_byte, (long)l));
+#else
+  int c1 = (int) (l & 0xFF);        putc(c1, fileptr);
+  int c2 = (int)((l >>  8) & 0xFF); putc(c2, fileptr);
+  int c3 = (int)((l >> 16) & 0xFF); putc(c3, fileptr);
+  int c4 = (int)((l >> 24) & 0xFF); putc(c4, fileptr);
+  DEEBUG(fprintf(logfile, "LONG:  %02X %02X %02X %02X= %d\n", c1,c2,c3,c4,  (int)l ));
+#endif // NO_XOR
 }
 
 
@@ -1223,10 +1247,16 @@ static void wr_bytes( int8u *c, register int count)
   ptr = c;
   for (i = 0; i < count; i++)
   {
+#ifndef NO_XOR
     xor_byte ^= *ptr++;
     (void)putc((int)xor_byte, fileptr);
     DEEBUG(fprintf(logfile, "  %02X = %d", (int)xor_byte,
       (int)(ptr[-1])));
+#else
+    putc((int) *ptr, fileptr);
+    DEEBUG(fprintf(logfile, "#%d: %02X %d ", i, (int)*ptr, (int)*ptr));
+    ptr++;
+#endif // NO_XOR
   }
   DEEBUG(fprintf(logfile, "\n"));
 }
@@ -1236,16 +1266,28 @@ static void wr_bytes( int8u *c, register int count)
 static void wr_string( register char *str)
 {
   DEEBUG(char *s = str);
-  DEEBUG(fprintf(logfile, "STRING:"));
+  DEEBUG(fprintf(logfile, "STRING:["));
   while (*str != '\0')
   {
+#ifndef NO_XOR
     xor_byte ^= *str++;
     (void)putc((int)xor_byte, fileptr);
     DEEBUG(fprintf(logfile, " %02X", (int)xor_byte));
+#else
+    (void)putc((int)*str, fileptr);
+    DEEBUG(fprintf(logfile, " [%c %02X]", *str, (int)*str ));
+    str++;
+#endif // NO_XOR
   }
+
+#ifndef NO_XOR
   xor_byte ^= *str;
   (void)putc((int)xor_byte, fileptr);
   DEEBUG(fprintf(logfile, " %02X = \"%s\"\n", (int)xor_byte, s));
+#else
+    (void)putc((int)*str++, fileptr);
+    DEEBUG(fprintf(logfile, "]\n"));
+#endif // NO_XOR
 }
 
 
@@ -1260,12 +1302,18 @@ static void wr_shorts( int16u *s, register int count)
   sptr = s;
   for (i = 0; i < count; i++)
   {
+#ifndef NO_XOR
     xor_byte ^= (*sptr & 0xFF);
     (void)putc((int)xor_byte, fileptr);
     DEEBUG(fprintf(logfile, "  %02X", (int)xor_byte));
     xor_byte ^= ((*sptr++ >> 8) & 0xFF);
     (void)putc((int)xor_byte, fileptr);
     DEEBUG(fprintf(logfile, " %02X = %d", (int)xor_byte, (int)sptr[-1]));
+#else
+    int c1 = (int)         (*sptr & 0xFF); putc(c1, fileptr);
+    int c2 = (int)((*sptr++ >> 8) & 0xFF); putc(c2, fileptr);
+    DEEBUG(fprintf(logfile, "#%d: %02X %02X = %d", i, c1,c2, (int)sptr[-1]) );
+#endif // NO_XOR
   }
   DEEBUG(fprintf(logfile, "\n"));
 }
@@ -1322,8 +1370,12 @@ static void rd_byte( int8u *ptr)
   int8u c;
 
   c = getc(fileptr) & 0xFF;
+#ifndef NO_XOR
   *ptr = c ^ xor_byte;
   xor_byte = c;
+#else
+  *ptr = c;
+#endif // NO_XOR
   DEEBUG(fprintf(logfile, "BYTE:  %02X = %d\n", (int)c, (int)*ptr));
 }
 
@@ -1335,13 +1387,18 @@ static void rd_short( int16u *ptr)
   int8u c;
   int16u s;
 
+#ifndef NO_XOR
   c = (getc(fileptr) & 0xFF);
   s = c ^ xor_byte;
   xor_byte = (getc(fileptr) & 0xFF);
   s |= (int16u)(c ^ xor_byte) << 8;
   *ptr = s;
-  DEEBUG(fprintf(logfile, "SHORT: %02X %02X = %d\n", (int)c, (int)xor_byte, \
-    (int)s));
+#else
+  int8u c1 = (getc(fileptr) & 0xFF); s = c1;
+  int8u c2 = (getc(fileptr) & 0xFF); s |= ((int16u)c2 << 8);
+  *ptr = s;
+#endif // NO_XOR
+  DEEBUG(fprintf(logfile, "SHORT: %02X %02X = %d\n", (int)c1, (int)c2, (int)s) );
 }
 
 
@@ -1349,9 +1406,10 @@ static void rd_short( int16u *ptr)
 
 static void rd_long(   int32u *ptr)
 {
-  register int32u l;
-  register int8u c;
+   int32u l; // register
+  // register int8u c;
 
+#ifndef NO_XOR
   c = (getc(fileptr) & 0xFF);
   l = c ^ xor_byte;
   xor_byte = (getc(fileptr) & 0xFF);
@@ -1364,12 +1422,22 @@ static void rd_long(   int32u *ptr)
   *ptr = l;
   DEEBUG(fprintf(logfile, "%02X %02X = %ld\n", (int)c, (int)xor_byte, \
     (long)l));
+#else
+  int a1 = getc(fileptr);  
+  int8u c1 = ( a1 & 0xFF); 
+  l = c1;
+  int a2 = getc(fileptr);  int8u c2 = ( a2 & 0xFF); l |= (int32u)c2 << 8;
+  int a3 = getc(fileptr);  int8u c3 = ( a3 & 0xFF); l |= (int32u)c3 << 16;
+  int a4 = getc(fileptr);  int8u c4 = ( a4 & 0xFF); l |= (int32u)c4 << 24;
+  *ptr = l;
+  DEEBUG(fprintf(logfile, "LONG: %02X %02X %02X %02X = %d\n", (int)c1, (int)c2, (int)c3, (int)c4, (int)l) );
+#endif // NO_XOR
 }
 
 
 
 
-static void rd_bytes(  int8u *ch_ptr, register int count)
+static void rd_bytes(int8u *ch_ptr, register int count)
 {
   register int i;
   register int8u *ptr;
@@ -1377,6 +1445,7 @@ static void rd_bytes(  int8u *ch_ptr, register int count)
 
   DEEBUG(fprintf(logfile, "%d BYTES:", count));
   ptr = ch_ptr;
+#ifndef NO_XOR
   for (i = 0; i < count; i++)
   {
     c = (getc(fileptr) & 0xFF);
@@ -1384,6 +1453,14 @@ static void rd_bytes(  int8u *ch_ptr, register int count)
     xor_byte = c;
     DEEBUG(fprintf(logfile, "  %02X = %d", (int)c, (int)ptr[-1]));
   }
+#else
+  for (i = 0; i < count; i++) {
+    c = (getc(fileptr) & 0xFF);
+    *ptr++ = c;
+    DEEBUG(fprintf(logfile, "  #%d: %02X = %d", i, (int)c, (int)ptr[-1]));
+  }
+#endif // NO_XOR
+
   DEEBUG(fprintf(logfile, "\n"));
 }
 
@@ -1393,8 +1470,10 @@ static void rd_string( char *str)
 {
   register int8u c;
 
-  DEEBUG(char *s = str);
   DEEBUG(fprintf(logfile, "STRING: "));
+
+#ifndef NO_XOR
+  DEEBUG(char *s = str);
   do
   {
     c = (getc(fileptr) & 0xFF);
@@ -1403,6 +1482,14 @@ static void rd_string( char *str)
     DEEBUG(fprintf(logfile, "%02X ", (int)c));
   } while (*str++ != '\0');
   DEEBUG(fprintf(logfile, "= \"%s\"\n", s));
+#else 
+  do {
+    c = (getc(fileptr) & 0xFF);
+    *str = c;
+    DEEBUG(fprintf(logfile, "[%c %02X] ", (char)c, (int)c) );
+  } while (*str++ != '\0');
+  DEEBUG(fprintf(logfile, "{END STRING}\n"));
+#endif // NO_XOR
 }
 
 
@@ -1415,6 +1502,7 @@ static void rd_shorts(int16u *ptr, register int count)
   int8u c;
 
   DEEBUG(fprintf(logfile, "%d SHORTS:", count));
+#ifndef NO_XOR
   sptr = ptr;
   for (i = 0; i < count; i++)
   {
@@ -1427,6 +1515,15 @@ static void rd_shorts(int16u *ptr, register int count)
       (int)s));
   }
   DEEBUG(fprintf(logfile, "\n"));
+#else 
+  sptr = ptr;
+  for (i = 0; i < count; i++) {
+    int8u c1 = (getc(fileptr) & 0xFF); s = c1;
+    int8u c2 = (getc(fileptr) & 0xFF); s |= (int16u)c2 << 8;
+    *sptr++ = s; 
+    DEEBUG(fprintf(logfile, "#%d: %02X %02X = %d", i, (int)c1,(int)c2, s ));
+  }
+#endif // NO_XOR
 }
 
 

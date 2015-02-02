@@ -2192,7 +2192,7 @@ void insert_lnum( // object_str, mtc_str, number, show_sign)
   tmp_str = object_str;
   do
   {
-    string = index(tmp_str, mtc_str[0]);
+    string = strchr(tmp_str, mtc_str[0]); // was: index
     if (string == 0)
       flag = 0;
     else

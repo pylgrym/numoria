@@ -1,21 +1,21 @@
 /* UNIX Moria Version 5.x
    source/main.c: initialization, main() function and main loop
-   Copyright (C) 1989-2008 James E. Wilson, Robert A. Koeneke, 
-                           David J. Grabiner
+   Copyright (C) 1989-2008 James E. Wilson, Robert A. Koeneke,
+   David J. Grabiner
 
    This file is part of Umoria.
 
-   Umoria is free software; you can redistribute it and/or modify 
+   Umoria is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
    Umoria is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of 
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
 
-   You should have received a copy of the GNU General Public License 
+   You should have received a copy of the GNU General Public License
    along with Umoria.  If not, see <http://www.gnu.org/licenses/>. */
 
 
@@ -67,8 +67,8 @@
 #include <fcntl.h>
 
 int not_access(const char* fileName, int what) {
-	const bool FIXME_WHAT_IS_ACCESS_FUNCTION = false;
-	// return true; //  false;
+  const bool FIXME_WHAT_IS_ACCESS_FUNCTION = false;
+  // return true; //  false;
   return 0; // JG: It turns out, 0 is access allowed.. http://www.freebsd.org/cgi/man.cgi?query=access&sektion=2
 }
 
@@ -78,7 +78,7 @@ int not_access(const char* fileName, int what) {
 
 #include	<stdio.h>
 #include	<stdlib.h>
- 
+
 #include "config.h"
 #include "constant.h"
 #include "types.h"
@@ -208,8 +208,8 @@ int argc;
 char *argv[];
 #else
 int moria_main(
-int argc,
-char *argv[])
+  int argc,
+  char *argv[])
 #endif
 {
   int32u seed;
@@ -242,18 +242,18 @@ char *argv[])
 #if !defined(AMIGA) && !defined(ATARIST_TC)
 #if !defined(atarist)
 
-// JG: I'm not sure we need this part anyway..?
+  // JG: I'm not sure we need this part anyway..?
 #ifdef SET_UID_SET_GID_NEEDED_JG
   if (0 != setuid(getuid()))
-    {
-      perror("Can't set permissions correctly!  Setuid call failed.\n");
-      exit(0);
-    }
+  {
+    perror("Can't set permissions correctly!  Setuid call failed.\n");
+    exit(0);
+  }
   if (0 != setgid(getgid()))
-    {
-      perror("Can't set permissions correctly!  Setgid call failed.\n");
-      exit(0);
-    }
+  {
+    perror("Can't set permissions correctly!  Setgid call failed.\n");
+    exit(0);
+  }
 #endif // SET_UID_SET_GID_NEEDED_JG.
 
 #endif
@@ -284,39 +284,39 @@ char *argv[])
   /*check for user interface option */
   for (--argc, ++argv; argc > 0 && argv[0][0] == '-'; --argc, ++argv)
     switch (argv[0][1])
-      {
-      case 'N':
-      case 'n': new_game = TRUE; break;
+  {
+    case 'N':
+    case 'n': new_game = TRUE; break;
 
-      case 'O':
-      case 'o':
-	/* rogue_like_commands may be set in get_char(), so delay this
-	   until after read savefile if any */
-	force_rogue_like = TRUE;
-	force_keys_to = FALSE;
-	break;
+    case 'O':
+    case 'o':
+      /* rogue_like_commands may be set in get_char(), so delay this
+         until after read savefile if any */
+      force_rogue_like = TRUE;
+      force_keys_to = FALSE;
+      break;
 
-      case 'R':
-      case 'r':
-	force_rogue_like = TRUE;
-	force_keys_to = TRUE;
-	break;
+    case 'R':
+    case 'r':
+      force_rogue_like = TRUE;
+      force_keys_to = TRUE;
+      break;
 
 #ifndef MAC
-      case 'S': display_scores(TRUE); exit_game();
-      case 's': display_scores(FALSE); exit_game();
-      case 'W':
-      case 'w':
-	to_be_wizard = TRUE;
+    case 'S': display_scores(TRUE); exit_game();
+    case 's': display_scores(FALSE); exit_game();
+    case 'W':
+    case 'w':
+      to_be_wizard = TRUE;
 
-	if (isdigit((int)argv[0][2]))
-	  seed = atoi(&argv[0][2]);
-	break;
+      if (isdigit((int)argv[0][2]))
+        seed = atoi(&argv[0][2]);
+      break;
 
-      default: (void) printf("Usage: moria [-norsw] [savefile]\n");
-	exit_game();
+    default: (void)printf("Usage: moria [-norsw] [savefile]\n");
+      exit_game();
 #endif
-      }
+  }
 
 #ifndef MAC
   /* Check operating hours			*/
@@ -348,9 +348,9 @@ char *argv[])
 
   /* Auto-restart of saved file */
   if (argv[0] != CNIL)
-    (void) strcpy (savefile, argv[0]);
+    (void)strcpy(savefile, argv[0]);
   else if ((p = getenv("MORIA_SAV")) != CNIL)
-    (void) strcpy(savefile, p);
+    (void)strcpy(savefile, p);
   else if ((p = getenv("HOME")) != CNIL)
 #if defined(ATARIST_MWC) || defined(ATARIST_TC)
     (void) sprintf(savefile, "%s\\%s", p, MORIA_SAV);
@@ -358,17 +358,17 @@ char *argv[])
 #ifdef VMS
     (void) sprintf(savefile, "%s%s", p, MORIA_SAV);
 #else
-    (void) sprintf(savefile, "%s/%s", p, MORIA_SAV);
+    (void)sprintf(savefile, "%s/%s", p, MORIA_SAV);
 #endif
 #endif
   else
-    (void) strcpy(savefile, MORIA_SAV);
+    (void)strcpy(savefile, MORIA_SAV);
 #endif
 
-/* This restoration of a saved character may get ONLY the monster memory. In
-   this case, get_char returns false. It may also resurrect a dead character
-   (if you are the wizard). In this case, it returns true, but also sets the
-   parameter "generate" to true, as it does not recover any cave details. */
+  /* This restoration of a saved character may get ONLY the monster memory. In
+     this case, get_char returns false. It may also resurrect a dead character
+     (if you are the wizard). In this case, it returns true, but also sets the
+     parameter "generate" to true, as it does not recover any cave details. */
 
   result = FALSE;
 #ifdef MAC
@@ -385,42 +385,42 @@ char *argv[])
       exit_game();
 
   if (result)
-    {
-      change_name();
+  {
+    change_name();
 
-      /* could be restoring a dead character after a signal or HANGUP */
-      if (py.misc.chp < 0)
-	death = TRUE;
-    }
+    /* could be restoring a dead character after a signal or HANGUP */
+    if (py.misc.chp < 0)
+      death = TRUE;
+  }
   else
-    {	  /* Create character	   */
-      create_character();
+  {	  /* Create character	   */
+    create_character();
 #ifdef MAC
-      birth_date = time ((time_t *)0);
+    birth_date = time ((time_t *)0);
 #else
-	  birth_date = (int32) time( (time_t*) (long *)0); // JG, FIXME: time_t* cast is mine, is this what this needs?
+    birth_date = (int32)time((time_t*)(long *)0); // JG, FIXME: time_t* cast is mine, is this what this needs?
 #endif
-      char_inven_init();
-      py.flags.food = 7500;
-      py.flags.food_digested = 2;
-      if (classs[py.misc.pclass].spell == MAGE)
-	{	  /* Magic realm   */
-	  clear_screen(); /* makes spell list easier to read */
-	  calc_spells(A_INT);
-	  calc_mana(A_INT);
-	}
-      else if (classs[py.misc.pclass].spell == PRIEST)
-	{	  /* Clerical realm*/
-	  calc_spells(A_WIS);
-	  clear_screen(); /* force out the 'learn prayer' message */
-	  calc_mana(A_WIS);
-	}
-      /* prevent ^c quit from entering score into scoreboard,
-	 and prevent signal from creating panic save until this point,
-	 all info needed for save file is now valid */
-      character_generated = 1;
-      generate = TRUE;
+    char_inven_init();
+    py.flags.food = 7500;
+    py.flags.food_digested = 2;
+    if (classs[py.misc.pclass].spell == MAGE)
+    {	  /* Magic realm   */
+      clear_screen(); /* makes spell list easier to read */
+      calc_spells(A_INT);
+      calc_mana(A_INT);
     }
+    else if (classs[py.misc.pclass].spell == PRIEST)
+    {	  /* Clerical realm*/
+      calc_spells(A_WIS);
+      clear_screen(); /* force out the 'learn prayer' message */
+      calc_mana(A_WIS);
+    }
+    /* prevent ^c quit from entering score into scoreboard,
+ and prevent signal from creating panic save until this point,
+ all info needed for save file is now valid */
+    character_generated = 1;
+    generate = TRUE;
+  }
 
   if (force_rogue_like)
     rogue_like_commands = force_keys_to;
@@ -434,27 +434,27 @@ char *argv[])
     generate_cave();
 
   /* Loop till dead, or exit			*/
-  while(!death)
-    {
-      dungeon();				  /* Dungeon logic */
+  while (!death)
+  {
+    dungeon();				  /* Dungeon logic */
 
 #ifndef MAC
-      /* check for eof here, see inkey() in io.c */
-      /* eof can occur if the process gets a HANGUP signal */
-      if (eof_flag)
-	{
-	  (void) strcpy(died_from, "(end of input: saved)");
-	  if (!save_char())
-	    {
-	      (void) strcpy(died_from, "unexpected eof");
-	    }
-	  /* should not reach here, by if we do, this guarantees exit */
-	  death = TRUE;
-	}
+    /* check for eof here, see inkey() in io.c */
+    /* eof can occur if the process gets a HANGUP signal */
+    if (eof_flag)
+    {
+      (void)strcpy(died_from, "(end of input: saved)");
+      if (!save_char())
+      {
+        (void)strcpy(died_from, "unexpected eof");
+      }
+      /* should not reach here, by if we do, this guarantees exit */
+      death = TRUE;
+    }
 #endif
 
-      if (!death) generate_cave();	       /* New level	*/
-    }
+    if (!death) generate_cave();	       /* New level	*/
+  }
 
   exit_game();		/* Character gets buried. */
   /* should never reach here, but just in case */
@@ -472,16 +472,16 @@ static void char_inven_init()
     invcopy(&inventory[i], OBJ_NOTHING);
 
   for (i = 0; i < 5; i++)
-    {
-      j = player_init[py.misc.pclass][i];
-      invcopy(&inven_init, j);
-      /* this makes it known2 and known1 */
-      store_bought(&inven_init);
-      /* must set this bit to display tohit/todam for stiletto */
-      if (inven_init.tval == TV_SWORD)
-	inven_init.ident |= ID_SHOW_HITDAM;
-      (void) inven_carry(&inven_init);
-    }
+  {
+    j = player_init[py.misc.pclass][i];
+    invcopy(&inven_init, j);
+    /* this makes it known2 and known1 */
+    store_bought(&inven_init);
+    /* must set this bit to display tohit/todam for stiletto */
+    if (inven_init.tval == TV_SWORD)
+      inven_init.ident |= ID_SHOW_HITDAM;
+    (void)inven_carry(&inven_init);
+  }
 
   /* wierd place for it, but why not? */
   for (i = 0; i < 32; i++)
@@ -506,7 +506,7 @@ static void init_m_level()
     /* fix a stupid MANX Aztec C 5.0 bug again */
     m_level[i] = m_level[i] + m_level[i-1];
 #else
-    m_level[i] += m_level[i-1];
+    m_level[i] += m_level[i - 1];
 #endif
 }
 
@@ -515,7 +515,7 @@ static void init_m_level()
 static void init_t_level()
 {
   register int i, l;
-  int tmp[MAX_OBJ_LEVEL+1];
+  int tmp[MAX_OBJ_LEVEL + 1];
 
   for (i = 0; i <= MAX_OBJ_LEVEL; i++)
     t_level[i] = 0;
@@ -526,7 +526,7 @@ static void init_t_level()
     /* fix a stupid MANX Aztec C 5.0 bug again */
     t_level[i] = t_level[i] + t_level[i-1];
 #else
-    t_level[i] += t_level[i-1];
+    t_level[i] += t_level[i - 1];
 #endif
 
   /* now produce an array with object indexes sorted by level, by using
@@ -535,11 +535,11 @@ static void init_t_level()
   for (i = 0; i <= MAX_OBJ_LEVEL; i++)
     tmp[i] = 1;
   for (i = 0; i < MAX_DUNGEON_OBJ; i++)
-    {
-      l = object_list[i].level;
-      sorted_objects[t_level[l] - tmp[l]] = i;
-      tmp[l]++;
-    }
+  {
+    l = object_list[i].level;
+    sorted_objects[t_level[l] - tmp[l]] = i;
+    tmp[l]++;
+  }
 }
 
 

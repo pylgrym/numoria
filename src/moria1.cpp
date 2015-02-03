@@ -324,21 +324,18 @@ void calc_bonuses()
    not fit, it may be moved left.  The return value is the left edge used. */
 /* If mask is non-zero, then only display those items which have a non-zero
    entry in the mask array.  */
-int show_inven( // r1, r2, weight, col, mask)
-register int r1, int r2,
-int weight, int col,
-char *mask)
+int show_inven( int r1, int r2, int weight, int col,char *mask)
 {
   register int i;
   int total_weight, len, l, lim, current_line;
   bigvtype tmp_val;
   vtype out_val[23];
 
-  len = 79 - col;
+  len = (RIGHTMOST_COL-1) - col; // 79
   if (weight)
-    lim = 68;
+    lim = (RIGHTMOST_COL - 12); // 68;
   else
-    lim = 76;
+    lim = (RIGHTMOST_COL - 4); // 76;
 
   for (i = r1; i <= r2; i++)		 /* Print the items	  */
     {
@@ -355,7 +352,7 @@ char *mask)
 	}
     }
 
-  col = 79 - len;
+  col = (RIGHTMOST_COL-1) - len; // /79
   if (col < 0)
     col = 0;
 
@@ -377,7 +374,7 @@ char *mask)
 	      total_weight = inventory[i].weight*inventory[i].number;
 	      (void) sprintf (tmp_val, "%3d.%d lb",
 			      (total_weight) / 10, (total_weight) % 10);
-	      prt (tmp_val, current_line, 71);
+	      prt (tmp_val, current_line, (RIGHTMOST_COL-9) ); // 71
 	    }
 	  current_line++;
 	}
@@ -1301,9 +1298,9 @@ char *message)
 	  if (redraw)
 	    {
 	      if (i_scr > 0)
-		(void) show_inven (i, j, FALSE, 80, mask);
+		(void) show_inven (i, j, FALSE, RIGHTMOST_COL, mask); // 80
 	      else
-		(void) show_equip (FALSE, 80);
+		(void) show_equip (FALSE, RIGHTMOST_COL); // 80
 	    }
 	  if (full)
 	    (void) sprintf(out_val,

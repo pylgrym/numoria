@@ -14,7 +14,7 @@ enum TileEnum {
   Ti_Fireball,
   Ti_Breath,
   Ti_ThrowItem,
-  // Ti_Potion
+  Ti_Potion
 };
 
 
@@ -26,9 +26,10 @@ struct LocInf {
   COLORREF color;
   int creatureIndex;
   int matIndex;
-  LocInf() { c = ' '; tile = Ti_Empty; color = colorNone; creatureIndex = 0; matIndex = -1;  }
-  explicit LocInf(unsigned char c_, TileEnum tile_, int matIndex_) :c(c_), tile(tile_), color(colorNone), creatureIndex(0), matIndex(matIndex_) {} // RGB(1, 0, 0)) {}
-  explicit LocInf(unsigned char c_, TileEnum tile_, COLORREF color_, int creatureIndex_) :c(c_), tile(tile_), color(color_), creatureIndex(creatureIndex_), matIndex(-1) {}
+  int tval;
+  LocInf() { c = ' '; tile = Ti_Empty; color = colorNone; creatureIndex = 0; matIndex = -1; tval = -1; }
+  explicit LocInf(unsigned char c_, TileEnum tile_, int matIndex_, int tval_) :c(c_), tile(tile_), color(colorNone), creatureIndex(0), matIndex(matIndex_), tval(tval_) {} // RGB(1, 0, 0)) {}
+  explicit LocInf(unsigned char c_, TileEnum tile_, COLORREF color_, int creatureIndex_) :c(c_), tile(tile_), color(color_), creatureIndex(creatureIndex_), matIndex(-1), tval(-1) {}
 
   void baseClear() {
     tile = Ti_Empty;

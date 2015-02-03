@@ -980,7 +980,7 @@ void throw_object()
 		      if (panel_contains(y, x) && (py.flags.blind < 1)
 			  && (c_ptr->tl || c_ptr->pl))
 			{
-			  print(  LocInf(tchar, Ti_ThrowItem,-1), y, x);
+			  print(  LocInf(tchar, Ti_ThrowItem,-1,-1), y, x);
 			  put_qio(); /* show object moving */
 			}
 		    }

@@ -562,27 +562,27 @@ LocInf loc_symbol(int y, int x)  { // unsigned char
   f_ptr = &py.flags;
 
   if ((cave_ptr->cptr == 1) && (!find_flag || find_prself)) { // creature-1 is PLAYER!
-    return LocInf('@', Ti_Player,-1);
+    return LocInf('@', Ti_Player,-1,-1);
   } else if (f_ptr->status & PY_BLIND) {
-    return LocInf(' ', Ti_Blind,-1); // We are blind, don't show anything.
+    return LocInf(' ', Ti_Blind,-1,-1); // We are blind, don't show anything.
   } else if ((f_ptr->image > 0) && (randint(12) == 1)) {
-    return LocInf(randint(95) + 31, Ti_Halluc, -1); // We are hallucinating. // FIXME, colours should be in hallucinating..
+    return LocInf(randint(95) + 31, Ti_Halluc, -1,-1); // We are hallucinating. // FIXME, colours should be in hallucinating..
   } else if ((cave_ptr->cptr > 1) && (m_list[cave_ptr->cptr].ml)) { // There is a creature on the tile.
     monster_type& monster = m_list[cave_ptr->cptr];
     creature_type& creatureType = c_list[monster.mptr];
     return LocInf(creatureType.cchar, Ti_Creature, creatureType.color, monster.mptr);
   } else if (!cave_ptr->pl && !cave_ptr->tl && !cave_ptr->fm) { // no permlight, no templight, no fieldmark 
-    return LocInf(' ', Ti_Unlit, -1);
+    return LocInf(' ', Ti_Unlit, -1,-1);
   } else if ((cave_ptr->tptr != 0) && (t_list[cave_ptr->tptr].tval != TV_INVIS_TRAP)) {
     inven_type& t_item = t_list[cave_ptr->tptr];
     int mat_index = t_item.subval & (ITEM_SINGLE_STACK_MIN - 1); // color/material-index.
-    return LocInf(t_list[cave_ptr->tptr].tchar, Ti_Thing, mat_index); // There is a THING on the floor.
+    return LocInf(t_list[cave_ptr->tptr].tchar, Ti_Thing, mat_index, t_item.tval); // There is a THING on the floor.
   } else if (cave_ptr->fval <= MAX_CAVE_FLOOR) {
-    return LocInf('.', Ti_Environ, -1); // Ti_Floor); // FLOOR
+    return LocInf('.', Ti_Environ, -1,-1); // Ti_Floor); // FLOOR
   } else if (cave_ptr->fval == GRANITE_WALL || cave_ptr->fval == BOUNDARY_WALL || highlight_seams == FALSE) {
-    return LocInf('#', Ti_Environ,-1); //Ti_Wall); // WALL
+    return LocInf('#', Ti_Environ,-1,-1); //Ti_Wall); // WALL
   } else { /* Originally set highlight bit, but that is not portable, now use the percent sign instead. */  
-    return LocInf('%', Ti_Environ,-1); //Ti_MineralSeam); // mineralSEAM(likely) or error-fallthrough(not likely)
+    return LocInf('%', Ti_Environ,-1,-1); //Ti_MineralSeam); // mineralSEAM(likely) or error-fallthrough(not likely)
   }
 }
 
@@ -610,7 +610,7 @@ void prt_map()
   (ie all small delta drawing actions.)
   */
   register int i, j, k;
-  LocInf tmp_char(' ',Ti_Empty, -1); // register unsigned char tmp_char;
+  LocInf tmp_char(' ',Ti_Empty, -1,-1); // register unsigned char tmp_char;
 
   k = 0;
   for (i = panel_row_min; i <= panel_row_max; i++)  /* Top to bottom */

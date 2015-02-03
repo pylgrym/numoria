@@ -18,6 +18,10 @@
 using namespace Gdiplus;
 #pragma comment (lib,"Gdiplus.lib")
 
+#include "config.h"
+#include "constant.h"
+#include "types.h"
+#include "externs.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -112,7 +116,10 @@ void rotator(CDC& dc, Gdiplus::Graphics& graphics, double angle) {
 }
 
 
-void SpriteDrawer::drawSprite(int myChar, CRect& dest, CDC& dc, Gdiplus::Graphics& graphics, int creatureIndex, TileEnum tileType, COLORREF color) {
+
+
+
+void SpriteDrawer::drawSprite(int myChar, CRect& dest, CDC& dc, Gdiplus::Graphics& graphics, int creatureIndex, TileEnum tileType, COLORREF color, int matIndex, int tval) {
   if (!initOK) { return;  } // Fail silently/gracefully.
 
   int row = 0, col = 0;
@@ -132,12 +139,15 @@ void SpriteDrawer::drawSprite(int myChar, CRect& dest, CDC& dc, Gdiplus::Graphic
   //sprites.Draw(dc, dest, srcR);
 
 
+  if ((matIndex < 0 || matIndex >= MAX_COLORS) || (tval != TV_POTION1 && tval != TV_POTION2)) { return; }  //  color == colorNone)
+
+  COLORREF matColor = colors[matIndex].color;
 
   Gdiplus::Rect dest2( dest.left,dest.top,  dest.Width(),dest.Height()); 
 
-	Color tintingColor(255,0,0); 
-  int angle = 154;
-	tintingColor.SetValue( Color::MakeARGB(255, angle, 255-angle, tintingColor.GetBlue() )); // tintingColor.GetGreen()
+  Color tintingColor(matColor); // 255, 0, 0);
+  // int angle = 154;
+	// tintingColor.SetValue( Color::MakeARGB(255, angle, 255-angle, tintingColor.GetBlue() )); // tintingColor.GetGreen()
 
 	float cr = tintingColor.GetRed()   / 255.0f;
   float cg = tintingColor.GetGreen() / 255.0f;
@@ -160,7 +170,7 @@ void SpriteDrawer::drawSprite(int myChar, CRect& dest, CDC& dc, Gdiplus::Graphic
 	   ColorMatrixFlagsDefault,
 	   ColorAdjustTypeBitmap);   
 
-  if (color == colorNone) { return; } 
+
   // UINT             zzwidth = sprites2.GetWidth();
 	graphics.DrawImage(
 	   &sprites2, 
@@ -426,7 +436,7 @@ void CChildView::OnPaint()
 				);
 
       if (cell.color != colorNone || cell.tile == Ti_Thing || cell.tile == Ti_Environ) { // IE if monster, not text..
-        sprites.drawSprite(cell.c, cellR, dc, graphics, cell.creatureIndex, cell.tile, cell.color);
+        sprites.drawSprite(cell.c, cellR, dc, graphics, cell.creatureIndex, cell.tile, cell.color, cell.matIndex, cell.tval);
       }
 		}
 	}

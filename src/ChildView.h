@@ -27,7 +27,9 @@ public:
 	  Gdiplus::Graphics& graphics,
     int creatureIndex,
     TileEnum tileType,
-    COLORREF color
+    COLORREF color,
+    int matIndex,
+    int tval
   );
 };
 

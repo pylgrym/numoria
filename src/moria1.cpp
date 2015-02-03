@@ -1730,7 +1730,7 @@ static void sub3_move_light(int y1, int x1, int y2, int x2)
     print(loc_symbol(y1, x1), y1, x1);
 
   if (!find_flag || find_prself)
-    print(LocInf('@',Ti_Player,-1), y2, x2);
+    print(LocInf('@',Ti_Player,-1,-1), y2, x2);
 }
 
 

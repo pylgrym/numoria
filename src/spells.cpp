@@ -814,7 +814,7 @@ void fire_bolt( // typ, dir, y, x, dam, bolt_typ)
       }
       else if (panel_contains(y, x) && (py.flags.blind < 1))
       {
-        print( LocInf('*', Ti_Firebolt,-1), y, x);
+        print( LocInf('*', Ti_Firebolt,-1,-1), y, x);
         /* show the bolt */
         put_qio();
       }
@@ -912,7 +912,7 @@ void fire_ball(// typ, dir, y, x, dam_hp, descrip)
                   c_ptr->pl = tmp;
                 }
                 else if (panel_contains(i, j) && (py.flags.blind < 1))
-                  print( LocInf('*', Ti_Fireball, -1), i, j);
+                  print( LocInf('*', Ti_Fireball, -1,-1), i, j);
               }
             }
         /* show ball of whatever */
@@ -949,7 +949,7 @@ void fire_ball(// typ, dir, y, x, dam_hp, descrip)
       }
       else if (panel_contains(y, x) && (py.flags.blind < 1))
       {
-        print( LocInf('*', Ti_Fireball, -1), y, x);
+        print( LocInf('*', Ti_Fireball, -1,-1), y, x);
         /* show bolt */
         put_qio();
       }
@@ -996,7 +996,7 @@ void breath( // typ, y, x, dam_hp, ddesc, monptr)
        been set by a previous monster, but the breath should still
        be visible until the blindness takes effect */
           if (panel_contains(i, j) && !(py.flags.status & PY_BLIND))
-            print( LocInf('*', Ti_Breath,-1), i, j);
+            print( LocInf('*', Ti_Breath,-1,-1), i, j);
           if (c_ptr->cptr > 1)
           {
             m_ptr = &m_list[c_ptr->cptr];

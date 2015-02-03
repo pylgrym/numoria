@@ -8,6 +8,8 @@
 #include "vsmoria.h"
 #include "MainFrm.h"
 
+#include <gdiplus.h>
+using namespace Gdiplus;
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -49,6 +51,9 @@ CvsmoriaApp theApp;
 
 // CvsmoriaApp initialization
 
+ULONG_PTR gdiplusToken = NULL;
+GdiplusStartupInput startupInput;
+
 BOOL CvsmoriaApp::InitInstance()
 {
 	// InitCommonControlsEx() is required on Windows XP if an application
@@ -79,6 +84,8 @@ BOOL CvsmoriaApp::InitInstance()
 	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
 
 
+  GdiplusStartup(&gdiplusToken, &startupInput, 0);
+
 	// To create the main window, this code creates a new frame window
 	// object and then sets it as the application's main window object
 	CMainFrame* pFrame = new CMainFrame;
@@ -103,6 +110,7 @@ BOOL CvsmoriaApp::InitInstance()
 int CvsmoriaApp::ExitInstance()
 {
 	//TODO: handle additional resources you may have added
+  GdiplusShutdown(gdiplusToken);
 	return CWinApp::ExitInstance();
 }
 

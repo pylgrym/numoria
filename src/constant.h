@@ -57,6 +57,7 @@ some of the system defines set up there.
 
 /* Changing values below this line may be hazardous to your health! */
 
+
 /* message line location */
 #define MSG_LINE  0
 
@@ -74,7 +75,7 @@ const int viewPort_COL_Offset = 0; // was 13; (when stat block on left side.)
 #define SCREEN_WIDTH   66
 
 // JG: Was initially SCREEN_WIDTH=66, but that won't fit in 1920/32..
-const int RIGHTMOST_COL = 60 
+const int RIGHTMOST_COL = 60;
 
 #define QUART_HEIGHT (SCREEN_HEIGHT / 4)
 #define QUART_WIDTH  (SCREEN_WIDTH / 4)
@@ -105,6 +106,7 @@ const int RIGHTMOST_COL = 60
 #define STORE_MIN_INVEN	 10   /* Min diff objs in stock for auto sell  */
 #define STORE_TURN_AROUND 9   /* Amount of buying and selling normally */
 #define COST_ADJ	 100  /* Adjust prices for buying and selling  */
+
 
 /* Treasure constants						*/
 #define INVEN_ARRAY_SIZE 34   /* Size of inventory array(Do not change)*/
@@ -156,6 +158,7 @@ const int RIGHTMOST_COL = 60
 #define OBJ_BOLT_RANGE	 18   /* Maximum range of bolts and balls      */
 #define OBJ_RUNE_PROT	 3000 /* Rune of protection resistance	       */
 
+
 /* Creature constants						*/
 #define MAX_CREATURES	  279 /* Number of creatures defined for univ  */
 #define N_MONS_ATTS	  215 /* Number of monster attack types.	*/
@@ -183,6 +186,7 @@ const int RIGHTMOST_COL = 60
 #define MAX_TRAP	 18  /* Number of defined traps		      */
 
 #define SCARE_MONSTER	99
+
 
 /* Descriptive constants					*/
 #define MAX_COLORS     49     /* Used with potions     */

@@ -5,11 +5,16 @@
 
 #pragma once
 
+#include <gdiplus.h>
+
 #include "./Tilemap.h"
+#include "./LocInf.h"
 
 class SpriteDrawer {
 public:
   CImage sprites;
+  Gdiplus::Image sprites2; // (L"potion.png"); // RotationInput.bmp");
+
   int imgWidth, imgHeight;
   int rowCount, colCount;
   int cellWidth, cellHeight;
@@ -18,7 +23,12 @@ public:
   bool initOK;
   SpriteDrawer();
 
-  void drawSprite(int myChar, CRect& dest, CDC& dc, int creatureIndex);
+  void drawSprite(int myChar, CRect& dest, CDC& dc, 
+	  Gdiplus::Graphics& graphics,
+    int creatureIndex,
+    TileEnum tileType,
+    COLORREF color
+  );
 };
 
 // CChildView window

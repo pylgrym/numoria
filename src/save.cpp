@@ -1384,10 +1384,10 @@ static void rd_byte( int8u *ptr)
 
 static void rd_short( int16u *ptr)
 {
-  int8u c;
   int16u s;
 
 #ifndef NO_XOR
+  int8u c;
   c = (getc(fileptr) & 0xFF);
   s = c ^ xor_byte;
   xor_byte = (getc(fileptr) & 0xFF);
@@ -1499,10 +1499,11 @@ static void rd_shorts(int16u *ptr, register int count)
   register int i;
   register int16u *sptr;
   register int16u s;
-  int8u c;
 
   DEEBUG(fprintf(logfile, "%d SHORTS:", count));
+
 #ifndef NO_XOR
+  int8u c;
   sptr = ptr;
   for (i = 0; i < count; i++)
   {

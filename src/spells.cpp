@@ -243,7 +243,8 @@ int detect_invisible()
     {
       m_ptr->ml = TRUE;
       /* works correctly even if hallucinating */
-      print(LocInf((char)c_list[m_ptr->mptr].cchar, Ti_Creature), (int)m_ptr->fy, (int)m_ptr->fx);
+      creature_type& creatureType = c_list[m_ptr->mptr];
+      print(LocInf((char)creatureType.cchar, Ti_Creature, creatureType.color, m_ptr->mptr), (int)m_ptr->fy, (int)m_ptr->fx);
       flag = TRUE;
     }
   }
@@ -539,7 +540,8 @@ int detect_monsters()
     {
       m_ptr->ml = TRUE;
       /* works correctly even if hallucinating */
-      print(LocInf((char)c_list[m_ptr->mptr].cchar, Ti_Creature), (int)m_ptr->fy,
+      creature_type& creatureType = c_list[m_ptr->mptr];
+      print(LocInf((char)creatureType.cchar, Ti_Creature, creatureType.color, m_ptr->mptr), (int)m_ptr->fy,
         (int)m_ptr->fx);
       detect = TRUE;
     }
@@ -812,7 +814,7 @@ void fire_bolt( // typ, dir, y, x, dam, bolt_typ)
       }
       else if (panel_contains(y, x) && (py.flags.blind < 1))
       {
-        print( LocInf('*', Ti_Firebolt), y, x);
+        print( LocInf('*', Ti_Firebolt,-1), y, x);
         /* show the bolt */
         put_qio();
       }
@@ -910,7 +912,7 @@ void fire_ball(// typ, dir, y, x, dam_hp, descrip)
                   c_ptr->pl = tmp;
                 }
                 else if (panel_contains(i, j) && (py.flags.blind < 1))
-                  print( LocInf('*', Ti_Fireball), i, j);
+                  print( LocInf('*', Ti_Fireball, -1), i, j);
               }
             }
         /* show ball of whatever */
@@ -947,7 +949,7 @@ void fire_ball(// typ, dir, y, x, dam_hp, descrip)
       }
       else if (panel_contains(y, x) && (py.flags.blind < 1))
       {
-        print( LocInf('*', Ti_Fireball), y, x);
+        print( LocInf('*', Ti_Fireball, -1), y, x);
         /* show bolt */
         put_qio();
       }
@@ -994,7 +996,7 @@ void breath( // typ, y, x, dam_hp, ddesc, monptr)
        been set by a previous monster, but the breath should still
        be visible until the blindness takes effect */
           if (panel_contains(i, j) && !(py.flags.status & PY_BLIND))
-            print( LocInf('*', Ti_Breath), i, j);
+            print( LocInf('*', Ti_Breath,-1), i, j);
           if (c_ptr->cptr > 1)
           {
             m_ptr = &m_list[c_ptr->cptr];
@@ -1982,7 +1984,8 @@ int detect_evil()
     {
       m_ptr->ml = TRUE;
       /* works correctly even if hallucinating */
-      print(LocInf((char)c_list[m_ptr->mptr].cchar, Ti_Creature), (int)m_ptr->fy, (int)m_ptr->fx);
+      creature_type& creatureType = c_list[m_ptr->mptr];
+      print(LocInf((char)creatureType.cchar, Ti_Creature, creatureType.color, m_ptr->mptr), (int)m_ptr->fy, (int)m_ptr->fx);
       flag = TRUE;
     }
   }

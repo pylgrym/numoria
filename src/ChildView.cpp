@@ -10,6 +10,15 @@
 
 #include "cursesJG.h"
 
+
+
+#include <math.h>
+#include <gdiplus.h>
+
+using namespace Gdiplus;
+#pragma comment (lib,"Gdiplus.lib")
+
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -18,11 +27,15 @@
 
 const int cellw = 32, cellh = 32;
 
-SpriteDrawer::SpriteDrawer() {
+CString tileFile = L"sprites\\nethack_tiles_32x32px_by_nevanda-d6w352s.png";
+
+SpriteDrawer::SpriteDrawer()
+:sprites2(tileFile) 
+{
   // char buf[256];
   // GetCurrentDirectory(sizeof buf, buf);
   // int res = sprites.Load( _T("sprites\\sprites.png") );
-  int res = sprites.Load( _T("sprites\\nethack_tiles_32x32px_by_nevanda-d6w352s.png") );
+  int res = sprites.Load(tileFile); // _T("sprites\\nethack_tiles_32x32px_by_nevanda-d6w352s.png") );
   initOK = (res >= 0);
 
   CString tilemapFile = _T("tileFile.txt");
@@ -40,7 +53,66 @@ SpriteDrawer::SpriteDrawer() {
 }
 
 
-void SpriteDrawer::drawSprite(int myChar, CRect& dest, CDC& dc, int creatureIndex) {
+
+void rotator(CDC& dc, Gdiplus::Graphics& graphics, double angle) {
+	// https://msdn.microsoft.com/en-us/library/windows/desktop/ms533866%28v=vs.85%29.aspx
+
+
+	Image            image(L"potion.png"); // RotationInput.bmp");
+	ImageAttributes  imageAttributes;
+	UINT             width = image.GetWidth();
+	UINT             height = image.GetHeight();
+
+	REAL             degrees = angle; //60;
+	REAL             pi = acos(-1.0);  // the angle whose cosine is -1.
+	REAL             r = degrees * pi / 180;  // degrees to radians
+
+	// graphics.DrawImage(&image, 10, 10, width, height);
+
+	// COLORREF tintingColor = RGB(255,0,0);
+	Color tintingColor(255,0,0); 
+	tintingColor.SetValue( Color::MakeARGB(255, angle, 255-angle, tintingColor.GetBlue() )); // tintingColor.GetGreen()
+
+	float cr = tintingColor.GetRed()   / 255.0f;
+    float cg = tintingColor.GetGreen() / 255.0f;
+    float cb = tintingColor.GetBlue()  / 255.0f;
+
+	ColorMatrix colorMatrix = {
+		cr,  cg,  cb,  0,  0, 
+		cb,  cr,  cg,  0,  0, 
+		cg,  cb,  cr,  0,  0, 
+		 0,   0,   0,  1,  0, 
+		 0,   0,   0,  0,  1
+      /*
+	   cos(r),  sin(r), 0.0f, 0.0f, 0.0f,
+	   -sin(r), cos(r), 0.0f, 0.0f, 0.0f,
+	   0.0f,    0.0f,   1.0f, 0.0f, 0.0f,
+	   0.0f,    0.0f,   0.0f, 1.0f, 0.0f,
+	   0.0f,    0.0f,   0.0f, 0.0f, 1.0f
+	  */
+	};
+   
+	imageAttributes.SetColorMatrix(
+	   &colorMatrix, 
+	   ColorMatrixFlagsDefault,
+	   ColorAdjustTypeBitmap);   
+
+	graphics.DrawImage(
+	   &image, 
+	   Gdiplus::Rect(32, 5, width, height),  // destination rectangle 
+	   0, 0,        // upper-left corner of source rectangle 
+	   width,       // width of source rectangle
+	   height,      // height of source rectangle
+	   UnitPixel,
+	   &imageAttributes);
+
+	CRect rect(0,555,32,590);
+	CBrush brush(tintingColor.ToCOLORREF());                    //RGB(0,0,20));   // Black  background
+	dc.FillRect(&rect, &brush);
+}
+
+
+void SpriteDrawer::drawSprite(int myChar, CRect& dest, CDC& dc, Gdiplus::Graphics& graphics, int creatureIndex, TileEnum tileType, COLORREF color) {
   if (!initOK) { return;  } // Fail silently/gracefully.
 
   int row = 0, col = 0;
@@ -57,7 +129,49 @@ void SpriteDrawer::drawSprite(int myChar, CRect& dest, CDC& dc, int creatureInde
   CRect srcR(CPoint(0, 0), CSize(cellWidth, cellHeight));
   srcR.OffsetRect(offset_x, offset_y);
 
-  sprites.Draw(dc, dest, srcR);
+  //sprites.Draw(dc, dest, srcR);
+
+
+
+  Gdiplus::Rect dest2( dest.left,dest.top,  dest.Width(),dest.Height()); 
+
+	Color tintingColor(255,0,0); 
+  int angle = 154;
+	tintingColor.SetValue( Color::MakeARGB(255, angle, 255-angle, tintingColor.GetBlue() )); // tintingColor.GetGreen()
+
+	float cr = tintingColor.GetRed()   / 255.0f;
+  float cg = tintingColor.GetGreen() / 255.0f;
+  float cb = tintingColor.GetBlue()  / 255.0f;
+
+  ColorMatrix colorMatrix = {
+    // 1,0,0,0,0, 
+    cr, cg, cb, 0, 0,
+    // 0,1,0,0,0, 
+    cb, cr, cg, 0, 0,
+    // 0,0,1,0,0, 
+    cg, cb, cr, 0, 0,
+    0, 0, 0, 1, 0,
+    0, 0, 0, 0, 1
+  }; 
+  ImageAttributes  imageAttributes;
+
+	imageAttributes.SetColorMatrix(
+	   &colorMatrix, 
+	   ColorMatrixFlagsDefault,
+	   ColorAdjustTypeBitmap);   
+
+  if (color == colorNone) { return; } 
+  // UINT             zzwidth = sprites2.GetWidth();
+	graphics.DrawImage(
+	   &sprites2, 
+	   dest2, // Rect(32, 5, width, height),  // destination rectangle 
+	   offset_x, offset_y, // 0, 0,        // upper-left corner of source rectangle 
+	   cellWidth, // width,       // width of source rectangle
+	   cellHeight, // height,      // height of source rectangle
+	   UnitPixel,
+	   &imageAttributes);
+
+
 }
 
 
@@ -226,6 +340,12 @@ void invalidateCell(int row, int col) {
 }
 
 
+
+
+
+
+
+
 void CChildView::OnPaint() 
 {
 	CPaintDC dc(this); // device context for painting
@@ -268,6 +388,8 @@ void CChildView::OnPaint()
 
   extern CursesJG Csr;
 
+	Graphics graphics(dc);
+
 	for (int row = 0; row<Csr.LINES; ++row) {
 		for (int col = 0; col<Csr.COLS; ++col) {
       const ScreenCell& cell = Csr.cell(row, col);
@@ -304,7 +426,7 @@ void CChildView::OnPaint()
 				);
 
       if (cell.color != colorNone || cell.tile == Ti_Thing || cell.tile == Ti_Environ) { // IE if monster, not text..
-        sprites.drawSprite(cell.c, cellR, dc, cell.creatureIndex);
+        sprites.drawSprite(cell.c, cellR, dc, graphics, cell.creatureIndex, cell.tile, cell.color);
       }
 		}
 	}

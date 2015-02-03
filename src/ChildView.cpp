@@ -29,7 +29,8 @@ using namespace Gdiplus;
 
 
 
-const int cellw = 32, cellh = 32;
+const int cellw = 32; //  20; // 32
+const int cellh = 32;
 
 CString tileFile = L"sprites\\nethack_tiles_32x32px_by_nevanda-d6w352s.png";
 
@@ -143,9 +144,13 @@ void SpriteDrawer::drawSprite(int myChar, CRect& dest, CDC& dc, Gdiplus::Graphic
 
   COLORREF matColor = colors[matIndex].color;
 
+  CBrush brush(matColor);
+  // dc.SelectObject(brush);
+  dc.FillRect(&dest, &brush);
+
   Gdiplus::Rect dest2( dest.left,dest.top,  dest.Width(),dest.Height()); 
 
-  Color tintingColor(matColor); // 255, 0, 0);
+  Color tintingColor( GetRValue(matColor), GetGValue(matColor), GetBValue(matColor) ); // 255, 0, 0);
   // int angle = 154;
 	// tintingColor.SetValue( Color::MakeARGB(255, angle, 255-angle, tintingColor.GetBlue() )); // tintingColor.GetGreen()
 

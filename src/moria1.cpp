@@ -425,7 +425,6 @@ char *describe_use(int i)
 /* Displays equipment items from r1 to end	-RAK-	*/
 /* Keep display as far right as possible. -CJS- */
 int show_equip(int weight, int col)
-// int weight, col;
 {
   register int i, line;
   int total_weight, l, len, lim;
@@ -435,11 +434,11 @@ int show_equip(int weight, int col)
   register inven_type *i_ptr;
 
   line = 0;
-  len = 79 - col;
+  len = (RIGHTMOST_COL-1) - col; //79
   if (weight)
-    lim = 52;
+    lim = (RIGHTMOST_COL - 28); // 52;
   else
-    lim = 60;
+    lim = (RIGHTMOST_COL - 20); //60;
   for (i = INVEN_WIELD; i < INVEN_ARRAY_SIZE; i++) /* Range of equipment */
     {
       i_ptr = &inventory[i];
@@ -490,7 +489,7 @@ int show_equip(int weight, int col)
 	  line++;
 	}
     }
-  col = 79 - len;
+  col = (RIGHTMOST_COL - 1) - len; // 79
   if (col < 0)
     col = 0;
 
@@ -513,7 +512,7 @@ int show_equip(int weight, int col)
 	      total_weight = i_ptr->weight*i_ptr->number;
 	      (void) sprintf(prt2, "%3d.%d lb",
 			     (total_weight) / 10, (total_weight) % 10);
-	      prt(prt2, line+1, 71);
+	      prt(prt2, line+1, (RIGHTMOST_COL - 9)); // 71
 	    }
 	  line++;
 	}
@@ -521,6 +520,8 @@ int show_equip(int weight, int col)
   erase_line(line+1, col);
   return col;
 }
+
+
 
 /* Remove item from equipment list		-RAK-	*/
 void takeoff(int item_val, int posn)
@@ -1261,12 +1262,12 @@ void inven_command(char command)
 
 
 /* Get the ID of an item and return the CTR value of it	-RAK-	*/
-int get_item( // com_val, pmt, i, j, mask, message)
-int *com_val,
-char *pmt,
-int i, int j,
-char *mask,
-char *message)
+int get_item(
+  int *com_val,
+  char *pmt,
+  int i, int j,
+  char *mask,
+  char *message)
 {
   vtype out_val;
   char which;

@@ -304,7 +304,8 @@ const int RIGHTMOST_COL = 60;
 
 // width of stat block columns (might change to tabbed approach):
 // (14 meant it couldn't fit on screen.)
-#define STATB_WID 13
+// 13 also bad, I need to look properly into spacing and placing those fields.
+#define STATB_WID 12
 
 const int STAT_RACE_ROW = STAT_LINE + 0;
 const int STAT_RACE_COL = STAT_COLUMN + STATB_WID * 0;

@@ -294,8 +294,10 @@ const int viewPort_COL_Offset = 0; // was 13; (when stat block on left side.)
 
 // line/row where stat block starts:
 #define STAT_LINE   25
+
 // width of stat block columns (might change to tabbed approach):
-#define STATB_WID 14
+// (14 meant it couldn't fit on screen.)
+#define STATB_WID 13
 
 const int STAT_RACE_ROW = STAT_LINE + 0;
 const int STAT_RACE_COL = STAT_COLUMN + STATB_WID * 0;

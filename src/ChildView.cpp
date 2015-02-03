@@ -273,8 +273,10 @@ void CChildView::OnPaint()
       const ScreenCell& cell = Csr.cell(row, col);
 
 			CPoint p(col, row);
-			int x = col*cellw, y = row*cellh;
-			CRect cellR(CPoint(x, y), CSize(cellw, cellh));
+      int cellw2 = cellw;
+      if (row == 0) { cellw2 = 20;  } // KLUDGE TO READ TEXT, on top msg row.
+			int x = col*cellw2, y = row*cellh;
+			CRect cellR(CPoint(x, y), CSize(cellw2, cellh));
 
 			dc.Rectangle(&cellR);  
       CRect shrink = cellR;

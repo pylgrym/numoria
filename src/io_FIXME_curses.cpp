@@ -1497,7 +1497,7 @@ char *command)
 
 bool isprint2(int ch) { // To protect us against stupid asserts in std isprint
   if (ch < -1 || ch > 255) { return false;  }
-  return isprint(ch);
+  return 0 != isprint(ch);
 }
 
 /* Gets a string terminated by <RETURN>		*/

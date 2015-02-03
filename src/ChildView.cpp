@@ -136,7 +136,7 @@ void SpriteDrawer::drawSprite(int myChar, CRect& dest, CDC& dc, Gdiplus::Graphic
   CRect srcR(CPoint(0, 0), CSize(cellWidth, cellHeight));
   srcR.OffsetRect(offset_x, offset_y);
 
-  //sprites.Draw(dc, dest, srcR);
+  sprites.Draw(dc, dest, srcR);
 
 
   if ((matIndex < 0 || matIndex >= MAX_COLORS) || (tval != TV_POTION1 && tval != TV_POTION2)) { return; }  //  color == colorNone)

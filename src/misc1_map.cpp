@@ -576,7 +576,7 @@ LocInf loc_symbol(int y, int x)  { // unsigned char
   } else if ((cave_ptr->tptr != 0) && (t_list[cave_ptr->tptr].tval != TV_INVIS_TRAP)) {
     inven_type& t_item = t_list[cave_ptr->tptr];
     int mat_index = t_item.subval & (ITEM_SINGLE_STACK_MIN - 1); // color/material-index.
-    return LocInf(t_list[cave_ptr->tptr].tchar, Ti_Thing, mat_index, t_item.tval); // There is a THING on the floor.
+    return LocInf(t_list[cave_ptr->tptr].tchar, Ti_Thing, mat_index, cave_ptr->tptr); // t_item.tval); // There is a THING on the floor.
   } else if (cave_ptr->fval <= MAX_CAVE_FLOOR) {
     return LocInf('.', Ti_Environ, -1,-1); // Ti_Floor); // FLOOR
   } else if (cave_ptr->fval == GRANITE_WALL || cave_ptr->fval == BOUNDARY_WALL || highlight_seams == FALSE) {
@@ -639,7 +639,7 @@ int compact_monsters()
 
   msg_print("Compacting monsters...");
 
-  cur_dis = 66;
+  cur_dis = SCREEN_WIDTH; // was: 66;
   delete_any = FALSE;
   do
   {
@@ -969,7 +969,7 @@ static void compact_objects()
   msg_print("Compacting objects...");
 
   ctr = 0;
-  cur_dis = 66;
+  cur_dis = SCREEN_WIDTH; // was: 66;
   do
   {
     for (i = 0; i < cur_height; i++)
@@ -1010,7 +1010,10 @@ static void compact_objects()
       }
     if (ctr == 0)  cur_dis -= 6;
   } while (ctr <= 0);
-  if (cur_dis < 66)  prt_map();
+
+  if (cur_dis < SCREEN_WIDTH) { // ; // was: 66
+    prt_map();
+  }
 }
 
 /* Gives pointer to next free space			-RAK-	*/

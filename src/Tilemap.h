@@ -3,6 +3,8 @@
 #include <vector>
 #include <map>
 
+#include "LocInf.h"
+
 class Assoc {
 public:
   CString key;
@@ -27,10 +29,14 @@ public:
   // std::vector<Assoc> hash;
   std::map<CString,Assoc> hash;
   void buildHash();
-  bool charFromHash(int myChar, int& x, int& y, int creatureIndex);
+  void buildCreatureHash();
+  void buildThingHash();
+
+  bool charFromHash(int myChar, int& x, int& y, int creatureThingIndex, TileEnum tileType);
 
   Assoc* getAssoc(CString key);
   std::map<int, CPoint> creatureTile; // Maps from monster-index to tilepos.
+  std::map<int, CPoint> thingTile; // Maps from thing-index to tilepos.
 
 };
 

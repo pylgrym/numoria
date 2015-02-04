@@ -1,4 +1,5 @@
 "!" 5 17
+""" 38 13
 "#" 0 21
 "$" 26 19
 "%" 31 20
@@ -371,3 +372,392 @@
 "Ancient Multi-Hued Dragon" 7 9
 "Evil Iggy" 30 7
 "Balrog" 25 7
+"Poison" 14 12
+"Blindness" 15 12
+"Paranoia" 6 12
+"Confusion" 7 12
+"Hallucination" 8 12
+"Cure Poison" 9 12
+"Cure Blindness" 10 12
+"Cure Paranoia" 11 12
+"Cure Confusion" 12 12
+"Weakness" 13 12
+"Unhealth" 14 12
+"Restore Constitution" 15 12
+"First-Aid" 6 12
+"Minor Cures" 7 12
+"Light Cures" 8 12
+"Restoration" 9 12
+"Poison" 11 12
+"Hallucination" 12 12
+"Cure Poison" 13 12
+"Unhealth" 14 12
+"Major Cures" 15 12
+"& Ration~ of Food" 18 16
+"& Slime Mold~" 25 20
+"& Piece~ of Elvish Waybread" 16 16
+"& Dagger (Main Gauche)" 14 10
+"& Dagger (Misericorde)" 13 10
+"& Dagger (Stiletto)" 12 10
+"& Dagger (Bodkin)" 11 10
+"& Broken Dagger" 14 10
+"& Backsword" 33 10
+"& Bastard Sword" 34 10
+"& Thrusting Sword (Bilbo)" 24 10
+"& Thrusting Sword (Baselard)" 35 10
+"& Broadsword" 31 10
+"& Two-Handed Sword (Claymore)" 26 10
+"& Cutlass" 28 10
+"& Two-Handed Sword (Espadon)" 25 10
+"& Executioner's Sword" 24 10
+"& Two-Handed Sword (Flamberge)" 29 10
+"& Foil" 17 11
+"& Katana" 16 10
+"& Longsword" 31 10
+"& Two-Handed Sword (No-Dachi)" 30 10
+"& Rapier" 28 10
+"& Sabre" 34 10
+"& Small Sword" 23 10
+"& Two-Handed Sword (Zweihander)" 32 10
+"& Broken Sword" 33 10
+"& Ball and Chain" 11 11
+"& Cat-o'-Nine-Tails" 18 11
+"& Wooden Club" 20 10
+"& Flail" 17 11
+"& Two-Handed Great Flail" 11 11
+"& Morningstar" 10 11
+"& Mace" 16 11
+"& War Hammer" 12 11
+"& Lead-Filled Mace" 15 11
+"& Awl-Pike" 4 11
+"& Beaked Axe" 2 11
+"& Fauchard" 34 10
+"& Glaive" 1 11
+"& Halberd" 9 11
+"& Lucerne Hammer" 7 11
+"& Pike" 5 11
+"& Spear" 8 10
+"& Lance" 0 11
+"& Javelin" 4 10
+"& Battle Axe (Balestarius)" 9 11
+"& Battle Axe (European)" 22 10
+"& Broad Axe" 22 10
+"& Short Bow" 22 11
+"& Long Bow" 21 11
+"& Composite Bow" 20 11
+"& Light Crossbow" 24 11
+"& Heavy Crossbow" 24 11
+"& Sling" 23 11
+"& Arrow~" 37 9
+"& Bolt~" 25 20
+"& Rounded Pebble~" 26 20
+"& Iron Shot~" 26 20
+"& Iron Spike~" 14 11
+"& Brass Lantern~" 37 14
+"& Wooden Torch~" 13 11
+"& Orcish Pick" 30 15
+"& Dwarven Pick" 30 15
+"& Gnomish Shovel" 30 15
+"& Dwarven Shovel" 30 15
+"& Pair of Soft Leather Shoes" 16 13
+"& Pair of Soft Leather Boots" 20 13
+"& Pair of Hard Leather Boots" 19 13
+"& Soft Leather Cap" 28 11
+"& Hard Leather Cap" 28 11
+"& Metal Cap" 25 11
+"& Iron Helm" 26 11
+"& Steel Helm" 27 11
+"& Silver Crown" 33 11
+"& Golden Crown" 35 11
+"& Jewel-Encrusted Crown" 26 11
+"& Robe" 3 13
+"Soft Leather Armor" 29 12
+"Soft Studded Leather" 29 12
+"Hard Leather Armor" 30 12
+"Hard Studded Leather" 30 12
+"Woven Cord Armor" 37 11
+"Soft Leather Ring Mail" 29 12
+"Hard Leather Ring Mail" 30 12
+"Leather Scale Mail" 19 12
+"Metal Scale Mail" 20 12
+"Chain Mail" 28 12
+"Rusty Chain Mail" 27 12
+"Double Chain Mail" 27 12
+"Augmented Chain Mail" 38 11
+"Bar Chain Mail" 36 11
+"Metal Brigandine Armor" 37 11
+"Laminated Armor" 5 12
+"Partial Plate Armor" 4 12
+"Metal Lamellar Armor" 2 12
+"Full Plate Armor" 1 12
+"Ribbed Plate Armor" 0 12
+"& Cloak" 34 12
+"& Set of Leather Gloves" 12 13
+"& Set of Gauntlets" 13 13
+"& Small Leather Shield" 5 13
+"& Medium Leather Shield" 5 13
+"& Large Leather Shield" 6 13
+"& Small Metal Shield" 5 13
+"& Medium Metal Shield" 8 13
+"& Large Metal Shield" 9 13
+"Strength" 3 14
+"Dexterity" 2 14
+"Constitution" 37 13
+"Intelligence" 36 13
+"Speed" 38 13
+"Searching" 39 13
+"Teleportation" 37 13
+"Slow Digestion" 3 14
+"Resist Fire" 35 13
+"Resist Cold" 27 13
+"Feather Falling" 26 13
+"Adornment" 28 13
+"& Arrow~" 36 9
+"Weakness" 28 13
+"Lordly Protection (FIRE)" 30 13
+"Lordly Protection (ACID)" 31 13
+"Lordly Protection (COLD)" 32 13
+"WOE" 11 14
+"Stupidity" 28 13
+"Increase Damage" 9 14
+"Increase To-Hit" 10 14
+"Protection" 12 14
+"Aggravate Monster" 0 14
+"See Invisible" 5 14
+"Sustain Strength" 51 8
+"Sustain Intelligence" 31 13
+"Sustain Wisdom" 28 13
+"Sustain Constitution" 29 13
+"Sustain Dexterity" 26 13
+"Sustain Charisma" 30 13
+"Slaying" 13 14
+"Wisdom" 1 14
+"Charisma" 0 14
+"Searching" 39 13
+"Teleportation" 36 13
+"Slow Digestion" 37 13
+"Resist Acid" 34 13
+"Adornment" 1 14
+"& Bolt~" 26 20
+"the Magi" 21 14
+"DOOM" 14 14
+"Enchant Weapon To-Hit" 30 17
+"Enchant Weapon To-Dam" 30 17
+"Enchant Armor" 31 17
+"Identify" 31 17
+"Remove Curse" 30 17
+"Light" 31 17
+"Summon Monster" 32 17
+"Phase Door" 31 17
+"Teleport" 32 17
+"Teleport Level" 34 17
+"Monster Confusion" 33 17
+"Magic Mapping" 32 17
+"Sleep Monster" 34 17
+"Rune of Protection" 33 17
+"Treasure Detection" 32 17
+"Object Detection" 33 17
+"Trap Detection" 31 17
+"Door/Stair Location" 34 17
+"Mass Genocide" 32 17
+"Detect Invisible" 31 17
+"Aggravate Monster" 32 17
+"Trap Creation" 31 17
+"Trap/Door Destruction" 32 17
+"Door Creation" 31 17
+"Recharging" 31 17
+"Genocide" 32 17
+"Darkness" 32 17
+"Protection from Evil" 30 17
+"Create Food" 25 17
+"Dispel Undead" 30 17
+"*Enchant Weapon*" 30 17
+"Curse Weapon" 30 17
+"*Enchant Armor*" 28 17
+"Curse Armor" 29 17
+"Summon Undead" 30 17
+"Blessing" 30 17
+"Holy Chant" 29 17
+"Holy Prayer" 29 17
+"Word-of-Recall" 29 17
+"*Destruction*" 33 17
+"Slime Mold Juice" 38 16
+"Apple Juice" 28 16
+"Water" 30 16
+"Strength" 5 17
+"Weakness" 37 16
+"Restore Strength" 25 16
+"Intelligence" 24 16
+"Lose Intelligence" 30 16
+"Restore Intelligence" 34 16
+"Wisdom" 9 17
+"Lose Wisdom" 3 17
+"Restore Wisdom" 30 16
+"Charisma" 38 16
+"Ugliness" 4 17
+"Restore Charisma" 33 16
+"Cure Light Wounds" 38 16
+"Cure Serious Wounds" 37 16
+"Cure Critical Wounds" 2 17
+"Healing" 29 16
+"Constitution" 24 16
+"Gain Experience" 0 17
+"Sleep" 29 16
+"Blindness" 2 17
+"Confusion" 3 17
+"Poison" 9 17
+"Haste Self" 25 16
+"Slowness" 34 16
+"Dexterity" 32 16
+"Restore Dexterity" 34 16
+"Restore Constitution" 35 16
+"Lose Experience" 36 16
+"Salt Water" 37 16
+"Invulnerability" 38 16
+"Heroism" 39 16
+"Super Heroism" 31 16
+"Boldness" 26 16
+"Restore Life Levels" 37 16
+"Resist Heat" 4 17
+"Resist Cold" 24 16
+"Detect Invisible" 30 16
+"Slow Poison" 38 16
+"Neutralize Poison" 37 16
+"Restore Mana" 30 16
+"Infra-Vision" 24 16
+"& Flask~ of Oil" 28 16
+"Light" 39 18
+"Lightning Bolts" 0 19
+"Frost Bolts" 1 19
+"Fire Bolts" 2 19
+"Stone-to-Mud" 3 19
+"Polymorph" 4 19
+"Heal Monster" 5 19
+"Haste Monster" 6 19
+"Slow Monster" 7 19
+"Confuse Monster" 8 19
+"Sleep Monster" 9 19
+"Drain Life" 10 19
+"Trap/Door Destruction" 11 19
+"Magic Missile" 12 19
+"Wall Building" 13 19
+"Clone Monster" 14 19
+"Teleport Away" 15 19
+"Disarming" 16 19
+"Lightning Balls" 17 19
+"Cold Balls" 19 19
+"Fire Balls" 9 19
+"Stinking Cloud" 5 19
+"Acid Balls" 1 19
+"Wonder" 15 19
+"Light" 18 19
+"Door/Stair Location" 22 19
+"Trap Location" 23 19
+"Treasure Location" 24 19
+"Object Location" 25 19
+"Teleportation" 18 19
+"Earthquakes" 22 19
+"Summoning" 24 19
+"*Destruction*" 25 19
+"Starlight" 18 19
+"Haste Monsters" 22 19
+"Slow Monsters" 24 19
+"Sleep Monsters" 25 19
+"Cure Light Wounds" 18 19
+"Detect Invisible" 25 19
+"Speed" 24 19
+"Slowness" 23 19
+"Mass Polymorph" 21 19
+"Remove Curse" 18 19
+"Detect Evil" 25 19
+"Curing" 24 19
+"Dispel Evil" 23 19
+"Darkness" 22 19
+"[Beginners-Magick]" 1 18
+"[Magick I]" 7 18
+"[Magick II]" 8 18
+"[The Mages' Guide to Power]" 9 18
+"[Beginners Handbook]" 16 18
+"[Words of Wisdom]" 18 18
+"[Chants and Blessings]" 19 18
+"[Exorcisms and Dispellings]" 20 18
+"& Small Wooden Chest" 26 14
+"& Large Wooden Chest" 27 14
+"& Small Iron Chest" 26 14
+"& Large Iron Chest" 25 14
+"& Small Steel Chest" 27 14
+"& Large Steel Chest" 26 14
+"& Rat Skeleton" 30 4
+"& Giant Centipede Skeleton" 32 15
+"some Filthy Rags" 6 15
+"& empty bottle" 39 16
+"some shards of pottery" 28 11
+"& Human Skeleton" 21 7
+"& Dwarf Skeleton" 21 7
+"& Elf Skeleton" 21 7
+"& Gnome Skeleton" 21 7
+"& broken set of teeth" 14 21
+"& large broken bone" 36 15
+"& broken stick" 14 11
+"& Ration~ of Food" 18 16
+"& Hard Biscuit~" 16 16
+"& Strip~ of Beef Jerky" 35 15
+"& Pint~ of Fine Ale" 35 16
+"& Pint~ of Fine Wine" 33 16
+"& Pick" 30 15
+"& Shovel" 30 15
+"Identify" 27 17
+"Light" 29 17
+"Phase Door" 27 17
+"Magic Mapping" 27 17
+"Treasure Detection" 28 17
+"Object Detection" 31 17
+"Detect Invisible" 30 17
+"Blessing" 34 17
+"Word-of-Recall" 10 17
+"Cure Light Wounds" 9 17
+"Heroism" 5 17
+"Boldness" 25 16
+"Slow Poison" 26 16
+"& Brass Lantern~" 37 14
+"& Wooden Torch~" 13 11
+"& Flask~ of Oil" 4 17
+"& open door" 3 21
+"& closed door" 4 21
+"& secret door" 6 21
+"an up staircase" 11 21
+"a down staircase" 12 21
+"General Store" 36 21
+"Armory" 34 21
+"Weapon Smiths" 30 21
+"Temple" 31 21
+"Alchemy Shop" 32 21
+"Magic Shop" 39 21
+"an open pit" 0 22
+"an arrow trap" 1 22
+"a covered pit" 1 22
+"a trap door" 3 22
+"a loose rock" 28 21
+"a strange rune" 15 22
+"some loose rock" 26 20
+"a gas trap" 9 21
+"a blackened spot" 2 22
+"some corroded rock" 30 20
+"a gas trap" 6 22
+"a dart trap" 9 21
+"some rubble" 28 21
+"& Pint~ of Fine Grade Mush" 38 15
+"a strange rune" 12 22
+"copper" 11 12
+"silver" 7 12
+"garnets" 29 19
+"gold" 26 19
+"opals" 6 16
+"sapphires" 13 12
+"gold" 26 19
+"rubies" 9 12
+"diamonds" 8 12
+"emeralds" 27 20
+"mithril" 26 20
+"nothing" 39 15
+"& ruined chest" 25 14

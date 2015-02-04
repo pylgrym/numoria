@@ -108,6 +108,8 @@ int not_access(const char* fileName, int what) {
 #include <time.h>
 #endif
 
+#include "ChildView.h"
+
 #ifndef VMS
 #ifndef MAC
 #ifndef GEMDOS
@@ -370,6 +372,8 @@ int moria_main(
      (if you are the wizard). In this case, it returns true, but also sets the
      parameter "generate" to true, as it does not recover any cave details. */
 
+  SpriteDrawer::setCellWidth(SpriteDrawer::CONST_CellWidthNarrow); // Narrow during start-up
+
   result = FALSE;
 #ifdef MAC
   if ((new_game == FALSE) && get_char(&generate))
@@ -432,6 +436,8 @@ int moria_main(
   prt_stat_block();
   if (generate)
     generate_cave();
+
+  SpriteDrawer::setCellWidth(SpriteDrawer::CONST_CellWidthDefault); // Wide during game.
 
   /* Loop till dead, or exit			*/
   while (!death)

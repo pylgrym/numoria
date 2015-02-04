@@ -24,17 +24,18 @@ struct LocInf {
   unsigned char c;
   TileEnum tile;
   COLORREF color;
-  int creatureIndex;
+  int creatureThingIndex;
   int matIndex;
-  int tval;
-  LocInf() { c = ' '; tile = Ti_Empty; color = colorNone; creatureIndex = 0; matIndex = -1; tval = -1; }
-  explicit LocInf(unsigned char c_, TileEnum tile_, int matIndex_, int tval_) :c(c_), tile(tile_), color(colorNone), creatureIndex(0), matIndex(matIndex_), tval(tval_) {} // RGB(1, 0, 0)) {}
-  explicit LocInf(unsigned char c_, TileEnum tile_, COLORREF color_, int creatureIndex_) :c(c_), tile(tile_), color(color_), creatureIndex(creatureIndex_), matIndex(-1), tval(-1) {}
+  // int tval;
+  LocInf() { c = ' '; tile = Ti_Empty; color = colorNone; creatureThingIndex = -1; matIndex = -1; } // tval = -1;
+
+  explicit LocInf(unsigned char c_, TileEnum tile_, int matIndex_, int thingIndex_) :c(c_), tile(tile_), color(colorNone), creatureThingIndex(-1), matIndex(matIndex_) {} // , tval(tval_) {} // RGB(1, 0, 0)) {}
+  explicit LocInf(unsigned char c_, TileEnum tile_, COLORREF color_, int creatureIndex_) :c(c_), tile(tile_), color(color_), creatureThingIndex(creatureIndex_), matIndex(-1) {} // , tval(-1) {}
 
   void baseClear() {
     tile = Ti_Empty;
     color = colorNone;
-    creatureIndex = 0; 
+    creatureThingIndex = -1; 
   }
 };
 

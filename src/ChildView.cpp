@@ -28,9 +28,9 @@ using namespace Gdiplus;
 #endif
 
 
-const int cellwNarrow = 20;
-const int cellw = 32; //   20; // 32
-const int cellh = 32;
+const int SpriteDrawer::cellwNarrow = CONST_CellWidthNarrow; // 20;
+int SpriteDrawer::cellw = CONST_CellWidthDefault; // 32; //   20; // 32
+int SpriteDrawer::cellh = CONST_CellWidthDefault; // 32;
 
 CString tileFile = L"sprites\\nethack_tiles_32x32px_by_nevanda-d6w352s.png";
 
@@ -120,7 +120,7 @@ void rotator(CDC& dc, Gdiplus::Graphics& graphics, double angle) {
 
 
 
-void SpriteDrawer::drawSprite(int myChar, CRect& dest, CDC& dc, Gdiplus::Graphics& graphics, int creatureIndex, TileEnum tileType, COLORREF color, int matIndex, int tval) {
+void SpriteDrawer::drawSprite(int myChar, CRect& dest, CDC& dc, Gdiplus::Graphics& graphics, int creatureThingIndex, TileEnum tileType, COLORREF color, int matIndex) { // , int tval) {
   if (!initOK) { return;  } // Fail silently/gracefully.
 
   int row = 0, col = 0;
@@ -128,7 +128,7 @@ void SpriteDrawer::drawSprite(int myChar, CRect& dest, CDC& dc, Gdiplus::Graphic
     row = myChar / colCount;
     col = myChar % colCount;
   } else {
-    bool bFound = tileMap.charFromHash(myChar, col, row, creatureIndex); // row, col);
+    bool bFound = tileMap.charFromHash(myChar, col, row, creatureThingIndex, tileType); // row, col);
     if (!bFound) { return; } // E.g. 'store digits' are not in this set.
   }
 
@@ -139,8 +139,7 @@ void SpriteDrawer::drawSprite(int myChar, CRect& dest, CDC& dc, Gdiplus::Graphic
 
   sprites.Draw(dc, dest, srcR);
 
-
-  if ((matIndex < 0 || matIndex >= MAX_COLORS) || (tval != TV_POTION1 && tval != TV_POTION2)) { return; }  //  color == colorNone)
+  if ((matIndex < 0 || matIndex >= MAX_COLORS) || tileType == Ti_Potion) { return; } //  (tval != TV_POTION1 && tval != TV_POTION2)) { return; }  //  color == colorNone)
 
   COLORREF matColor = colors[matIndex].color;
 
@@ -349,11 +348,11 @@ void CChildView::OnTimer(UINT nIDEvent) { // Used to start app loop.
 
 
 void invalidateCell(int row, int col) {
-  int cellw2 = cellw;
-  if (row == 0) { cellw2 = cellwNarrow;  }
+  int cellw2 = SpriteDrawer::cellw;
+  if (row == 0) { cellw2 = SpriteDrawer::cellwNarrow;  }
 
-	int x = col*cellw2, y = row*cellh;
-	CRect cellR(CPoint(x, y), CSize(cellw2, cellh));
+	int x = col*cellw2, y = row*SpriteDrawer::cellh;
+	CRect cellR(CPoint(x, y), CSize(cellw2, SpriteDrawer::cellh));
   invalidateWndJG(&cellR);
 }
 
@@ -413,10 +412,10 @@ void CChildView::OnPaint()
       const ScreenCell& cell = Csr.cell(row, col);
 
 			CPoint p(col, row);
-      int cellw2 = cellw;
-      if (row == 0) { cellw2 = cellwNarrow;  } // KLUDGE TO READ TEXT, on top msg row.
-			int x = col*cellw2, y = row*cellh;
-			CRect cellR(CPoint(x, y), CSize(cellw2, cellh));
+      int cellw2 = SpriteDrawer::cellw;
+      if (row == 0) { cellw2 = SpriteDrawer::cellwNarrow;  } // KLUDGE TO READ TEXT, on top msg row.
+			int x = col*cellw2, y = row*SpriteDrawer::cellh;
+			CRect cellR(CPoint(x, y), CSize(cellw2, SpriteDrawer::cellh));
 
 			dc.Rectangle(&cellR);  
       CRect shrink = cellR;
@@ -444,7 +443,7 @@ void CChildView::OnPaint()
 				);
 
       if (cell.color != colorNone || cell.tile == Ti_Thing || cell.tile == Ti_Environ) { // IE if monster, not text..
-        sprites.drawSprite(cell.c, cellR, dc, graphics, cell.creatureIndex, cell.tile, cell.color, cell.matIndex, cell.tval);
+        sprites.drawSprite(cell.c, cellR, dc, graphics, cell.creatureThingIndex, cell.tile, cell.color, cell.matIndex); //  , cell.tval);
       }
 		}
 	}

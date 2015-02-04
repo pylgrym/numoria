@@ -97,9 +97,14 @@ void Tilemap::buildHash() {
     hash[assoc.key] = assoc;
   }
 
+  buildCreatureHash();
+  buildThingHash();
+}
+
+void Tilemap::buildCreatureHash() {
+
   for (int j = 0; j < MAX_CREATURES; ++j) {
     creature_type& creatureType = c_list[j];
-
     // CT2A ac(assoc.key, CP_UTF8); // CP_ACP);  // s.c_str()
     CA2T uc(creatureType.name, CP_ACP);  // s.c_str()
     CString myKey=uc; 
@@ -108,17 +113,43 @@ void Tilemap::buildHash() {
     if (pAssoc != NULL) {
       creatureTile[j] = pAssoc->tilepos;
     }
-
   }
 
 }
 
 
-bool Tilemap::charFromHash(int myChar, int& x, int& y, int creatureIndex) {
-  if (creatureIndex > 1) {
+void Tilemap::buildThingHash() {
+
+  for (int j = 0; j < MAX_OBJECTS; ++j) {
+    treasure_type& objectType = object_list[j]; // c_list
+    // CT2A ac(assoc.key, CP_UTF8); // CP_ACP);  // s.c_str()
+    CA2T uc(objectType.name, CP_ACP);  // s.c_str()
+    CString myKey=uc; 
+
+    Assoc* pAssoc = getAssoc(myKey);
+    if (pAssoc != NULL) {
+      thingTile[j] = pAssoc->tilepos;
+    }
+  }
+
+}
+
+
+bool Tilemap::charFromHash(int myChar, int& x, int& y, int creatureThingIndex, TileEnum tileType) {
+  if (creatureThingIndex > 1 && tileType == Ti_Creature) {
     std::map<int, CPoint>::iterator j;
-    j = creatureTile.find(creatureIndex); // Maps from monster-index to tilepos.
+    j = creatureTile.find(creatureThingIndex); // Maps from monster-index to tilepos.
     if (j != creatureTile.end()) {
+      x = j->second.x;
+      y = j->second.y;
+      return true;
+    }
+  }
+
+  if (creatureThingIndex > -1 && (tileType == Ti_Thing || tileType == Ti_Potion) ) {
+    std::map<int, CPoint>::iterator j;
+    j = thingTile.find(creatureThingIndex); // Maps from thing-index to tilepos.
+    if (j != thingTile.end()) {
       x = j->second.x;
       y = j->second.y;
       return true;

@@ -9,7 +9,7 @@
 
 NB! - anything failing should return ERR=0.
 */
-extern void invalidateWndJG(CRect* pRect);
+extern void invalidateWndJG(CRect* pRect, bool erase);
 extern void invalidateCell(int row, int col);
 
 
@@ -26,8 +26,8 @@ CursesJG::CursesJG() {
 
 int  CursesJG::move(int y, int x) { curscr->csr_y = y, curscr->csr_x = x; return 1; }
 
-int  CursesJG::addch(const chtype ch) { 
-  curscr->cell(curscr->csr_y, curscr->csr_x) = ScreenCell(ch); 
+int  CursesJG::addch(const chtype ch, COLORREF backColor) { 
+  curscr->cell(curscr->csr_y, curscr->csr_x) = ScreenCell(ch, backColor); 
   invalidateCell(curscr->csr_y, curscr->csr_x);
   help_advCsr(); return 1; 
 }
@@ -48,13 +48,13 @@ void CursesJG::help_advCsr() { // Move cursor right, then new line, then top of 
 	curscr->csr_y = 0;
 }
 
-int  CursesJG::mvaddch(int y, int x, const chtype ch) { move(y, x); addch(ch); return 1; }
+int  CursesJG::mvaddch(int y, int x, const chtype ch) { move(y, x); addch(ch, colorNone); return 1; }
 int  CursesJG::mvaddch_L(int y, int x, const struct LocInf& ch) { move(y, x); addch_L(ch); return 1; }
 
-int CursesJG::addstr(const char *str) {
+int CursesJG::addstr(const char *str, COLORREF backColor) {
 	int count = 0;
 	for (int i = 0; str[i] != NULL; ++i, ++count) {
-		addch(str[i]);
+		addch(str[i], backColor);
 		if (count > (COLS*LINES)) {
 			assert(false); // string too long, in addstr().
 			count = 1 / (count - count);
@@ -63,7 +63,7 @@ int CursesJG::addstr(const char *str) {
 	return 1;
 }
 
-int CursesJG::mvaddstr(int y, int x, const char *str) { move(y, x); addstr(str); return 1; }
+int CursesJG::mvaddstr(int y, int x, const char *str, COLORREF backColor) { move(y, x); addstr(str, backColor); return 1; }
 
 int CursesJG::wrefresh(WINDOW *) { 
 	// FIXME, window-mechanism doesn't exist yet.
@@ -87,7 +87,7 @@ int CursesJG::clear() {
   // I'll just trigger a complete redraw here
   // (So far I only use MS-Window's Invalidate, 
   // I don't keep separate track of 'which parts are dirty/need refreshing', on char-by-char basis.)
-  invalidateWndJG(NULL); // in clear.
+  invalidateWndJG(NULL, true); // in clear.
 
 	return 1; 
 }
@@ -149,7 +149,7 @@ int CursesJG::clrtobot() {
 
 int CursesJG::overwrite(const WINDOW * src, WINDOW * tgt) { 
   tgt->overwrite(*src);  
-  invalidateWndJG(NULL); // in touchwin.
+  invalidateWndJG(NULL, true); // false); // in touchwin.
   return 1; 
 }
 
@@ -157,7 +157,7 @@ void CursesJG::getyx(WINDOW *win, int& y, int& x) { y = win->csr_y; x = win->csr
 
 int CursesJG::touchwin(WINDOW *win) { 
 	// cur_scr = win; // Possibly this?
-  invalidateWndJG(NULL); // in touchwin.
+  invalidateWndJG(NULL, true); // in touchwin.
   return 1;
 }
 
@@ -167,7 +167,7 @@ WINDOW* CursesJG::initscr() {
 	stdscr = newwin(0, 0, 0, 0); // LINES // COLS
 	curscr = stdscr;  // required behaviour of initscr.
 	// FIXME/todo/Consider: initscr is supposed to refresh/init actual screen too!
-	invalidateWndJG(NULL); // in initscr.
+	invalidateWndJG(NULL, true); // in initscr.
 	return stdscr; 
 }
 

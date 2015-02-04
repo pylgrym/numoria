@@ -40,9 +40,12 @@ CursesJG Csr;
 // # define        ERR     (0)
 // typedef char chtype;
 // struct WINDOW;
-int  mvaddstr(int y, int x, const char *str) { return Csr.mvaddstr(y,x,str);  }
-int addstr(const char *str) { return Csr.addstr(str); }
-int  addch(const chtype ch) { return Csr.addch(ch); }
+int  mvaddstr(int y, int x, const char *str) { return Csr.mvaddstr(y,x,str, colorNone);  }
+int  mvaddstr_color(int y, int x, const char *str, COLORREF back) { return Csr.mvaddstr(y,x,str, back);  }
+
+
+int addstr(const char *str) { return Csr.addstr(str, colorNone); }
+int  addch(const chtype ch) { return Csr.addch(ch, colorNone); }
 
 int  mvaddch(int y, int x, const chtype ch) { return Csr.mvaddch(y, x, ch); }
 int  mvaddch_L(int y, int x, const struct LocInf& ch) { return Csr.mvaddch_L(y, x, ch); }
@@ -567,16 +570,7 @@ void moriaterm()
 
 
 /* Dump IO to buffer					-RAK-	*/
-void put_buffer( // out_str, row, col)
-char *out_str,
-int row, int col)
-#ifdef MAC
-{
-  /* The screen manager handles writes past the edge ok */
-  DSetScreenCursor(col, row);
-  DWriteScreenStringAttr(out_str, ATTR_NORMAL);
-}
-#else
+void put_buffer_color( char *out_str,int row, int col, COLORREF backColor)
 {
   vtype tmp_str;
 
@@ -587,7 +581,7 @@ int row, int col)
   (void) strncpy (tmp_str, out_str, 79 - col);
   tmp_str [79 - col] = '\0';
 
-  if (mvaddstr(row, col, tmp_str) == ERR)
+  if (mvaddstr_color(row, col, tmp_str, backColor) == ERR)
     {
       abort();
       /* clear msg_flag to avoid problems with unflushed messages */
@@ -600,7 +594,18 @@ int row, int col)
       (void) sleep(2);
     }
 }
-#endif
+
+
+void put_buffer(char *out_str, int row, int col) {
+  put_buffer_color(out_str, row, col, colorNone);
+}
+
+
+
+
+
+
+
 
 
 /* Dump the IO buffer to terminal			-RAK-	*/

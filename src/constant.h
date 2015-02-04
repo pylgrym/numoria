@@ -327,12 +327,13 @@ const int STAT_MANA_COL = STAT_COLUMN + STATB_WID * 1;
 const int STAT_LEV_ROW  = STAT_LINE + 3;
 const int STAT_LEV_COL  = STAT_COLUMN + STATB_WID * 1;
 
+//////////////////////////////////////////////////////JG: the '-3' moves that block left..
 const int STAT_EXP_ROW = STAT_LINE + 0;
-const int STAT_EXP_COL = STAT_COLUMN + STATB_WID * 2;
+const int STAT_EXP_COL = STAT_COLUMN + STATB_WID * 2 - 3;
 const int STAT_AU_ROW  = STAT_LINE + 1;
-const int STAT_AU_COL  = STAT_COLUMN + STATB_WID * 2;
+const int STAT_AU_COL  = STAT_COLUMN + STATB_WID * 2 - 3;
 const int STAT_AC_ROW  = STAT_LINE + 2;
-const int STAT_AC_COL  = STAT_COLUMN + STATB_WID * 2;
+const int STAT_AC_COL  = STAT_COLUMN + STATB_WID * 2  -3;
 
 
 const int STAT_DEPTH_ROW = 23;

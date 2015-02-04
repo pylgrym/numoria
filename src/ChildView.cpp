@@ -76,11 +76,11 @@ void rotator(CDC& dc, Gdiplus::Graphics& graphics, double angle) {
 
 	// COLORREF tintingColor = RGB(255,0,0);
 	Color tintingColor(255,0,0); 
-	tintingColor.SetValue( Color::MakeARGB(255, angle, 255-angle, tintingColor.GetBlue() )); // tintingColor.GetGreen()
+	// tintingColor.SetValue( Color::MakeARGB(255, angle, 255-angle, tintingColor.GetBlue() )); // tintingColor.GetGreen()
 
 	float cr = tintingColor.GetRed()   / 255.0f;
-    float cg = tintingColor.GetGreen() / 255.0f;
-    float cb = tintingColor.GetBlue()  / 255.0f;
+  float cg = tintingColor.GetGreen() / 255.0f;
+  float cb = tintingColor.GetBlue()  / 255.0f;
 
 	ColorMatrix colorMatrix = {
 		cr,  cg,  cb,  0,  0, 
@@ -272,14 +272,14 @@ static CChildView* singletonWnd = NULL;
 
 
 
-void invalidateWndJG(CRect* pRect) { // Used by curses-emulator.
+void invalidateWndJG(CRect* pRect, bool erase) { // Used by curses-emulator.
   /* FIXME: we should limit/reduce these invalidates,
   to the actual necessary rectangles,
   and possibly stop 'erase=true'.
   */
   if (singletonWnd == NULL) { return;  }
 	// assert(singletonWnd != NULL);
-  singletonWnd->InvalidateRect(pRect, false); //  true);
+  singletonWnd->InvalidateRect(pRect, erase); //  true);
 }
 
 void flashWndJG() {
@@ -353,7 +353,7 @@ void invalidateCell(int row, int col) {
 
 	int x = col*cellw2, y = row*SpriteDrawer::cellh;
 	CRect cellR(CPoint(x, y), CSize(cellw2, SpriteDrawer::cellh));
-  invalidateWndJG(&cellR);
+  invalidateWndJG(&cellR, false);
 }
 
 
@@ -370,7 +370,6 @@ void CChildView::OnPaint()
 
 	CPen pen(PS_SOLID, 1, RGB(16, 0, 32));
 	dc.SelectObject(pen);
-	CBrush cellBackgroundBrush(RGB(0, 0, 20));   // Black  background
 	// dc.SetBkMode(OPAQUE);
 	dc.SetBkMode(TRANSPARENT);
 
@@ -416,6 +415,10 @@ void CChildView::OnPaint()
       if (row == 0) { cellw2 = SpriteDrawer::cellwNarrow;  } // KLUDGE TO READ TEXT, on top msg row.
 			int x = col*cellw2, y = row*SpriteDrawer::cellh;
 			CRect cellR(CPoint(x, y), CSize(cellw2, SpriteDrawer::cellh));
+
+      COLORREF cellBackground = RGB(0, 0, 20); // "Black"  background
+      if (cell.back != colorNone) { cellBackground = cell.back;  }
+	    CBrush cellBackgroundBrush(cellBackground);   
 
 			dc.Rectangle(&cellR);  
       CRect shrink = cellR;

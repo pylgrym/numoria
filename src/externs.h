@@ -343,6 +343,7 @@ int suspend(void);
 void init_curses(void);
 void moriaterm(void);
 void put_buffer(char *, int, int);
+void put_buffer_color(char *, int, int, COLORREF back);
 void put_qio(void);
 void restore_term(void);
 void shell_out(void);
@@ -431,7 +432,7 @@ void place_object(int, int, int);
 void alloc_object(int (*)(int), int, int); // JG: I added (int) instead of void.
 void random_object(int, int, int);
 void cnv_stat(int8u, char *);
-void prt_stat(int);
+void prt_stat(int); // , COLORREF back);
 void prt_field(char *, int, int);
 int stat_adj(int);
 int chr_adj(void);

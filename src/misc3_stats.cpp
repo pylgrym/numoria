@@ -46,11 +46,11 @@ char *index();
 #endif
 
 #if defined(LINT_ARGS)
-static void prt_lnum(char *, int32, int, int);
+static void prt_lnum(char *, int32, int, int, COLORREF backColor);
 static void prt_7lnum(char *, int32, int, int);
-static void prt_num(char *, int, int, int);
+static void prt_num(char *, int, int, int, COLORREF backColor);
 static void prt_long(int32, int, int);
-static void prt_int(int, int, int);
+static void prt_int(int, int, int, COLORREF backColor);
 static void gain_level(void);
 #endif
 
@@ -274,15 +274,12 @@ void prt_field( // info, row, column)
 }
 
 /* Print long number with header at given row, column */
-static void prt_lnum( // header, num, row, column)
-  char *header,
-  int32 num,
-  int row, int column)
+static void prt_lnum(char *header, int32 num, int row, int column, COLORREF backColor)
 {
   vtype out_val;
 
   (void)sprintf(out_val, "%s: %6ld", header, num);
-  put_buffer(out_val, row, column);
+  put_buffer_color(out_val, row, column, backColor);
 }
 
 /* Print long number (7 digits of space) with header at given row, column */
@@ -298,35 +295,31 @@ static void prt_7lnum( // header, num, row, column)
 }
 
 /* Print number with header at given row, column	-RAK-	*/
-static void prt_num( // header, num, row, column)
-  char *header,
-  int num, int row, int column)
+static void prt_num(char *header, int num, int row, int column,  COLORREF backColor)
 {
   vtype out_val;
 
-  (void)sprintf(out_val, "%s: %6d", header, num);
-  put_buffer(out_val, row, column);
+  (void)sprintf(out_val, "%s:%3d", header, num); // was 6, and a space..
+  put_buffer_color(out_val, row, column, backColor);
 }
 
 /* Print long number at given row, column */
-static void prt_long( // num, row, column)
-  int32 num,
-  int row, int column)
+static void prt_long(int32 num, int row, int column, COLORREF back)
 {
   vtype out_val;
 
   (void)sprintf(out_val, "%6ld", num);
-  put_buffer(out_val, row, column);
+  put_buffer_color(out_val, row, column, back);
 }
 
 /* Print number at given row, column	-RAK-	*/
-static void prt_int(int num, int row, int column)
+static void prt_int(int num, int row, int column, COLORREF back)
 //int num, row, column;
 {
   vtype out_val;
 
   (void)sprintf(out_val, "%6d", num);
-  put_buffer(out_val, row, column);
+  put_buffer_color(out_val, row, column, back);
 }
 
 
@@ -434,6 +427,11 @@ char *title_string()
 }
 
 
+COLORREF column1_color=RGB(255, 0, 0), column2_color=RGB(64, 128, 0), colorPlusses=RGB(255, 0, 255), personalColor=RGB(0,255,255), vitalsColor=RGB(128,255,128),
+depth_color = RGB(128, 128, 0), statAcolor = RGB(0, 128, 255), statBcolor = RGB(128,0,64)
+  ;
+
+
 /* Prints title of character				-RAK-	*/
 void prt_title()
 {
@@ -444,42 +442,42 @@ void prt_title()
 /* Prints level						-RAK-	*/
 void prt_level()
 {
-  prt_int((int)py.misc.lev, STAT_LEV_ROW, STAT_LEV_COL+6); // 13, STAT_COLUMN + 6);
+  prt_int((int)py.misc.lev, STAT_LEV_ROW, STAT_LEV_COL+6, column1_color); // 13, STAT_COLUMN + 6);
 }
 
 
 /* Prints players current mana points.		 -RAK-	*/
 void prt_cmana()
 {
-  prt_int(py.misc.cmana, STAT_MANA_ROW, STAT_MANA_COL+6); // 15, STAT_COLUMN + 6);
+  prt_int(py.misc.cmana, STAT_MANA_ROW, STAT_MANA_COL+6, column1_color); // 15, STAT_COLUMN + 6);
 }
 
 
 /* Prints Max hit points				-RAK-	*/
 void prt_mhp()
 {
-  prt_int(py.misc.mhp, STAT_MHP_ROW, STAT_MHP_COL+6); // 16, STAT_COLUMN + 6);
+  prt_int(py.misc.mhp, STAT_MHP_ROW, STAT_MHP_COL+6, column1_color); // 16, STAT_COLUMN + 6);
 }
 
 
 /* Prints players current hit points			-RAK-	*/
 void prt_chp()
 {
-  prt_int(py.misc.chp, STAT_CHP_ROW, STAT_CHP_COL+6); // 17, STAT_COLUMN + 6);
+  prt_int(py.misc.chp, STAT_CHP_ROW, STAT_CHP_COL+6, column1_color); // 17, STAT_COLUMN + 6);
 }
 
 
 /* prints current AC					-RAK-	*/
 void prt_pac()
 {
-  prt_int(py.misc.dis_ac, STAT_AC_ROW, STAT_AC_COL+6); // 19, STAT_COLUMN + 6);
+  prt_int(py.misc.dis_ac, STAT_AC_ROW, STAT_AC_COL+6, column2_color); // 19, STAT_COLUMN + 6);
 }
 
 
 /* Prints current gold					-RAK-	*/
 void prt_gold()
 {
-  prt_long(py.misc.au, STAT_AU_ROW, STAT_AU_COL+6); // 20, STAT_COLUMN + 6);
+  prt_long(py.misc.au, STAT_AU_ROW, STAT_AU_COL+6, column2_color); // 20, STAT_COLUMN + 6);
 }
 
 
@@ -495,7 +493,7 @@ void prt_depth()
   else
     (void)sprintf(depths, "%d feet", depth);
 
-  prt(depths, STAT_DEPTH_ROW, STAT_DEPTH_COL); //  23, 65);
+  prt(depths, STAT_DEPTH_ROW, STAT_DEPTH_COL); // , depth_color); //  23, 65);
 }
 
 
@@ -750,7 +748,7 @@ int inc_stat( // stat)
     if (tmp_stat > py.stats.max_stat[stat])
       py.stats.max_stat[stat] = tmp_stat;
     set_use_stat(stat);
-    prt_stat(stat);
+    prt_stat(stat); // , (stat / 3) ? statAcolor : statBcolor);
     return TRUE;
   }
   else
@@ -781,7 +779,7 @@ int dec_stat( // stat)
 
     py.stats.cur_stat[stat] = tmp_stat;
     set_use_stat(stat);
-    prt_stat(stat);
+    prt_stat(stat); // , (stat / 3) ? statAcolor : statBcolor);
     return TRUE;
   }
   else
@@ -800,7 +798,7 @@ int res_stat(int stat)
   {
     py.stats.cur_stat[stat] += i;
     set_use_stat(stat);
-    prt_stat(stat);
+    prt_stat(stat); // , (stat / 3) ? statAcolor : statBcolor);
     return TRUE;
   }
   return FALSE;
@@ -915,23 +913,24 @@ int todam_adj()
 
 
 /* Print character stat in given row, column		-RAK-	*/
-void prt_stat(int stat)
+void prt_stat(int stat) // , COLORREF back)
 // int stat;
 {
   stat_type out_val1;
 
-  const int PYSTAT_COL = STAT_COLUMN + STATB_WID * 3;
+  const int PYSTAT_COL = STAT_COLUMN + STATB_WID * 3 -3; // JG: -3 is offset because of xp block.
   const int STAT_ROW_OFFSET = stat % 3;
   const int PYSTAT_ROW = STAT_LINE + STAT_ROW_OFFSET;
-  const int STAT_COL_OFFSET = (stat / 3)*STATB_WID;
+  const int STAT_COL_OFFSET = (stat/3)*STATB_WID;
 
   const int statLabWidth = 4; // was:6
 
-  cnv_stat(py.stats.use_stat[stat], out_val1);
-  put_buffer(stat_names[stat], PYSTAT_ROW, STAT_COL_OFFSET + PYSTAT_COL);     //  STAT_COLUMN);     // row was: 6 + stat
-  put_buffer(out_val1, PYSTAT_ROW, STAT_COL_OFFSET + PYSTAT_COL + statLabWidth); //  STAT_COLUMN + 6); // row was: 6 + stat
-}
+  COLORREF backColor = (stat / 3) ? statAcolor : statBcolor;
 
+  cnv_stat(py.stats.use_stat[stat], out_val1);
+  put_buffer_color(stat_names[stat], PYSTAT_ROW, STAT_COL_OFFSET + PYSTAT_COL, backColor);     //  STAT_COLUMN);     // row was: 6 + stat
+  put_buffer_color(out_val1, PYSTAT_ROW, STAT_COL_OFFSET + PYSTAT_COL + statLabWidth, backColor); //  STAT_COLUMN + 6); // row was: 6 + stat
+}
 
 
 /* Prints character-screen info				-RAK-	*/
@@ -947,18 +946,18 @@ void prt_stat_block()
   prt_field(title_string(),               STAT_TITLE_ROW, STAT_TITLE_COL); // STAT_COLUMN + STATB_WID * 1 ); // 4
 
   for (i = 0; i < 6; i++) {
-    prt_stat(i); // in prt_stat_block.
+    prt_stat(i); // , (i / 3) ? statAcolor : statBcolor); // in prt_stat_block.
   }
 
 
-  prt_num( "CHP ", m_ptr->chp,     STAT_CHP_ROW,  STAT_CHP_COL); // STAT_LINE + 0, STAT_COLUMN + STATB_WID * 1); // 17
-  prt_num( "MHP ", m_ptr->mhp,     STAT_MHP_ROW,  STAT_MHP_COL); // STAT_LINE + 1, STAT_COLUMN + STATB_WID * 1); // 16
-  prt_num( "MANA", m_ptr->cmana,   STAT_MANA_ROW, STAT_MANA_COL);// STAT_LINE + 2, STAT_COLUMN + STATB_WID * 1); // 15
-  prt_num( "LEV ", (int)m_ptr->lev,STAT_LEV_ROW,  STAT_LEV_COL); // STAT_LINE + 3, STAT_COLUMN + STATB_WID * 1); // 13,
+  prt_num( "CHP ", m_ptr->chp,     STAT_CHP_ROW,  STAT_CHP_COL, column1_color); // STAT_LINE + 0, STAT_COLUMN + STATB_WID * 1); // 17
+  prt_num( "MHP ", m_ptr->mhp,     STAT_MHP_ROW,  STAT_MHP_COL, column1_color); // STAT_LINE + 1, STAT_COLUMN + STATB_WID * 1); // 16
+  prt_num( "MANA", m_ptr->cmana,   STAT_MANA_ROW, STAT_MANA_COL,column1_color);// STAT_LINE + 2, STAT_COLUMN + STATB_WID * 1); // 15
+  prt_num( "LEV ", (int)m_ptr->lev,STAT_LEV_ROW,  STAT_LEV_COL, column1_color); // STAT_LINE + 3, STAT_COLUMN + STATB_WID * 1); // 13,
 
-  prt_lnum("EXP ", m_ptr->exp,     STAT_EXP_ROW,  STAT_EXP_COL);//  STAT_LINE + 0, STAT_COLUMN + STATB_WID * 2); // 14
-  prt_lnum("GOLD", m_ptr->au,      STAT_AU_ROW,   STAT_AU_COL); //  STAT_LINE + 1, STAT_COLUMN + STATB_WID * 2); // 20
-  prt_num( "AC  ", m_ptr->dis_ac,  STAT_AC_ROW,   STAT_AC_COL); //  STAT_LINE + 2, STAT_COLUMN + STATB_WID * 2); // 19
+  prt_lnum("EXP ", m_ptr->exp,     STAT_EXP_ROW,  STAT_EXP_COL, column2_color); // , column2_color);//  STAT_LINE + 0, STAT_COLUMN + STATB_WID * 2); // 14
+  prt_lnum("GOLD", m_ptr->au,      STAT_AU_ROW,   STAT_AU_COL,  column2_color); // , column2_color); //  STAT_LINE + 1, STAT_COLUMN + STATB_WID * 2); // 20
+  prt_num( "AC  ", m_ptr->dis_ac,  STAT_AC_ROW,   STAT_AC_COL,  column2_color); //  STAT_LINE + 2, STAT_COLUMN + STATB_WID * 2); // 19
 
   prt_winner();
   status = py.flags.status;
@@ -1032,10 +1031,10 @@ void put_stats()
       put_buffer(buf, 2 + i, 73);
     }
   }
-  prt_num("+ To Hit    ", m_ptr->dis_th, 9, 1);
-  prt_num("+ To Damage ", m_ptr->dis_td, 10, 1);
-  prt_num("+ To AC     ", m_ptr->dis_tac, 11, 1);
-  prt_num("  Total AC  ", m_ptr->dis_ac, 12, 1);
+  prt_num("+ To Hit    ", m_ptr->dis_th,   9, 1, colorNone); //colorPlusses);
+  prt_num("+ To Damage ", m_ptr->dis_td,  10, 1, colorNone); //colorPlusses);
+  prt_num("+ To AC     ", m_ptr->dis_tac, 11, 1, colorNone); //colorPlusses);
+  prt_num("  Total AC  ", m_ptr->dis_ac,  12, 1, colorNone); //colorPlusses);
 }
 
 
@@ -1062,10 +1061,10 @@ void put_misc1()
   register struct player_type::misc *m_ptr;
 
   m_ptr = &py.misc;
-  prt_num("Age          ", (int)m_ptr->age, 2, 38);
-  prt_num("Height       ", (int)m_ptr->ht, 3, 38);
-  prt_num("Weight       ", (int)m_ptr->wt, 4, 38);
-  prt_num("Social Class ", (int)m_ptr->sc, 5, 38);
+  prt_num("Age          ", (int)m_ptr->age, 2, 38, colorNone); //personalColor);
+  prt_num("Height       ", (int)m_ptr->ht,  3, 38, colorNone); //personalColor);
+  prt_num("Weight       ", (int)m_ptr->wt,  4, 38, colorNone); //personalColor);
+  prt_num("Social Class ", (int)m_ptr->sc,  5, 38, colorNone); //personalColor);
 }
 
 
@@ -1084,10 +1083,10 @@ void put_misc2()
     prt_7lnum("Exp to Adv.", (int32)(player_exp[m_ptr->lev - 1]
     * m_ptr->expfact / 100), 12, 28);
   prt_7lnum("Gold       ", m_ptr->au, 13, 28);
-  prt_num("Max Hit Points ", m_ptr->mhp, 9, 52);
-  prt_num("Cur Hit Points ", m_ptr->chp, 10, 52);
-  prt_num("Max Mana       ", m_ptr->mana, 11, 52);
-  prt_num("Cur Mana       ", m_ptr->cmana, 12, 52);
+  prt_num("Max Hit Points ", m_ptr->mhp,    9, 52, colorNone); //vitalsColor);
+  prt_num("Cur Hit Points ", m_ptr->chp,   10, 52, colorNone); //vitalsColor);
+  prt_num("Max Mana       ", m_ptr->mana,  11, 52, colorNone); //vitalsColor);
+  prt_num("Cur Mana       ", m_ptr->cmana, 12, 52, colorNone); //vitalsColor);
 }
 
 
@@ -2087,7 +2086,7 @@ void prt_experience()
   if (p_ptr->exp > p_ptr->max_exp)
     p_ptr->max_exp = p_ptr->exp;
 
-  prt_long(p_ptr->exp, STAT_EXP_ROW, STAT_EXP_COL); // 14, STAT_COLUMN + 6);
+  prt_long(p_ptr->exp, STAT_EXP_ROW, STAT_EXP_COL, column2_color); // 14, STAT_COLUMN + 6);
 }
 
 

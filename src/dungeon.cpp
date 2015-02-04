@@ -804,7 +804,7 @@ void dungeon()
 #else
 	    if ((PY_STR << i) & py.flags.status)
 #endif
-	      prt_stat(i);
+        prt_stat(i); // , (i / 3) ? statAcolor : statBcolor);
 #ifdef ATARIST_MWC
 	  py.flags.status &= ~(holder = PY_STATS);
 #else

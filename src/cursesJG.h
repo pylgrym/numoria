@@ -11,15 +11,17 @@ typedef char chtype;
 class ScreenCell : public LocInf {
 public:
 	enum CellConstants { Empty = ' ' };
-
+  COLORREF back;
 	//chtype c;
   
 
 	// colors, graphics, sounds, fantastic other stuff.
 	ScreenCell() { }
-	ScreenCell(chtype c_)  { c = c_; }
+  ScreenCell(chtype c_)  { c = c_; back = colorNone;  }
+  ScreenCell(chtype c_, COLORREF back_)  { c = c_; back = back_;  }
   ScreenCell(const LocInf& src) {
     LocInf::operator=(src);
+    back = colorNone; 
   }
 
 	void clearCell() {
@@ -100,10 +102,10 @@ public:
 	// ScreenCell& cell(int y, int x) { return cells[y][x];  } // Will allow us to do bounds-check.
 	// int csr_x, csr_y;
 
-	int  mvaddstr(int y, int x, const char *str);  
-	int  addstr(const char *str);  
+	int  mvaddstr(int y, int x, const char *str, COLORREF backColor);  
+	int  addstr(const char *str, COLORREF backColor);  
 
-	int  addch(const chtype ch);  
+	int  addch(const chtype ch, COLORREF backColor);  
 	int  addch_L(const struct LocInf& ch);  
 
 	int  mvaddch(int y, int x, const chtype ch);  

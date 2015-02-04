@@ -2,6 +2,7 @@
 #include "cursesJG.h"
 #include "LocInf.h"
 
+#include <assert.h>
 
 /* FIXME; I want to catch calls to fprintf(stderror, e.g. 
 ..(void) fprintf (stderr, "Can't open score file \"%s\"\n", MORIA_TOP);

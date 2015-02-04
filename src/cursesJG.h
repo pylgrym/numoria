@@ -2,6 +2,7 @@
 #define CURSES_JG_H
 
 #include "LocInf.h"
+#include <assert.h>
 
 # define        ERR     (0)
 

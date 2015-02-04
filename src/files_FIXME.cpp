@@ -105,8 +105,9 @@ void init_scorefile()
   highscore_fp = fopen(MORIA_TOP, "rb+");
 #else
 
-  char wd_buf[256] = "JOhn";
-  _getcwd_dbg(wd_buf, sizeof wd_buf, _NORMAL_BLOCK, __FILE__, __LINE__);
+  // char wd_buf[256] = "JOhn";
+  // _getcwd_dbg(wd_buf, sizeof wd_buf, _NORMAL_BLOCK, __FILE__, __LINE__);
+
   // _getcwd(wd_buf, sizeof wd_buf); // , _NORMAL_BLOCK, __FILE__, __LINE__);
 
 

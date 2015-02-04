@@ -28,8 +28,8 @@ using namespace Gdiplus;
 #endif
 
 
-
-const int cellw = 32; //  20; // 32
+const int cellwNarrow = 20;
+const int cellw = 32; //   20; // 32
 const int cellh = 32;
 
 CString tileFile = L"sprites\\nethack_tiles_32x32px_by_nevanda-d6w352s.png";
@@ -349,8 +349,11 @@ void CChildView::OnTimer(UINT nIDEvent) { // Used to start app loop.
 
 
 void invalidateCell(int row, int col) {
-	int x = col*cellw, y = row*cellh;
-	CRect cellR(CPoint(x, y), CSize(cellw, cellh));
+  int cellw2 = cellw;
+  if (row == 0) { cellw2 = cellwNarrow;  }
+
+	int x = col*cellw2, y = row*cellh;
+	CRect cellR(CPoint(x, y), CSize(cellw2, cellh));
   invalidateWndJG(&cellR);
 }
 
@@ -411,7 +414,7 @@ void CChildView::OnPaint()
 
 			CPoint p(col, row);
       int cellw2 = cellw;
-      if (row == 0) { cellw2 = 20;  } // KLUDGE TO READ TEXT, on top msg row.
+      if (row == 0) { cellw2 = cellwNarrow;  } // KLUDGE TO READ TEXT, on top msg row.
 			int x = col*cellw2, y = row*cellh;
 			CRect cellR(CPoint(x, y), CSize(cellw2, cellh));
 

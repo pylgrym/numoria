@@ -318,7 +318,7 @@ static void prt_int(int num, int row, int column, COLORREF back)
 {
   vtype out_val;
 
-  (void)sprintf(out_val, "%6d", num);
+  (void)sprintf(out_val, "%3d", num); // was 6..
   put_buffer_color(out_val, row, column, back);
 }
 
@@ -442,35 +442,35 @@ void prt_title()
 /* Prints level						-RAK-	*/
 void prt_level()
 {
-  prt_int((int)py.misc.lev, STAT_LEV_ROW, STAT_LEV_COL+6, column1_color); // 13, STAT_COLUMN + 6);
+  prt_int((int)py.misc.lev, STAT_LEV_ROW, STAT_LEV_COL+5, column1_color); // 13, STAT_COLUMN + 6);
 }
 
 
 /* Prints players current mana points.		 -RAK-	*/
 void prt_cmana()
 {
-  prt_int(py.misc.cmana, STAT_MANA_ROW, STAT_MANA_COL+6, column1_color); // 15, STAT_COLUMN + 6);
+  prt_int(py.misc.cmana, STAT_MANA_ROW, STAT_MANA_COL+5, column1_color); // 15, STAT_COLUMN + 6);
 }
 
 
 /* Prints Max hit points				-RAK-	*/
 void prt_mhp()
 {
-  prt_int(py.misc.mhp, STAT_MHP_ROW, STAT_MHP_COL+6, column1_color); // 16, STAT_COLUMN + 6);
+  prt_int(py.misc.mhp, STAT_MHP_ROW, STAT_MHP_COL+5, column1_color); // 16, STAT_COLUMN + 6);
 }
 
 
 /* Prints players current hit points			-RAK-	*/
 void prt_chp()
 {
-  prt_int(py.misc.chp, STAT_CHP_ROW, STAT_CHP_COL+6, column1_color); // 17, STAT_COLUMN + 6);
+  prt_int(py.misc.chp, STAT_CHP_ROW, STAT_CHP_COL+5, column1_color); // 17, STAT_COLUMN + 6);
 }
 
 
 /* prints current AC					-RAK-	*/
 void prt_pac()
 {
-  prt_int(py.misc.dis_ac, STAT_AC_ROW, STAT_AC_COL+6, column2_color); // 19, STAT_COLUMN + 6);
+  prt_int(py.misc.dis_ac, STAT_AC_ROW, STAT_AC_COL+6+3, column2_color); // 19, STAT_COLUMN + 6);
 }
 
 
@@ -2086,7 +2086,7 @@ void prt_experience()
   if (p_ptr->exp > p_ptr->max_exp)
     p_ptr->max_exp = p_ptr->exp;
 
-  prt_long(p_ptr->exp, STAT_EXP_ROW, STAT_EXP_COL, column2_color); // 14, STAT_COLUMN + 6);
+  prt_long(p_ptr->exp, STAT_EXP_ROW, STAT_EXP_COL+6, column2_color); // 14, STAT_COLUMN + 6);
 }
 
 

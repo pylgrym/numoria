@@ -72,7 +72,8 @@ const int viewPort_ROW_Offset = 1; // 1 is required, because we display msg's at
 const int viewPort_COL_Offset = 0; // was 13; (when stat block on left side.)
 
 #define SCREEN_HEIGHT  22
-#define SCREEN_WIDTH   66
+// #define SCREEN_WIDTH   66
+#define SCREEN_WIDTH   60
 
 // JG: Was initially SCREEN_WIDTH=66, but that won't fit in 1920/32..
 const int RIGHTMOST_COL = 60;
